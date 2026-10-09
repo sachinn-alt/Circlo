@@ -1,7 +1,10 @@
 # 🔄 Circlo (सर्कलो)
 ### Decentralized AI E-Waste & Informal Recycler Network
-**Track 03: Waste & Energy** | **AWS Hackathon "Build It" Track (100% Free / Local)**
+**Track 03: Waste & Energy** | **AWS Hackathon "Build It" (Open Source) & "Ship It" (Live Cloud)**
 
+> 🌐 **Live Web Application:** [https://circlo-eight.vercel.app/](https://circlo-eight.vercel.app/)
+
+[![Live Deployment](https://img.shields.io/badge/Live_Demo-circlo--eight.vercel.app-000000?logo=vercel&logoColor=white)](https://circlo-eight.vercel.app/)
 [![AWS OpenSource](https://img.shields.io/badge/AWS_OpenSource-OpenSearch_%2B_Cedar-FF9900?logo=amazon-aws)](https://github.com/opensearch-project/OpenSearch)
 [![Cedar Policy](https://img.shields.io/badge/AWS_Cedar-Authorization_Engine-7C3AED)](https://www.cedarpolicy.com/)
 [![LocalStack](https://img.shields.io/badge/LocalStack-Zero_Cloud_Cost-0055FF)](https://localstack.cloud/)
