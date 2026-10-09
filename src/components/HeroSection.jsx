@@ -7,8 +7,10 @@ import {
   Scale, 
   Coins, 
   Zap,
-  ShieldCheck 
+  ShieldCheck,
+  Cloud
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const KINETIC_SAMPLES = [
   {
@@ -43,7 +45,8 @@ const KINETIC_SAMPLES = [
   }
 ];
 
-export default function HeroSection({ onNavigateTab }) {
+export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
+  const { t } = useLanguage();
   const [activeSample, setActiveSample] = useState(KINETIC_SAMPLES[0]);
 
   // Framer Motion scroll parallax effect on hero
@@ -158,6 +161,19 @@ export default function HeroSection({ onNavigateTab }) {
                   <MapPin size={18} />
                 </span>
                 <span>FIND NEARBY COLLECTORS</span>
+              </motion.button>
+
+              <motion.button 
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-kinetic-outline"
+                style={{ borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
+                onClick={onOpenAwsArch}
+              >
+                <span className="btn-icon">
+                  <Cloud size={18} />
+                </span>
+                <span>AWS ARCHITECTURE</span>
               </motion.button>
             </div>
 

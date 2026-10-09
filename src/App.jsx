@@ -10,12 +10,14 @@ import CedarPolicyLab from './components/CedarPolicyLab';
 import ImpactLedger from './components/ImpactLedger';
 import PickupModal from './components/PickupModal';
 import CertificateModal from './components/CertificateModal';
+import AwsArchitectureModal from './components/AwsArchitectureModal';
 import KineticMarquee from './components/KineticMarquee';
 import CircloBrandMark from './components/CircloBrandMark';
 import './App.css';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
+  const [isAwsArchModalOpen, setIsAwsArchModalOpen] = useState(false);
   
   // Cross-tab workflows
   const [prefilteredSample, setPrefilteredSample] = useState(null);
@@ -54,6 +56,7 @@ export default function App() {
       <Header 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
+        onOpenAwsArch={() => setIsAwsArchModalOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -68,7 +71,10 @@ export default function App() {
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
-              <HeroSection onNavigateTab={(tab) => setActiveTab(tab)} />
+              <HeroSection 
+                onNavigateTab={(tab) => setActiveTab(tab)} 
+                onOpenAwsArch={() => setIsAwsArchModalOpen(true)}
+              />
               <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
               
               {/* Live Interactive Scanner Playground directly in Overview */}
@@ -299,6 +305,12 @@ export default function App() {
           onClose={() => setCertModalData(null)}
         />
       )}
+
+      {/* Interactive AWS Cloud Architecture Modal */}
+      <AwsArchitectureModal 
+        isOpen={isAwsArchModalOpen}
+        onClose={() => setIsAwsArchModalOpen(false)}
+      />
 
     </div>
   );

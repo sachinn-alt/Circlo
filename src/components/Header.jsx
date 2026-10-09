@@ -3,13 +3,15 @@ import KineticMarquee from './KineticMarquee';
 import CircloBrandMark from './CircloBrandMark';
 import { motion } from 'framer-motion';
 import { 
-  ArrowRight, 
   Smartphone, 
-  TrendingUp, 
-  ShieldCheck 
+  Cloud,
+  Globe
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
-export default function Header({ activeTab, setActiveTab }) {
+export default function Header({ activeTab, setActiveTab, onOpenAwsArch }) {
+  const { language, toggleLanguage, t } = useLanguage();
+
   return (
     <header className="kinetic-nav">
       
@@ -17,27 +19,27 @@ export default function Header({ activeTab, setActiveTab }) {
       <div className="kinetic-marquee-strip">
         <KineticMarquee speed={75}>
           <div className="marquee-item">
-            <span>● 1,500,000 INFORMAL RECYCLERS EMPOWERED</span>
+            <span>● {t('marqueeRecyclers')}</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>● 100% DIGITAL SCALE ACCURACY GUARANTEED</span>
+            <span>● {t('marqueeScale')}</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>● ZERO TOXIC BACKYARD BURNING</span>
+            <span>● {t('marqueeZeroBurn')}</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>● GUARANTEED 85% FAIR SCRAP FLOOR PRICE</span>
+            <span>● {t('marqueeFairPrice')}</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>● DIRECT INSTANT UPI BANK PAYOUTS</span>
+            <span>● {t('marqueeUpi')}</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>● AUDITED CPCB GREEN RECYCLING CERTIFICATES</span>
+            <span>● {t('marqueeCpcb')}</span>
             <span className="marquee-divider" />
           </div>
         </KineticMarquee>
@@ -68,53 +70,81 @@ export default function Header({ activeTab, setActiveTab }) {
               className={`kinetic-nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
               onClick={() => setActiveTab('overview')}
             >
-              HOW IT WORKS
+              {t('navHowItWorks')}
             </button>
             <button 
               className={`kinetic-nav-btn ${activeTab === 'scanner' ? 'active' : ''}`}
               onClick={() => setActiveTab('scanner')}
             >
-              AI SCANNER
+              {t('navAiScanner')}
             </button>
             <button 
               className={`kinetic-nav-btn ${activeTab === 'map' ? 'active' : ''}`}
               onClick={() => setActiveTab('map')}
             >
-              FIND RECYCLERS
+              {t('navFindRecyclers')}
             </button>
             <button 
               className={`kinetic-nav-btn ${activeTab === 'kabadiwala' ? 'active' : ''}`}
               onClick={() => setActiveTab('kabadiwala')}
             >
-              COLLECTOR HUB
+              {t('navCollectorHub')}
             </button>
             <button 
               className={`kinetic-nav-btn ${activeTab === 'cedar' ? 'active' : ''}`}
               onClick={() => setActiveTab('cedar')}
             >
-              FAIR PRICE GUARD
+              {t('navFairPriceGuard')}
             </button>
             <button 
               className={`kinetic-nav-btn ${activeTab === 'impact' ? 'active' : ''}`}
               onClick={() => setActiveTab('impact')}
             >
-              IMPACT LEDGER
+              {t('navImpactLedger')}
             </button>
           </nav>
 
-          {/* Right Action Trigger with Motion */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* Right Action Triggers: Language Switcher, AWS Cloud Arch & Scan Device */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            
+            {/* Language Toggle Button */}
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-kinetic-outline"
+              style={{ height: '42px', padding: '0 12px', fontSize: '12px' }}
+              onClick={toggleLanguage}
+              title="Toggle Hindi / English localization"
+            >
+              <Globe size={14} />
+              <span>{language === 'en' ? 'हिन्दी' : 'EN'}</span>
+            </motion.button>
+
+            {/* AWS Cloud Architecture Trigger Button */}
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-kinetic-outline"
+              style={{ height: '42px', padding: '0 14px', fontSize: '12px', borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
+              onClick={onOpenAwsArch}
+              title="Inspect AWS Cloud Architecture & Cedar policies"
+            >
+              <Cloud size={14} />
+              <span>AWS CLOUD</span>
+            </motion.button>
+
+            {/* Primary Action Button */}
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="btn-kinetic-primary"
-              style={{ height: '48px', padding: '0 24px', fontSize: '14px' }}
+              style={{ height: '42px', padding: '0 18px', fontSize: '13px' }}
               onClick={() => setActiveTab('scanner')}
             >
               <span className="btn-icon">
-                <Smartphone size={16} />
+                <Smartphone size={15} />
               </span>
-              <span>SCAN DEVICE</span>
+              <span>{t('navScanDevice')}</span>
             </motion.button>
           </div>
 
