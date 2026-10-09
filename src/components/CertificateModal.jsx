@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { X, Award, Printer, QrCode } from 'lucide-react';
 
 export default function CertificateModal({ certData, onClose }) {
@@ -7,25 +8,37 @@ export default function CertificateModal({ certData, onClose }) {
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.85)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 2000,
-      padding: '20px'
-    }} onClick={onClose}>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.88)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2000,
+        padding: '20px'
+      }} 
+      onClick={onClose}
+    >
       
-      <div style={{
-        backgroundColor: '#09090b',
-        border: '2px solid var(--accent-color)',
-        maxWidth: '720px',
-        width: '100%',
-        padding: '36px',
-        color: '#fafafa'
-      }} onClick={(e) => e.stopPropagation()}>
+      <motion.div 
+        initial={{ scale: 0.93, opacity: 0, y: 15 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          backgroundColor: '#09090b',
+          border: '2px solid var(--accent-color)',
+          maxWidth: '720px',
+          width: '100%',
+          padding: '36px',
+          color: '#fafafa'
+        }} 
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '16px', marginBottom: '24px' }}>
@@ -38,14 +51,18 @@ export default function CertificateModal({ certData, onClose }) {
             </h3>
           </div>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               className="btn-kinetic-outline"
               style={{ height: '38px', padding: '0 16px', fontSize: '12px' }}
               onClick={handlePrint}
             >
-              <Printer size={14} />
+              <span className="btn-icon">
+                <Printer size={14} />
+              </span>
               <span>PRINT / PDF</span>
-            </button>
+            </motion.button>
             <button 
               style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer' }}
               onClick={onClose}
@@ -133,7 +150,7 @@ export default function CertificateModal({ certData, onClose }) {
           </div>
         </div>
 
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

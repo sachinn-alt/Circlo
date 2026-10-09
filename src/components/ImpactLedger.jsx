@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { motion } from 'framer-motion';
 import { 
   Award, 
   Leaf, 
@@ -7,7 +8,8 @@ import {
   Coins, 
   Sparkles, 
   Download,
-  CheckCircle2 
+  CheckCircle2,
+  ArrowRight 
 } from 'lucide-react';
 import { IMPACT_STATISTICS } from '../data/mockData';
 
@@ -42,14 +44,22 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
     <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
       
       {/* Section Header */}
-      <div style={{ marginBottom: '32px' }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ marginBottom: '32px' }}
+      >
         <span style={{ 
           fontFamily: 'var(--font-space)', 
           fontSize: '13px', 
           fontWeight: 800, 
           letterSpacing: '0.12em', 
-          color: 'var(--accent-color)' 
+          color: 'var(--accent-color)',
+          display: 'inline-flex',
+          alignItems: 'center'
         }}>
+          <span className="kinetic-live-dot" />
           [ IMPACT AUDIT // CPCB EXTENDED PRODUCER RESPONSIBILITY LEDGER ]
         </span>
         <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
@@ -58,7 +68,7 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
         <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '12px' }}>
           Real ecological diversion numbers, neurotoxic lead protection, and formal Extended Producer Responsibility (EPR) compliance audit metrics.
         </p>
-      </div>
+      </motion.div>
 
       {/* Massive Graphic Metric Numbers in Hairline Grid */}
       <div style={{ 
@@ -69,7 +79,10 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
         border: '2px solid var(--border-color)',
         marginBottom: '40px'
       }}>
-        <div style={{ backgroundColor: 'var(--bg-color)', padding: '36px' }}>
+        <motion.div 
+          whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
+          style={{ backgroundColor: 'var(--bg-color)', padding: '36px', transition: 'background-color 0.2s ease' }}
+        >
           <div className="kinetic-giant-num">142.8</div>
           <h4 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
             TONNES DIVERTED
@@ -77,9 +90,12 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
           <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
             Intercepted from Ghazipur & Bhalaswa burning dumpsites.
           </p>
-        </div>
+        </motion.div>
 
-        <div style={{ backgroundColor: 'var(--bg-color)', padding: '36px' }}>
+        <motion.div 
+          whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
+          style={{ backgroundColor: 'var(--bg-color)', padding: '36px', transition: 'background-color 0.2s ease' }}
+        >
           <div className="kinetic-giant-num" style={{ color: 'var(--accent-color)' }}>3.1M</div>
           <h4 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
             LITERS WATER SAVED
@@ -87,9 +103,12 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
           <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
             Groundwater protected from mercury & cadmium acid leach.
           </p>
-        </div>
+        </motion.div>
 
-        <div style={{ backgroundColor: 'var(--bg-color)', padding: '36px' }}>
+        <motion.div 
+          whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
+          style={{ backgroundColor: 'var(--bg-color)', padding: '36px', transition: 'background-color 0.2s ease' }}
+        >
           <div className="kinetic-giant-num">₹48.2K</div>
           <h4 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
             FAIR VALUE PAID
@@ -97,7 +116,7 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
           <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
             Disbursed directly into citizen and collector UPI accounts.
           </p>
-        </div>
+        </motion.div>
       </div>
 
       {/* Interactive Certificate Generator Calculator */}
@@ -115,13 +134,17 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
               Adjust your obsolete devices to compute exact carbon savings and mint a verifiable CPCB certificate.
             </p>
           </div>
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
             className="btn-kinetic-primary"
             onClick={handleGenerateCertificate}
           >
-            <Award size={18} />
+            <span className="btn-icon">
+              <Award size={18} />
+            </span>
             <span>GENERATE VERIFIED CERTIFICATE</span>
-          </button>
+          </motion.button>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import TracksSection from './components/TracksSection';
@@ -9,7 +10,7 @@ import CedarPolicyLab from './components/CedarPolicyLab';
 import ImpactLedger from './components/ImpactLedger';
 import PickupModal from './components/PickupModal';
 import CertificateModal from './components/CertificateModal';
-import Marquee from 'react-fast-marquee';
+import KineticMarquee from './components/KineticMarquee';
 import './App.css';
 
 export default function App() {
@@ -55,88 +56,135 @@ export default function App() {
       />
 
       {/* Main Content Area */}
+      {/* Main Content Area with Animated Tab Transitions */}
       <main style={{ flex: 1 }}>
-        {activeTab === 'overview' && (
-          <>
-            <HeroSection onNavigateTab={(tab) => setActiveTab(tab)} />
-            <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
-            
-            {/* Live Interactive Scanner Playground directly in Overview */}
-            <section className="kinetic-section" style={{ borderBottom: 'none' }}>
-              <div className="kinetic-container">
-                <div style={{ marginBottom: '40px' }}>
-                  <span style={{ 
-                    fontFamily: 'var(--font-space)', 
-                    fontSize: '13px', 
-                    fontWeight: 800, 
-                    color: 'var(--accent-color)', 
-                    letterSpacing: '0.12em' 
-                  }}>
-                    [ 03 // LIVE CAMERA ENGINE ]
-                  </span>
-                  <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '12px' }}>
-                    TEST THE AI SPECTROMETER.
-                  </h2>
-                  <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '14px' }}>
-                    Click any sample preset below to inspect bounding box computer vision, extracted metal rates, and verified payouts.
-                  </p>
+        <AnimatePresence mode="wait">
+          {activeTab === 'overview' && (
+            <motion.div
+              key="overview"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <HeroSection onNavigateTab={(tab) => setActiveTab(tab)} />
+              <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
+              
+              {/* Live Interactive Scanner Playground directly in Overview */}
+              <section className="kinetic-section" style={{ borderBottom: 'none' }}>
+                <div className="kinetic-container">
+                  <div style={{ marginBottom: '40px' }}>
+                    <span style={{ 
+                      fontFamily: 'var(--font-space)', 
+                      fontSize: '13px', 
+                      fontWeight: 800, 
+                      color: 'var(--accent-color)', 
+                      letterSpacing: '0.12em',
+                      display: 'inline-flex',
+                      alignItems: 'center'
+                    }}>
+                      <span className="kinetic-live-dot" />
+                      [ 03 // LIVE CAMERA ENGINE ]
+                    </span>
+                    <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '12px' }}>
+                      TEST THE AI SPECTROMETER.
+                    </h2>
+                    <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '14px' }}>
+                      Click any sample preset below to inspect bounding box computer vision, extracted metal rates, and verified payouts.
+                    </p>
+                  </div>
+
+                  <ScannerTab 
+                    onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
+                    onOpenCedarForBatch={handleOpenCedarForBatch}
+                  />
                 </div>
+              </section>
+            </motion.div>
+          )}
 
-                <ScannerTab 
-                  onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
-                  onOpenCedarForBatch={handleOpenCedarForBatch}
-                />
-              </div>
-            </section>
-          </>
-        )}
+          {activeTab === 'scanner' && (
+            <motion.div
+              key="scanner"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="kinetic-container"
+            >
+              <ScannerTab 
+                onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
+                onOpenCedarForBatch={handleOpenCedarForBatch}
+              />
+            </motion.div>
+          )}
 
-        {activeTab === 'scanner' && (
-          <div className="kinetic-container">
-            <ScannerTab 
-              onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
-              onOpenCedarForBatch={handleOpenCedarForBatch}
-            />
-          </div>
-        )}
+          {activeTab === 'map' && (
+            <motion.div
+              key="map"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="kinetic-container"
+            >
+              <MapTab 
+                prefilteredSample={prefilteredSample}
+                onRequestPickup={handleRequestPickup}
+              />
+            </motion.div>
+          )}
 
-        {activeTab === 'map' && (
-          <div className="kinetic-container">
-            <MapTab 
-              prefilteredSample={prefilteredSample}
-              onRequestPickup={handleRequestPickup}
-            />
-          </div>
-        )}
+          {activeTab === 'kabadiwala' && (
+            <motion.div
+              key="kabadiwala"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="kinetic-container"
+            >
+              <KabadiwalaHub 
+                onRequestPickup={handleRequestPickup}
+              />
+            </motion.div>
+          )}
 
-        {activeTab === 'kabadiwala' && (
-          <div className="kinetic-container">
-            <KabadiwalaHub 
-              onRequestPickup={handleRequestPickup}
-            />
-          </div>
-        )}
+          {activeTab === 'cedar' && (
+            <motion.div
+              key="cedar"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="kinetic-container"
+            >
+              <CedarPolicyLab 
+                preselectedBatch={pickupItem}
+              />
+            </motion.div>
+          )}
 
-        {activeTab === 'cedar' && (
-          <div className="kinetic-container">
-            <CedarPolicyLab 
-              preselectedBatch={pickupItem}
-            />
-          </div>
-        )}
-
-        {activeTab === 'impact' && (
-          <div className="kinetic-container">
-            <ImpactLedger 
-              onOpenCertificateModal={(data) => setCertModalData(data)}
-            />
-          </div>
-        )}
+          {activeTab === 'impact' && (
+            <motion.div
+              key="impact"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="kinetic-container"
+            >
+              <ImpactLedger 
+                onOpenCertificateModal={(data) => setCertModalData(data)}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Full Bleed Marquee Before Footer */}
       <div className="kinetic-marquee-strip">
-        <Marquee speed={85} gradient={false} autoFill={true}>
+        <KineticMarquee speed={85}>
           <div className="marquee-item">
             <span>NO RIGGED SCALES</span>
             <span className="marquee-divider" />
@@ -157,7 +205,7 @@ export default function App() {
             <span>AUDITED CPCB CERTIFICATION</span>
             <span className="marquee-divider" />
           </div>
-        </Marquee>
+        </KineticMarquee>
       </div>
 
       {/* Monumental Kinetic Footer */}

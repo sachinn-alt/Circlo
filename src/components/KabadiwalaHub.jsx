@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   ShieldCheck, 
   TrendingUp, 
@@ -46,14 +47,22 @@ export default function KabadiwalaHub({ onRequestPickup }) {
     <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
       
       {/* Section Header */}
-      <div style={{ marginBottom: '32px' }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ marginBottom: '32px' }}
+      >
         <span style={{ 
           fontFamily: 'var(--font-space)', 
           fontSize: '13px', 
           fontWeight: 800, 
           letterSpacing: '0.12em', 
-          color: 'var(--accent-color)' 
+          color: 'var(--accent-color)',
+          display: 'inline-flex',
+          alignItems: 'center'
         }}>
+          <span className="kinetic-live-dot" />
           [ WELFARE PORTAL // GRASSROOTS RECYCLER DIGNITY & TRANSPARENCY ]
         </span>
         <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
@@ -62,7 +71,7 @@ export default function KabadiwalaHub({ onRequestPickup }) {
         <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '12px' }}>
           Direct pickup leads from citizens, live commodity market rates, and safety certifications. Eliminating predatory brokers and guaranteeing fair livelihoods.
         </p>
-      </div>
+      </motion.div>
 
       {/* Daily Scrap Market Ticker Grid */}
       <div style={{ 
@@ -74,14 +83,19 @@ export default function KabadiwalaHub({ onRequestPickup }) {
         marginBottom: '40px'
       }}>
         {COMMODITY_PRICES.map((item, idx) => (
-          <div 
+          <motion.div 
             key={idx}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: idx * 0.08 }}
+            whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
             style={{ 
               backgroundColor: 'var(--bg-color)', 
               padding: '24px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              transition: 'background-color 0.2s ease'
             }}
           >
             <div>
@@ -97,7 +111,7 @@ export default function KabadiwalaHub({ onRequestPickup }) {
               <span>{item.change24h} TODAY</span>
               <span style={{ color: 'var(--muted-fg-color)' }}>MCX LINKED</span>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -117,23 +131,32 @@ export default function KabadiwalaHub({ onRequestPickup }) {
             fontWeight: 800, 
             padding: '4px 10px', 
             backgroundColor: 'var(--accent-color)', 
-            color: '#000000' 
+            color: '#000000',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px'
           }}>
-            ● {leads.length} LIVE REQUESTS
+            <span style={{ width: '6px', height: '6px', backgroundColor: '#000000', display: 'inline-block' }} />
+            {leads.length} LIVE REQUESTS
           </span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
-          {leads.map(lead => (
-            <div 
+          {leads.map((lead, lIdx) => (
+            <motion.div 
               key={lead.id}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: lIdx * 0.1 }}
+              whileHover={{ y: -4, borderColor: 'var(--accent-color)' }}
               style={{
                 backgroundColor: 'var(--bg-color)',
                 border: '2px solid var(--border-color)',
                 padding: '24px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                transition: 'border-color 0.2s ease'
               }}
             >
               <div>
@@ -156,15 +179,17 @@ export default function KabadiwalaHub({ onRequestPickup }) {
                     {lead.payout}
                   </strong>
                 </div>
-                <button 
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   className="btn-kinetic-primary"
                   style={{ height: '36px', padding: '0 14px', fontSize: '12px' }}
                   onClick={() => alert(`Accepted pickup lead from ${lead.resident}! Route dispatched.`)}
                 >
                   <span>ACCEPT</span>
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

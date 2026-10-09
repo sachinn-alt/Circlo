@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { 
   MapPin, 
   Search, 
@@ -6,7 +7,8 @@ import {
   Clock, 
   Truck, 
   AlertCircle,
-  ArrowRight
+  ArrowRight,
+  Radio
 } from 'lucide-react';
 import { searchRecyclersOpenSearch } from '../services/openSearchClient';
 
@@ -33,90 +35,108 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
 
   const recyclers = searchResults.hits.hits.map(h => h._source);
 
-  // Leaflet Map Lifecycle
+  // Leaflet Map Lifecycle - Init once, update layers smoothly
   useEffect(() => {
-    let L;
-    import('leaflet').then((leaflet) => {
-      L = leaflet.default;
+    let isMounted = true;
 
-      if (!leafletMapRef.current && mapContainerRef.current) {
-        const map = L.map(mapContainerRef.current, {
-          center: [userLocation.lat, userLocation.lon],
-          zoom: 13,
-          zoomControl: false
-        });
+    import('leaflet').then((leafletModule) => {
+      if (!isMounted || !mapContainerRef.current) return;
+      const L = leafletModule.default || leafletModule;
+      if (!L || !L.map) return;
 
-        // Carto Dark Matter Tiles
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-          subdomains: 'abcd',
-          maxZoom: 19
-        }).addTo(map);
-
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
-        leafletMapRef.current = map;
-      }
-
-      const map = leafletMapRef.current;
-      if (!map) return;
-
-      // Clear existing markers
-      markersRef.current.forEach(m => map.removeLayer(m));
-      markersRef.current = [];
-
-      // User Marker
-      const userIcon = L.divIcon({
-        className: 'custom-user-marker',
-        html: `<div style="width:20px;height:20px;background:#dfe104;border:2px solid #000;box-shadow:0 0 12px #dfe104"></div>`,
-        iconSize: [20, 20],
-        iconAnchor: [10, 10]
-      });
-      const userMarker = L.marker([userLocation.lat, userLocation.lon], { icon: userIcon })
-        .addTo(map)
-        .bindPopup(`<b>YOUR LOCATION</b><br/>${userLocation.city}`);
-      markersRef.current.push(userMarker);
-
-      // Search Radius Circle
-      const radiusCircle = L.circle([userLocation.lat, userLocation.lon], {
-        radius: radiusKm * 1000,
-        color: '#dfe104',
-        fillColor: '#dfe104',
-        fillOpacity: 0.08,
-        weight: 2,
-        dashArray: '4, 4'
-      }).addTo(map);
-      markersRef.current.push(radiusCircle);
-
-      // Recycler Pins
-      recyclers.forEach(rec => {
-        const isSelected = selectedRecycler && selectedRecycler.id === rec.id;
-        const recIcon = L.divIcon({
-          className: 'custom-rec-marker-kinetic',
-          html: `<div class="marker-pin-box ${isSelected ? 'selected' : ''}">
-                  ${rec.rating.toFixed(1)}
-                 </div>`,
-          iconSize: [38, 38],
-          iconAnchor: [19, 19]
-        });
-
-        const marker = L.marker([rec.location.lat, rec.location.lon], { icon: recIcon })
-          .addTo(map)
-          .on('click', () => {
-            setSelectedRecycler(rec);
+      try {
+        if (!leafletMapRef.current) {
+          const map = L.map(mapContainerRef.current, {
+            center: [userLocation.lat, userLocation.lon],
+            zoom: 13,
+            zoomControl: false
           });
 
-        marker.bindTooltip(`<b>${rec.name.toUpperCase()}</b><br/>${rec.distanceKm} KM • ${rec.vehicleType}`);
-        markersRef.current.push(marker);
-      });
+          // Carto Dark Matter Tiles
+          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+            subdomains: 'abcd',
+            maxZoom: 19
+          }).addTo(map);
+
+          L.control.zoom({ position: 'bottomright' }).addTo(map);
+          leafletMapRef.current = map;
+        }
+
+        const map = leafletMapRef.current;
+        if (!map) return;
+
+        // Clear existing markers
+        markersRef.current.forEach(m => {
+          try { map.removeLayer(m); } catch (e) {}
+        });
+        markersRef.current = [];
+
+        // User Marker
+        const userIcon = L.divIcon({
+          className: 'custom-user-marker',
+          html: `<div style="width:20px;height:20px;background:#dfe104;border:2px solid #000;box-shadow:0 0 12px #dfe104"></div>`,
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        });
+        const userMarker = L.marker([userLocation.lat, userLocation.lon], { icon: userIcon })
+          .addTo(map)
+          .bindPopup(`<b>YOUR LOCATION</b><br/>${userLocation.city}`);
+        markersRef.current.push(userMarker);
+
+        // Search Radius Circle
+        const radiusCircle = L.circle([userLocation.lat, userLocation.lon], {
+          radius: radiusKm * 1000,
+          color: '#dfe104',
+          fillColor: '#dfe104',
+          fillOpacity: 0.08,
+          weight: 2,
+          dashArray: '4, 4'
+        }).addTo(map);
+        markersRef.current.push(radiusCircle);
+
+        // Recycler Pins
+        recyclers.forEach(rec => {
+          const isSelected = selectedRecycler && selectedRecycler.id === rec.id;
+          const recIcon = L.divIcon({
+            className: 'custom-rec-marker-kinetic',
+            html: `<div class="marker-pin-box ${isSelected ? 'selected' : ''}">
+                    ${rec.rating.toFixed(1)}
+                   </div>`,
+            iconSize: [38, 38],
+            iconAnchor: [19, 19]
+          });
+
+          const marker = L.marker([rec.location.lat, rec.location.lon], { icon: recIcon })
+            .addTo(map)
+            .on('click', () => {
+              setSelectedRecycler(rec);
+            });
+
+          marker.bindTooltip(`<b>${rec.name.toUpperCase()}</b><br/>${rec.distanceKm} KM • ${rec.vehicleType}`);
+          markersRef.current.push(marker);
+        });
+      } catch (err) {
+        console.warn('Leaflet map error handled gracefully:', err);
+      }
     });
 
     return () => {
+      isMounted = false;
+    };
+  }, [userLocation, radiusKm, recyclers.length, selectedRecycler?.id]);
+
+  // Clean up on complete unmount
+  useEffect(() => {
+    return () => {
       if (leafletMapRef.current) {
-        leafletMapRef.current.remove();
+        try {
+          leafletMapRef.current.remove();
+        } catch (e) {}
         leafletMapRef.current = null;
       }
     };
-  }, [userLocation, radiusKm, recyclers.length, selectedRecycler?.id]);
+  }, []);
 
   return (
     <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
@@ -169,7 +189,8 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
 
           {/* Recyclers Count Header */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '12px' }}>
-            <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, textTransform: 'uppercase' }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="kinetic-live-dot" />
               NEARBY COLLECTORS ({recyclers.length})
             </span>
             <span style={{ fontSize: '12px', color: 'var(--muted-fg-color)' }}>
@@ -180,15 +201,17 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
           {/* Collectors List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '360px', overflowY: 'auto' }}>
             {recyclers.map(rec => (
-              <div 
+              <motion.div 
                 key={rec.id}
+                whileHover={{ x: 4 }}
+                whileTap={{ scale: 0.98 }}
                 style={{
                   border: '2px solid var(--border-color)',
                   backgroundColor: selectedRecycler?.id === rec.id ? 'var(--accent-color)' : 'var(--muted-color)',
                   color: selectedRecycler?.id === rec.id ? '#000000' : 'var(--fg-color)',
                   padding: '16px',
                   cursor: 'pointer',
-                  transition: 'all 0.15s ease'
+                  transition: 'background-color 0.15s ease, color 0.15s ease'
                 }}
                 onClick={() => setSelectedRecycler(rec)}
               >
@@ -233,19 +256,24 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          {/* Request Pickup Button */}
+          {/* Request Pickup Button with Micro-Interaction */}
           {selectedRecycler && (
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className="btn-kinetic-primary"
               style={{ width: '100%', marginTop: 'auto' }}
               onClick={() => onRequestPickup(selectedRecycler)}
             >
-              <span>BOOK DOORSTEP PICKUP WITH {selectedRecycler.name} →</span>
-            </button>
+              <span>BOOK DOORSTEP PICKUP WITH {selectedRecycler.name}</span>
+              <span className="btn-icon">
+                <ArrowRight size={18} />
+              </span>
+            </motion.button>
           )}
 
         </div>

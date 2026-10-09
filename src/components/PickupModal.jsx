@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   X, 
   CheckCircle2, 
   Truck, 
   Scale, 
-  CreditCard 
+  CreditCard,
+  ArrowRight 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -23,25 +25,37 @@ export default function PickupModal({ recycler, item, onClose }) {
   };
 
   return (
-    <div style={{
-      position: 'fixed',
-      inset: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.85)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      zIndex: 2000,
-      padding: '20px'
-    }} onClick={onClose}>
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.88)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2000,
+        padding: '20px'
+      }} 
+      onClick={onClose}
+    >
       
-      <div style={{
-        backgroundColor: '#09090b',
-        border: '2px solid var(--accent-color)',
-        maxWidth: '560px',
-        width: '100%',
-        padding: '36px',
-        color: '#fafafa'
-      }} onClick={(e) => e.stopPropagation()}>
+      <motion.div 
+        initial={{ scale: 0.94, opacity: 0, y: 15 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        style={{
+          backgroundColor: '#09090b',
+          border: '2px solid var(--accent-color)',
+          maxWidth: '560px',
+          width: '100%',
+          padding: '36px',
+          color: '#fafafa'
+        }} 
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Modal Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '16px', marginBottom: '24px' }}>
@@ -132,13 +146,18 @@ export default function PickupModal({ recycler, item, onClose }) {
             </div>
 
             {/* Action Trigger */}
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className="btn-kinetic-primary"
               style={{ width: '100%' }}
               onClick={handleConfirm}
             >
-              <span>CONFIRM PICKUP & DISPATCH OTP →</span>
-            </button>
+              <span>CONFIRM PICKUP & DISPATCH OTP</span>
+              <span className="btn-icon">
+                <ArrowRight size={18} />
+              </span>
+            </motion.button>
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '24px 0' }}>
@@ -149,7 +168,7 @@ export default function PickupModal({ recycler, item, onClose }) {
               color: '#000000', 
               display: 'flex', 
               alignItems: 'center', 
-              justifyContent: 'center',
+              justifyContent: 'center', 
               margin: '0 auto 20px auto',
               fontWeight: 900,
               fontSize: '28px'
@@ -162,16 +181,18 @@ export default function PickupModal({ recycler, item, onClose }) {
             <p style={{ fontSize: '15px', color: 'var(--muted-fg-color)', margin: '12px 0 24px 0' }}>
               {recycler.name} is on the way. Your calibrated Bluetooth scale security pin is <strong>#4821</strong>.
             </p>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               className="btn-kinetic-primary"
               onClick={onClose}
             >
               <span>RETURN TO PLATFORM</span>
-            </button>
+            </motion.button>
           </div>
         )}
 
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

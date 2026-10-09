@@ -1,5 +1,6 @@
 import React from 'react';
-import Marquee from 'react-fast-marquee';
+import KineticMarquee from './KineticMarquee';
+import { motion } from 'framer-motion';
 import { 
   ArrowRight, 
   Smartphone, 
@@ -13,40 +14,42 @@ export default function Header({ activeTab, setActiveTab }) {
       
       {/* 1. Infinite High-Energy Marquee Strip (No Gradients) */}
       <div className="kinetic-marquee-strip">
-        <Marquee speed={75} gradient={false} autoFill={true}>
+        <KineticMarquee speed={75}>
           <div className="marquee-item">
-            <span>1,500,000 INFORMAL RECYCLERS EMPOWERED</span>
+            <span>● 1,500,000 INFORMAL RECYCLERS EMPOWERED</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>100% DIGITAL SCALE ACCURACY GUARANTEED</span>
+            <span>● 100% DIGITAL SCALE ACCURACY GUARANTEED</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>ZERO TOXIC BACKYARD BURNING</span>
+            <span>● ZERO TOXIC BACKYARD BURNING</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>GUARANTEED 85% FAIR SCRAP FLOOR PRICE</span>
+            <span>● GUARANTEED 85% FAIR SCRAP FLOOR PRICE</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>DIRECT INSTANT UPI BANK PAYOUTS</span>
+            <span>● DIRECT INSTANT UPI BANK PAYOUTS</span>
             <span className="marquee-divider" />
           </div>
           <div className="marquee-item">
-            <span>AUDITED CPCB GREEN RECYCLING CERTIFICATES</span>
+            <span>● AUDITED CPCB GREEN RECYCLING CERTIFICATES</span>
             <span className="marquee-divider" />
           </div>
-        </Marquee>
+        </KineticMarquee>
       </div>
 
       {/* 2. Brutalist Navigation Bar */}
       <div className="kinetic-container">
         <div className="kinetic-nav-inner">
           
-          {/* Brand Mark */}
-          <div 
+          {/* Brand Mark with Hover Scale */}
+          <motion.div 
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
             className="kinetic-brand"
             onClick={() => setActiveTab('overview')}
           >
@@ -56,7 +59,7 @@ export default function Header({ activeTab, setActiveTab }) {
             <div>
               <span className="kinetic-brand-title">CIRCLO</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Navigation Links */}
           <nav className="kinetic-nav-links">
@@ -98,16 +101,20 @@ export default function Header({ activeTab, setActiveTab }) {
             </button>
           </nav>
 
-          {/* Right Action Trigger */}
+          {/* Right Action Trigger with Motion */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               className="btn-kinetic-primary"
               style={{ height: '48px', padding: '0 24px', fontSize: '14px' }}
               onClick={() => setActiveTab('scanner')}
             >
-              <Smartphone size={16} />
+              <span className="btn-icon">
+                <Smartphone size={16} />
+              </span>
               <span>SCAN DEVICE</span>
-            </button>
+            </motion.button>
           </div>
 
         </div>

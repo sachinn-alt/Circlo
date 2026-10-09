@@ -31,7 +31,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   background-color: var(--accent-color);
   color: var(--accent-fg-color);
   font-family: var(--font-space);
@@ -44,12 +44,34 @@
   border: 2px solid var(--accent-color);
   cursor: pointer;
   box-shadow: none;
-  transition: transform 0.15s ease, filter 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), filter 0.18s ease, background-color 0.18s ease;
+}
+
+.btn-kinetic-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
 }
 
 .btn-kinetic-primary:hover {
   transform: scale(1.05);
-  filter: brightness(1.05);
+  filter: brightness(1.06);
+}
+
+.btn-kinetic-primary:hover::after {
+  left: 120%;
+}
+
+.btn-kinetic-primary:hover .btn-icon {
+  transform: translateX(4px);
 }
 
 .btn-kinetic-primary:active {
@@ -60,7 +82,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
   background-color: transparent;
   color: var(--fg-color);
   font-family: var(--font-space);
@@ -72,7 +94,9 @@
   height: 56px;
   border: 2px solid var(--border-color);
   cursor: pointer;
-  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
 
 .btn-kinetic-outline:hover {
@@ -82,8 +106,12 @@
   transform: scale(1.03);
 }
 
+.btn-kinetic-outline:hover .btn-icon {
+  transform: translateX(4px);
+}
+
 .btn-kinetic-outline:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .btn-kinetic-ghost {
@@ -100,10 +128,44 @@
   padding: 8px 16px;
   cursor: pointer;
   border: none;
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
 .btn-kinetic-ghost:hover {
   color: var(--accent-color);
+  transform: translateX(3px);
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Kinetic Pulse & Live Indicators */
+@keyframes kineticBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.85); }
+}
+
+.kinetic-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-color);
+  animation: kineticBlink 1.4s infinite ease-in-out;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Text Mask Wrapper for Kinetic Stagger */
+.text-mask-wrapper {
+  display: block;
+  overflow: hidden;
+}
+
+.kinetic-text-line {
+  display: block;
 }
 
 /* ==============================================================================
@@ -472,25 +534,59 @@
   overflow: hidden;
 }
 
+.scanner-scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(223, 225, 4, 0.04), rgba(0, 0, 0, 0) 2px);
+  background-size: 100% 4px, 40px 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
 .scanner-laser-kinetic {
   position: absolute;
   left: 0;
   right: 0;
   height: 3px;
   background-color: var(--accent-color);
+  box-shadow: 0 0 14px var(--accent-color), 0 0 28px var(--accent-color);
   z-index: 10;
-  animation: laserPulse 1.8s infinite alternate ease-in-out;
+  animation: laserPulse 2s infinite alternate ease-in-out;
 }
 
 @keyframes laserPulse {
-  0% { top: 0%; }
-  100% { top: 97%; }
+  0% { top: 2%; opacity: 0.8; }
+  100% { top: 96%; opacity: 1; }
+}
+
+/* Corner Reticle Indicators */
+.scanner-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--accent-color);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 12;
+  animation: reticlePulse 2s infinite alternate ease-in-out;
+}
+
+.corner-tl { top: 12px; left: 12px; border-width: 3px 0 0 3px; }
+.corner-tr { top: 12px; right: 12px; border-width: 3px 3px 0 0; }
+.corner-bl { bottom: 12px; left: 12px; border-width: 0 0 3px 3px; }
+.corner-br { bottom: 12px; right: 12px; border-width: 0 3px 3px 0; }
+
+@keyframes reticlePulse {
+  0% { opacity: 0.5; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.05); }
 }
 
 .bounding-box-kinetic {
   position: absolute;
   border: 2px solid var(--accent-color);
   pointer-events: none;
+  box-shadow: 0 0 10px rgba(223, 225, 4, 0.3);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bounding-box-label-kinetic {
@@ -506,6 +602,12 @@
   padding: 2px 8px;
   letter-spacing: -0.02em;
   white-space: nowrap;
+  animation: labelGlint 2s infinite alternate ease-in-out;
+}
+
+@keyframes labelGlint {
+  0% { filter: brightness(1); }
+  100% { filter: brightness(1.15); }
 }
 
 .payout-big-number {
@@ -516,6 +618,11 @@
   line-height: 0.9;
   letter-spacing: -0.05em;
   margin: 12px 0;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.payout-big-number:hover {
+  transform: scale(1.03) translateX(4px);
 }
 
 /* Material tags grid */
@@ -534,10 +641,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.material-hairline-cell:hover {
+  background-color: var(--muted-color);
 }
 
 /* ==============================================================================
-   7. MAP & CIVIC RADAR (Dark Brutalist Map Frame)
+   7. MAP & CIVIC RADAR (Dark Brutalist Map Frame with Radar Sweep)
    ============================================================================== */
 .radar-split-brutalist {
   display: grid;
@@ -556,6 +668,25 @@
 .map-viewport-brutalist {
   height: 600px;
   width: 100%;
+  position: relative;
+}
+
+/* 360-Degree Kinetic Radar Sweep in Header / Radar UI */
+@keyframes radarSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radar-sweep-beam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  transform-origin: 0 0;
+  background: conic-gradient(from 0deg at 0 0, rgba(223, 225, 4, 0.35) 0deg, transparent 55deg, transparent 360deg);
+  animation: radarSpin 3.5s linear infinite;
+  pointer-events: none;
 }
 
 .custom-rec-marker-kinetic .marker-pin-box {
@@ -570,11 +701,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease;
+}
+
+.custom-rec-marker-kinetic .marker-pin-box:hover {
+  transform: scale(1.15);
 }
 
 .custom-rec-marker-kinetic .marker-pin-box.selected {
   background-color: var(--accent-color);
   color: #000000;
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(223, 225, 4, 0.6);
 }
 
 /* ==============================================================================

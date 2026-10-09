@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ShieldAlert, 
   ShieldCheck, 
@@ -6,7 +7,8 @@ import {
   CheckCircle2, 
   XCircle, 
   Zap, 
-  RotateCcw 
+  RotateCcw,
+  ArrowRight 
 } from 'lucide-react';
 import { CEDAR_SCENARIOS } from '../data/mockData';
 import { evaluateCedarRequest } from '../services/cedarEngine';
@@ -71,14 +73,22 @@ export default function CedarPolicyLab({ preselectedBatch }) {
     <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
       
       {/* Section Header */}
-      <div style={{ marginBottom: '32px' }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        style={{ marginBottom: '32px' }}
+      >
         <span style={{ 
           fontFamily: 'var(--font-space)', 
           fontSize: '13px', 
           fontWeight: 800, 
           letterSpacing: '0.12em', 
-          color: 'var(--accent-color)' 
+          color: 'var(--accent-color)',
+          display: 'inline-flex',
+          alignItems: 'center'
         }}>
+          <span className="kinetic-live-dot" />
           [ COMPLIANCE ENGINE // AUTOMATED CITIZEN & WORKER PROTECTIONS ]
         </span>
         <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
@@ -88,7 +98,7 @@ export default function CedarPolicyLab({ preselectedBatch }) {
           Before any scrap hand-off occurs, automated policy rules evaluate the transaction. 
           Brokers cannot bid below the 85% price floor, and hazardous batteries are forbidden without safety gear.
         </p>
-      </div>
+      </motion.div>
 
       {/* 3 Scenario Cards in Hairline Grid */}
       <div style={{ 
@@ -100,14 +110,16 @@ export default function CedarPolicyLab({ preselectedBatch }) {
         marginBottom: '32px'
       }}>
         {CEDAR_SCENARIOS.map((sc, idx) => (
-          <div 
+          <motion.div 
             key={sc.id}
+            whileHover={{ y: -3 }}
+            whileTap={{ scale: 0.98 }}
             style={{
               padding: '28px',
               backgroundColor: selectedScenarioIndex === idx ? 'var(--accent-color)' : 'var(--bg-color)',
               color: selectedScenarioIndex === idx ? '#000000' : 'var(--fg-color)',
               cursor: 'pointer',
-              transition: 'all 0.15s ease'
+              transition: 'background-color 0.15s ease, color 0.15s ease'
             }}
             onClick={() => handleSelectScenario(idx)}
           >
@@ -137,23 +149,29 @@ export default function CedarPolicyLab({ preselectedBatch }) {
             }}>
               {sc.triggerPolicy}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      {/* Decision Banner (Massive Kinetic Announcement) */}
-      <div style={{ 
-        padding: '32px', 
-        backgroundColor: evaluationResult.decision === 'ALLOW' ? 'var(--accent-color)' : '#991b1b',
-        color: evaluationResult.decision === 'ALLOW' ? '#000000' : '#ffffff',
-        border: '2px solid var(--border-color)',
-        marginBottom: '32px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '20px'
-      }}>
+      {/* Decision Banner (Massive Kinetic Announcement) with Spring Motion */}
+      <motion.div 
+        key={evaluationResult.decision}
+        initial={{ opacity: 0, scale: 0.97, y: 10 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        style={{ 
+          padding: '32px', 
+          backgroundColor: evaluationResult.decision === 'ALLOW' ? 'var(--accent-color)' : '#991b1b',
+          color: evaluationResult.decision === 'ALLOW' ? '#000000' : '#ffffff',
+          border: '2px solid var(--border-color)',
+          marginBottom: '32px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '20px'
+        }}
+      >
         <div>
           <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, letterSpacing: '0.1em' }}>
             AUTOMATED VERDICT:
@@ -183,7 +201,7 @@ export default function CedarPolicyLab({ preselectedBatch }) {
         }}>
           LATENCY: {evaluationResult.latencyMs} MS
         </div>
-      </div>
+      </motion.div>
 
       {/* Interactive Parameter Controls */}
       <div style={{ 

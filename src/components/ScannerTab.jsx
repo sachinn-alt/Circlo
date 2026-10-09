@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Camera, 
   Upload, 
@@ -8,7 +9,7 @@ import {
   ArrowRight, 
   ShieldCheck, 
   Sparkles,
-  Zap
+  Zap 
 } from 'lucide-react';
 import { PRELOADED_EWASTE_SAMPLES } from '../data/mockData';
 
@@ -119,12 +120,22 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
             <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, textTransform: 'uppercase' }}>
               CAMERA VIEWPORT // {(selectedSample.confidence * 100).toFixed(0)}% CONFIDENCE
             </span>
-            <span style={{ color: 'var(--accent-color)', fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800 }}>
-              ● LIVE AI FEED
+            <span style={{ color: 'var(--accent-color)', fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, display: 'inline-flex', alignItems: 'center' }}>
+              <span className="kinetic-live-dot" />
+              LIVE SPECTROMETER
             </span>
           </div>
 
           <div className="scanner-camera-box">
+            {/* Scanlines Effect Overlay */}
+            <div className="scanner-scanlines" />
+
+            {/* Futuristic HUD Corner Reticles */}
+            <div className="scanner-corner corner-tl" />
+            <div className="scanner-corner corner-tr" />
+            <div className="scanner-corner corner-bl" />
+            <div className="scanner-corner corner-br" />
+
             <img 
               src={customImage || selectedSample.imageUrl} 
               alt={selectedSample.title}
@@ -133,12 +144,12 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
                 height: '100%',
                 objectFit: 'cover',
                 filter: isScanning ? 'blur(4px)' : 'none',
-                transition: 'filter 0.3s'
+                transition: 'filter 0.3s ease'
               }}
             />
 
-            {/* Laser Scan Animation */}
-            {isScanning && <div className="scanner-laser-kinetic" />}
+            {/* Continuous Kinetic Laser Scan Beam */}
+            <div className="scanner-laser-kinetic" />
 
             {/* Bounding Box Overlays */}
             {!isScanning && selectedSample.detectedFeatures?.map((feat, idx) => (
@@ -214,9 +225,15 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
             <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--muted-fg-color)' }}>
               GUARANTEED CIVIC SCRAP VALUE
             </span>
-            <div className="payout-big-number">
+            <motion.div 
+              key={selectedSample.recoveryValue.fairBenchmark}
+              initial={{ opacity: 0, scale: 0.95, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="payout-big-number"
+            >
               ₹{selectedSample.recoveryValue.fairBenchmark}
-            </div>
+            </motion.div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: 'var(--muted-fg-color)', fontFamily: 'var(--font-space)', fontWeight: 700 }}>
               <span>FLOOR: ₹{selectedSample.recoveryValue.min}</span>
               <span>CEILING: ₹{selectedSample.recoveryValue.max}</span>
@@ -262,15 +279,19 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
             </p>
           </div>
 
-          {/* CTA Action */}
-          <button 
+          {/* CTA Action with Micro-Interactions */}
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             className="btn-kinetic-primary"
             style={{ width: '100%' }}
             onClick={() => onSelectRecyclerForScrap(selectedSample)}
           >
-            <ArrowRight size={18} />
             <span>FIND VERIFIED COLLECTOR FOR THIS ITEM</span>
-          </button>
+            <span className="btn-icon">
+              <ArrowRight size={18} />
+            </span>
+          </motion.button>
 
         </div>
 

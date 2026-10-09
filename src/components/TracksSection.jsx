@@ -1,5 +1,6 @@
 import React from 'react';
-import Marquee from 'react-fast-marquee';
+import KineticMarquee from './KineticMarquee';
+import { motion } from 'framer-motion';
 import { 
   Smartphone, 
   MapPin, 
@@ -17,7 +18,7 @@ export default function TracksSection({ onSelectWasteTrack }) {
       
       {/* Testimonials Slower Marquee Strip */}
       <div className="kinetic-marquee-dark">
-        <Marquee speed={45} gradient={false} autoFill={true}>
+        <KineticMarquee speed={45}>
           <div className="marquee-item">
             <span>★ "EARNED ₹1,240 FOR DEAD SERVER BOARDS IN 15 MINUTES" — ANANYA R. (DELHI)</span>
             <span className="marquee-divider" />
@@ -34,21 +35,30 @@ export default function TracksSection({ onSelectWasteTrack }) {
             <span>★ "CPCB RECYCLING CERTIFICATES VERIFIED FOR ISO AUDITS" — APEX TECH CLINIC</span>
             <span className="marquee-divider" />
           </div>
-        </Marquee>
+        </KineticMarquee>
       </div>
 
       <section className="kinetic-section" id="how-it-works">
         <div className="kinetic-container">
           
-          {/* Section Header */}
-          <div className="kinetic-section-header">
+          {/* Section Header with Scroll Entrance */}
+          <motion.div 
+            className="kinetic-section-header"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
             <span style={{ 
               fontFamily: 'var(--font-space)', 
               fontSize: '14px', 
               fontWeight: 800, 
               color: 'var(--accent-color)', 
-              letterSpacing: '0.12em' 
+              letterSpacing: '0.12em',
+              display: 'inline-flex',
+              alignItems: 'center'
             }}>
+              <span className="kinetic-live-dot" />
               [ 02 // THREE-STAGE DISRUPTION PROTOCOL ]
             </span>
             <h2 className="kinetic-section-title" style={{ marginTop: '12px' }}>
@@ -57,15 +67,22 @@ export default function TracksSection({ onSelectWasteTrack }) {
             <p style={{ fontFamily: 'var(--font-inter)', fontSize: '20px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '16px' }}>
               We eliminate predatory scrap broker cartels with radical transparency, computer vision valuation, and instant digital payments.
             </p>
-          </div>
+          </motion.div>
 
           {/* 3-Cell Connected Hairline Grid (Hard Hover Inversion) */}
           <div className="hairline-grid-3">
             
             {/* Cell 01 */}
-            <div className="hairline-grid-cell">
+            <motion.div 
+              className="hairline-grid-cell"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4 }}
+            >
               <div className="kinetic-giant-num">01</div>
-              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px' }}>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px', transition: 'transform 0.2s ease' }}>
                 SCAN & VALUE TECH
               </h3>
               <p style={{ fontSize: '16px', lineHeight: 1.6, marginBottom: '24px' }}>
@@ -77,12 +94,19 @@ export default function TracksSection({ onSelectWasteTrack }) {
                   [ LIVE MCX SPOT ORACLES ]
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Cell 02 */}
-            <div className="hairline-grid-cell">
+            <motion.div 
+              className="hairline-grid-cell"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4 }}
+            >
               <div className="kinetic-giant-num">02</div>
-              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px' }}>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px', transition: 'transform 0.2s ease' }}>
                 MATCH LOCAL COLLECTOR
               </h3>
               <p style={{ fontSize: '16px', lineHeight: 1.6, marginBottom: '24px' }}>
@@ -94,12 +118,19 @@ export default function TracksSection({ onSelectWasteTrack }) {
                   [ CALIBRATED BLUETOOTH SCALE ]
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Cell 03 */}
-            <div className="hairline-grid-cell">
+            <motion.div 
+              className="hairline-grid-cell"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4 }}
+            >
               <div className="kinetic-giant-num">03</div>
-              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px' }}>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px', transition: 'transform 0.2s ease' }}>
                 INSTANT CASH & PROOF
               </h3>
               <p style={{ fontSize: '16px', lineHeight: 1.6, marginBottom: '24px' }}>
@@ -111,12 +142,18 @@ export default function TracksSection({ onSelectWasteTrack }) {
                   [ AUDITED CPCB EPR MINTING ]
                 </span>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
-          {/* Brutalist Comparison Table */}
-          <div className="kinetic-table-container">
+          {/* Brutalist Comparison Table with Scroll Entrance */}
+          <motion.div 
+            className="kinetic-table-container"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
             
             {/* Header Row */}
             <div className="kinetic-table-row kinetic-table-header">
@@ -153,16 +190,21 @@ export default function TracksSection({ onSelectWasteTrack }) {
               <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Instant direct UPI bank transfer + verifiable CPCB certificate</div>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* Action Trigger */}
           <div style={{ marginTop: '56px', display: 'flex', justifyContent: 'center' }}>
-            <button 
+            <motion.button 
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               className="btn-kinetic-primary"
               onClick={onSelectWasteTrack}
             >
-              <span>TEST THE AI VISION SCANNER RIGHT NOW →</span>
-            </button>
+              <span>TEST THE AI VISION SCANNER RIGHT NOW</span>
+              <span className="btn-icon">
+                <ArrowRight size={18} />
+              </span>
+            </motion.button>
           </div>
 
         </div>
