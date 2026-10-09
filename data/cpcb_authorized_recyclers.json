@@ -1,0 +1,139 @@
+[
+  {
+    "recycler_id": "CPCB-WB-KOL-001",
+    "name": "Bengal Clean E-Waste Dismantlers & Recyclers",
+    "phone": "+91 98301 44521",
+    "collector_type": "CERTIFIED_R2_REFINER",
+    "registration_no": "WBPCB/E-WASTE/REG/2023/048",
+    "address": "Sector V, Salt Lake, Kolkata, West Bengal 700091",
+    "kyc_verified": true,
+    "fair_price_pledge": true,
+    "certifications": ["CPCB_AUTHORIZED", "HAZMAT_EWASTE_L2", "R2_CERTIFIED", "ISO_14001"],
+    "vehicle_type": "Electric Cargo Van (EV)",
+    "rating": 4.9,
+    "total_batches_collected": 342,
+    "location": {
+      "lat": 22.5804,
+      "lon": 88.4378
+    },
+    "operating_radius_km": 25.0,
+    "accepted_materials": [
+      "PRINTED_CIRCUIT_BOARDS",
+      "LITHIUM_ION_BATTERY",
+      "CRT_TELEVISION_TUBE",
+      "SOLAR_INVERTERS",
+      "COPPER_WIRE"
+    ],
+    "status": "AVAILABLE",
+    "updated_at": "2026-10-09T00:00:00Z"
+  },
+  {
+    "recycler_id": "CPCB-KA-BLR-002",
+    "name": "Hasiru Dala E-Waste Aggregation Center",
+    "phone": "+91 98452 77103",
+    "collector_type": "INFORMAL_COLLECTOR_COOPERATIVE",
+    "registration_no": "KSPCB/EW/REG/2022/119",
+    "address": "Kumbalgodu Industrial Area, Bengaluru, Karnataka 560074",
+    "kyc_verified": true,
+    "fair_price_pledge": true,
+    "certifications": ["CPCB_AUTHORIZED", "HAZMAT_EWASTE_L1", "FAIR_TRADE_RECYCLER"],
+    "vehicle_type": "Solar-Assisted Cargo Trike",
+    "rating": 4.95,
+    "total_batches_collected": 890,
+    "location": {
+      "lat": 12.8732,
+      "lon": 77.4623
+    },
+    "operating_radius_km": 15.0,
+    "accepted_materials": [
+      "PRINTED_CIRCUIT_BOARDS",
+      "CONSUMER_ELECTRONICS",
+      "COPPER_WIRE",
+      "ALUMINUM_CASING"
+    ],
+    "status": "AVAILABLE",
+    "updated_at": "2026-10-09T00:00:00Z"
+  },
+  {
+    "recycler_id": "CPCB-DL-NCR-003",
+    "name": "Eco-Reco Clean Planet Recycling Facility",
+    "phone": "+91 98110 33892",
+    "collector_type": "CERTIFIED_R2_REFINER",
+    "registration_no": "DPCC/E-WASTE/AUTH/2021/014",
+    "address": "Okhla Industrial Area Phase-II, New Delhi 110020",
+    "kyc_verified": true,
+    "fair_price_pledge": true,
+    "certifications": ["CPCB_AUTHORIZED", "HAZMAT_EWASTE_L2", "R2_CERTIFIED"],
+    "vehicle_type": "Heavy Hazmat Recovery EV",
+    "rating": 4.88,
+    "total_batches_collected": 1250,
+    "location": {
+      "lat": 28.5273,
+      "lon": 77.2789
+    },
+    "operating_radius_km": 30.0,
+    "accepted_materials": [
+      "PRINTED_CIRCUIT_BOARDS",
+      "LITHIUM_ION_BATTERY",
+      "CRT_TELEVISION_TUBE",
+      "INDUCTION_COOKTOP_COILS",
+      "TELECOM_RACKS"
+    ],
+    "status": "AVAILABLE",
+    "updated_at": "2026-10-09T00:00:00Z"
+  },
+  {
+    "recycler_id": "CPCB-MH-MUM-004",
+    "name": "Dharavi Clean Scrap Refiners & Upcyclers",
+    "phone": "+91 98205 11984",
+    "collector_type": "INFORMAL_COLLECTOR_COOPERATIVE",
+    "registration_no": "MPCB/EW-REG/2023/078",
+    "address": "90 Feet Road, Dharavi, Mumbai, Maharashtra 400017",
+    "kyc_verified": true,
+    "fair_price_pledge": true,
+    "certifications": ["CPCB_AUTHORIZED", "HAZMAT_EWASTE_L1"],
+    "vehicle_type": "Electric Cargo Rickshaw (EV)",
+    "rating": 4.85,
+    "total_batches_collected": 620,
+    "location": {
+      "lat": 19.0415,
+      "lon": 72.8532
+    },
+    "operating_radius_km": 12.0,
+    "accepted_materials": [
+      "PRINTED_CIRCUIT_BOARDS",
+      "COPPER_WIRE",
+      "ALUMINUM_CASING",
+      "BRASS_CONNECTORS"
+    ],
+    "status": "AVAILABLE",
+    "updated_at": "2026-10-09T00:00:00Z"
+  },
+  {
+    "recycler_id": "CPCB-TN-CHN-005",
+    "name": "Tamil Nadu Circular E-Waste Stewardship Hub",
+    "phone": "+91 94440 88291",
+    "collector_type": "CERTIFIED_R2_REFINER",
+    "registration_no": "TNPCB/EW/2022/201",
+    "address": "Ambattur Industrial Estate, Chennai, Tamil Nadu 600058",
+    "kyc_verified": true,
+    "fair_price_pledge": true,
+    "certifications": ["CPCB_AUTHORIZED", "HAZMAT_EWASTE_L2", "ISO_14001"],
+    "vehicle_type": "EV Cargo Van",
+    "rating": 4.92,
+    "total_batches_collected": 410,
+    "location": {
+      "lat": 13.0983,
+      "lon": 80.1624
+    },
+    "operating_radius_km": 20.0,
+    "accepted_materials": [
+      "PRINTED_CIRCUIT_BOARDS",
+      "LITHIUM_ION_BATTERY",
+      "SOLAR_INVERTERS",
+      "RARE_EARTH_MAGNETS"
+    ],
+    "status": "AVAILABLE",
+    "updated_at": "2026-10-09T00:00:00Z"
+  }
+]

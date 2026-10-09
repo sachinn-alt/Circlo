@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Layers, 
+  Camera, 
+  MapPin, 
+  Users, 
+  ShieldCheck, 
+  Award 
+} from 'lucide-react';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import TracksSection from './components/TracksSection';
@@ -311,6 +319,52 @@ export default function App() {
         isOpen={isAwsArchModalOpen}
         onClose={() => setIsAwsArchModalOpen(false)}
       />
+
+      {/* Sticky Bottom Dock for Phones */}
+      <nav className="kinetic-bottom-nav" aria-label="Mobile Navigation Dock">
+        <button 
+          className={`kinetic-bottom-nav-item ${activeTab === 'overview' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('overview'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <Layers size={17} />
+          <span>Home</span>
+        </button>
+        <button 
+          className={`kinetic-bottom-nav-item ${activeTab === 'scanner' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('scanner'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <Camera size={17} />
+          <span>Scanner</span>
+        </button>
+        <button 
+          className={`kinetic-bottom-nav-item ${activeTab === 'map' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('map'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <MapPin size={17} />
+          <span>Map</span>
+        </button>
+        <button 
+          className={`kinetic-bottom-nav-item ${activeTab === 'kabadiwala' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('kabadiwala'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <Users size={17} />
+          <span>Hub</span>
+        </button>
+        <button 
+          className={`kinetic-bottom-nav-item ${activeTab === 'cedar' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('cedar'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <ShieldCheck size={17} />
+          <span>Guard</span>
+        </button>
+        <button 
+          className={`kinetic-bottom-nav-item ${activeTab === 'impact' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('impact'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        >
+          <Award size={17} />
+          <span>Impact</span>
+        </button>
+      </nav>
 
     </div>
   );

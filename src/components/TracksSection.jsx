@@ -149,13 +149,13 @@ export default function TracksSection({ onSelectWasteTrack }) {
           {/* Brutalist Comparison Table with Scroll Entrance */}
           <motion.div 
             className="kinetic-table-container"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             
-            {/* Header Row */}
+            {/* Header Row (Desktop) */}
             <div className="kinetic-table-row kinetic-table-header">
               <div>CRITERIA</div>
               <div style={{ color: '#f87171' }}>TRADITIONAL SCRAP MIDDLEMEN</div>
@@ -165,29 +165,53 @@ export default function TracksSection({ onSelectWasteTrack }) {
             {/* Row 1 */}
             <div className="kinetic-table-row">
               <strong style={{ color: 'var(--fg-color)' }}>WEIGHING ACCURACY</strong>
-              <div style={{ color: '#f87171' }}>Rigged manual spring scales (-20% to -35% weight loss)</div>
-              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>100% Calibrated digital scale with live in-app photo lock</div>
+              <div style={{ color: '#f87171' }}>
+                <span className="mobile-table-tag tag-traditional">[ TRADITIONAL ]</span>
+                Rigged manual spring scales (-20% to -35% weight loss)
+              </div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>
+                <span className="mobile-table-tag tag-circlo">[ CIRCLO ]</span>
+                100% Calibrated digital scale with live in-app photo lock
+              </div>
             </div>
 
             {/* Row 2 */}
             <div className="kinetic-table-row">
               <strong style={{ color: 'var(--fg-color)' }}>PRICING TRANSPARENCY</strong>
-              <div style={{ color: '#f87171' }}>Brokers guess arbitrary rates; pocket 75% of precious metals</div>
-              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Live commodity market spot rates + guaranteed 85% floor price</div>
+              <div style={{ color: '#f87171' }}>
+                <span className="mobile-table-tag tag-traditional">[ TRADITIONAL ]</span>
+                Brokers guess arbitrary rates; pocket 75% of precious metals
+              </div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>
+                <span className="mobile-table-tag tag-circlo">[ CIRCLO ]</span>
+                Live commodity market spot rates + guaranteed 85% floor price
+              </div>
             </div>
 
             {/* Row 3 */}
             <div className="kinetic-table-row">
               <strong style={{ color: 'var(--fg-color)' }}>WORKER SAFETY & FUMES</strong>
-              <div style={{ color: '#f87171' }}>Acid baths & open wire burning releasing neurotoxic lead smoke</div>
-              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Zero open burning; protective gear & certified hydrometallurgy</div>
+              <div style={{ color: '#f87171' }}>
+                <span className="mobile-table-tag tag-traditional">[ TRADITIONAL ]</span>
+                Acid baths & open wire burning releasing neurotoxic lead smoke
+              </div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>
+                <span className="mobile-table-tag tag-circlo">[ CIRCLO ]</span>
+                Zero open burning; protective gear & certified hydrometallurgy
+              </div>
             </div>
 
             {/* Row 4 */}
             <div className="kinetic-table-row">
               <strong style={{ color: 'var(--fg-color)' }}>PAYMENT & RECORDS</strong>
-              <div style={{ color: '#f87171' }}>Delayed cash or IOUs; zero legal disposal proof</div>
-              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Instant direct UPI bank transfer + verifiable CPCB certificate</div>
+              <div style={{ color: '#f87171' }}>
+                <span className="mobile-table-tag tag-traditional">[ TRADITIONAL ]</span>
+                Delayed cash or IOUs; zero legal disposal proof
+              </div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>
+                <span className="mobile-table-tag tag-circlo">[ CIRCLO ]</span>
+                Instant direct UPI bank transfer + verifiable CPCB certificate
+              </div>
             </div>
 
           </motion.div>

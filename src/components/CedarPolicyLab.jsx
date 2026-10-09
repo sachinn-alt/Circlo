@@ -101,21 +101,14 @@ export default function CedarPolicyLab({ preselectedBatch }) {
       </motion.div>
 
       {/* 3 Scenario Cards in Hairline Grid */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(3, 1fr)', 
-        gap: '2px', 
-        backgroundColor: 'var(--border-color)',
-        border: '2px solid var(--border-color)',
-        marginBottom: '32px'
-      }}>
+      <div className="cedar-scenarios-grid">
         {CEDAR_SCENARIOS.map((sc, idx) => (
           <motion.div 
             key={sc.id}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.98 }}
             style={{
-              padding: '28px',
+              padding: 'clamp(18px, 3vw, 28px)',
               backgroundColor: selectedScenarioIndex === idx ? 'var(--accent-color)' : 'var(--bg-color)',
               color: selectedScenarioIndex === idx ? '#000000' : 'var(--fg-color)',
               cursor: 'pointer',
@@ -135,7 +128,7 @@ export default function CedarPolicyLab({ preselectedBatch }) {
               </span>
             </div>
             <h4 style={{ 
-              fontSize: '20px', 
+              fontSize: '19px', 
               fontWeight: 800, 
               textTransform: 'uppercase',
               color: selectedScenarioIndex === idx ? '#000000' : 'var(--fg-color)'
@@ -160,7 +153,7 @@ export default function CedarPolicyLab({ preselectedBatch }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         style={{ 
-          padding: '32px', 
+          padding: 'clamp(20px, 4vw, 32px)', 
           backgroundColor: evaluationResult.decision === 'ALLOW' ? 'var(--accent-color)' : '#991b1b',
           color: evaluationResult.decision === 'ALLOW' ? '#000000' : '#ffffff',
           border: '2px solid var(--border-color)',
@@ -169,19 +162,19 @@ export default function CedarPolicyLab({ preselectedBatch }) {
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '20px'
+          gap: '16px'
         }}
       >
         <div>
-          <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, letterSpacing: '0.1em' }}>
+          <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, letterSpacing: '0.1em' }}>
             AUTOMATED VERDICT:
           </span>
-          <div style={{ fontFamily: 'var(--font-space)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1 }}>
+          <div style={{ fontFamily: 'var(--font-space)', fontSize: 'clamp(2rem, 5.5vw, 3.8rem)', fontWeight: 900, lineHeight: 1.05, marginTop: '4px' }}>
             {evaluationResult.decision === 'ALLOW' ? 'TRADE AUTHORIZED [PERMITTED]' : 'ACTION FORBIDDEN [BLOCKED]'}
           </div>
           <p style={{ 
             fontFamily: 'var(--font-inter)', 
-            fontSize: '16px', 
+            fontSize: '15px', 
             fontWeight: 600, 
             marginTop: '8px',
             color: evaluationResult.decision === 'ALLOW' ? '#000000' : '#ffffff'
@@ -191,11 +184,11 @@ export default function CedarPolicyLab({ preselectedBatch }) {
         </div>
 
         <div style={{ 
-          padding: '16px 24px', 
+          padding: '12px 20px', 
           backgroundColor: '#000000', 
           color: 'var(--accent-color)', 
           fontFamily: 'var(--font-space)',
-          fontSize: '14px',
+          fontSize: '13px',
           fontWeight: 800,
           border: '2px solid #000000'
         }}>
@@ -207,15 +200,15 @@ export default function CedarPolicyLab({ preselectedBatch }) {
       <div style={{ 
         border: '2px solid var(--border-color)', 
         backgroundColor: 'var(--muted-color)', 
-        padding: '32px' 
+        padding: 'clamp(16px, 4vw, 32px)' 
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h3 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '14px' }}>
+          <h3 style={{ fontSize: '19px', fontWeight: 800, textTransform: 'uppercase' }}>
             TEST LIVE PRICE & HAZARD CONTROLS
           </h3>
           <button 
             className="btn-kinetic-primary"
-            style={{ height: '42px', padding: '0 20px', fontSize: '13px' }}
+            style={{ height: '42px', padding: '0 18px', fontSize: '12px' }}
             onClick={handleRunEvaluation}
           >
             <Play size={15} />
@@ -223,7 +216,7 @@ export default function CedarPolicyLab({ preselectedBatch }) {
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+        <div className="cedar-controls-grid">
           <div>
             <label style={{ display: 'block', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
               OFFERED PRICE PER KG: ₹{offeredPrice}

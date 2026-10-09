@@ -461,10 +461,10 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
             >
               ₹{selectedSample.recoveryValue.fairBenchmark}
             </motion.div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: 'var(--muted-fg-color)', fontFamily: 'var(--font-space)', fontWeight: 700 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', fontSize: '12px', color: 'var(--muted-fg-color)', fontFamily: 'var(--font-space)', fontWeight: 700 }}>
               <span>FLOOR: ₹{selectedSample.recoveryValue.min}</span>
               <span>CEILING: ₹{selectedSample.recoveryValue.max}</span>
-              <span>DIGITAL SCALE LOCKED</span>
+              <span style={{ color: 'var(--accent-color)' }}>DIGITAL SCALE LOCKED</span>
             </div>
           </div>
 

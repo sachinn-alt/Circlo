@@ -135,11 +135,12 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
             </p>
 
             {/* Kinetic Action Buttons with Micro-Animations */}
-            <div style={{ display: 'flex', gap: '16px', marginTop: '36px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '14px', marginTop: '32px', flexWrap: 'wrap' }}>
               <motion.button 
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 className="btn-kinetic-primary"
+                style={{ flex: '1 1 240px' }}
                 onClick={() => onNavigateTab('scanner')}
               >
                 <span className="btn-icon">
@@ -155,6 +156,7 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="btn-kinetic-outline"
+                style={{ flex: '1 1 200px' }}
                 onClick={() => onNavigateTab('map')}
               >
                 <span className="btn-icon">
@@ -167,7 +169,7 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="btn-kinetic-outline"
-                style={{ borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
+                style={{ flex: '1 1 180px', borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
                 onClick={onOpenAwsArch}
               >
                 <span className="btn-icon">
@@ -180,10 +182,10 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
             {/* Massive Numerical Graphic Stats with Hover Scale */}
             <div style={{ 
               display: 'grid', 
-              gridTemplateColumns: '1fr 1fr', 
-              gap: '24px', 
-              marginTop: '56px',
-              paddingTop: '32px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', 
+              gap: '20px', 
+              marginTop: '44px',
+              paddingTop: '28px',
               borderTop: '2px solid var(--border-color)'
             }}>
               <motion.div whileHover={{ x: 4 }}>
@@ -212,7 +214,7 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
             whileHover={{ y: -4 }}
           >
             
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '6px' }}>
               <span className="kinetic-card-eyebrow">
                 INSTANT SCRAP VALUATOR
               </span>
@@ -267,11 +269,12 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
             </div>
 
             {/* Extracted Metal Breakdown */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', fontSize: '14px', fontWeight: 700 }}>
-              <span>{activeSample.gold}</span>
-              <span>{activeSample.copper}</span>
-              <span>DIRECT UPI TRANSFER</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', flexWrap: 'wrap', marginBottom: '24px', fontSize: '13px', fontWeight: 700 }}>
+              <span style={{ backgroundColor: 'var(--muted-color)', padding: '4px 8px' }}>{activeSample.gold}</span>
+              <span style={{ backgroundColor: 'var(--muted-color)', padding: '4px 8px' }}>{activeSample.copper}</span>
+              <span style={{ color: 'var(--accent-color)', padding: '4px 0' }}>DIRECT UPI TRANSFER</span>
             </div>
+
 
             <motion.button 
               whileHover={{ scale: 1.02 }}

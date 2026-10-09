@@ -46,7 +46,7 @@ export default function CertificateModal({ certData, onClose }) {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2500,
-        padding: '20px'
+        padding: '12px'
       }} 
       onClick={onClose}
     >
@@ -55,12 +55,10 @@ export default function CertificateModal({ certData, onClose }) {
         initial={{ scale: 0.93, opacity: 0, y: 15 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="kinetic-modal-dialog"
         style={{
-          backgroundColor: '#09090b',
-          border: '2px solid var(--accent-color)',
           maxWidth: '780px',
-          width: '100%',
-          padding: '36px',
+          padding: 'clamp(16px, 4vw, 36px)',
           color: '#fafafa'
         }} 
         onClick={(e) => e.stopPropagation()}
@@ -104,6 +102,7 @@ export default function CertificateModal({ certData, onClose }) {
 
             {/* Close Button */}
             <button 
+              aria-label="Close Certificate"
               style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer', padding: '6px' }}
               onClick={onClose}
             >
@@ -117,12 +116,12 @@ export default function CertificateModal({ certData, onClose }) {
           id="circlo-printable-certificate"
           style={{ 
             border: '2px solid var(--border-color)', 
-            padding: '28px',
+            padding: 'clamp(16px, 3.5vw, 28px)',
             backgroundColor: '#000000'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <div style={{ fontFamily: 'var(--font-space)', fontSize: '28px', fontWeight: 900, letterSpacing: '-0.05em' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{ fontFamily: 'var(--font-space)', fontSize: 'clamp(20px, 4vw, 28px)', fontWeight: 900, letterSpacing: '-0.05em' }}>
               CIRCLO // 2026
             </div>
             <span style={{ 
@@ -137,19 +136,12 @@ export default function CertificateModal({ certData, onClose }) {
             </span>
           </div>
 
-          <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: 'var(--muted-fg-color)', marginBottom: '24px' }}>
+          <p style={{ fontFamily: 'var(--font-inter)', fontSize: '13px', color: 'var(--muted-fg-color)', marginBottom: '20px' }}>
             This document certifies verifiable e-waste diversion from burning landfills, heavy metal recovery, and informal collector economic inclusion under India E-Waste Management Rules 2022.
           </p>
 
           {/* Key Metrics Grid */}
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(4, 1fr)', 
-            gap: '2px', 
-            backgroundColor: 'var(--border-color)',
-            border: '2px solid var(--border-color)',
-            marginBottom: '24px'
-          }}>
+          <div className="cert-metrics-grid">
             <div style={{ backgroundColor: '#09090b', padding: '16px' }}>
               <strong style={{ fontFamily: 'var(--font-space)', fontSize: '24px', color: '#10b981', display: 'block' }}>
                 {certData?.co2Kg || 148} KG

@@ -42,6 +42,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+}
+
 /* Noise Texture Overlay */
 .kinetic-noise-overlay {
   position: fixed;

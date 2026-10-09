@@ -37,7 +37,7 @@ export default function PickupModal({ recycler, item, onClose }) {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2000,
-        padding: '20px'
+        padding: '12px'
       }} 
       onClick={onClose}
     >
@@ -46,19 +46,17 @@ export default function PickupModal({ recycler, item, onClose }) {
         initial={{ scale: 0.94, opacity: 0, y: 15 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="kinetic-modal-dialog"
         style={{
-          backgroundColor: '#09090b',
-          border: '2px solid var(--accent-color)',
           maxWidth: '560px',
-          width: '100%',
-          padding: '36px',
+          padding: 'clamp(20px, 4vw, 36px)',
           color: '#fafafa'
         }} 
         onClick={(e) => e.stopPropagation()}
       >
         
         {/* Modal Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '16px', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '16px', marginBottom: '24px', flexWrap: 'wrap', gap: '8px' }}>
           <div>
             <span style={{ fontFamily: 'var(--font-space)', fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', letterSpacing: '0.1em' }}>
               [ DOORSTEP DISPATCH PROTOCOL ]
@@ -68,6 +66,7 @@ export default function PickupModal({ recycler, item, onClose }) {
             </h3>
           </div>
           <button 
+            aria-label="Close Pickup Modal"
             style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer' }}
             onClick={onClose}
           >

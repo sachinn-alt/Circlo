@@ -165,7 +165,7 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
       <div className="radar-split-brutalist">
         
         {/* Left Column: Filter Controls & Recyclers Scroll List */}
-        <div style={{ backgroundColor: 'var(--bg-color)', padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        <div style={{ backgroundColor: 'var(--bg-color)', padding: 'clamp(16px, 3.5vw, 32px)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           {/* Radius Control */}
           <div>

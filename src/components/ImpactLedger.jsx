@@ -71,20 +71,13 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
       </motion.div>
 
       {/* Massive Graphic Metric Numbers in Hairline Grid */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(3, 1fr)', 
-        gap: '2px', 
-        backgroundColor: 'var(--border-color)',
-        border: '2px solid var(--border-color)',
-        marginBottom: '40px'
-      }}>
+      <div className="impact-metrics-grid">
         <motion.div 
           whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
-          style={{ backgroundColor: 'var(--bg-color)', padding: '36px', transition: 'background-color 0.2s ease' }}
+          style={{ backgroundColor: 'var(--bg-color)', padding: 'clamp(20px, 3.5vw, 36px)', transition: 'background-color 0.2s ease' }}
         >
           <div className="kinetic-giant-num">142.8</div>
-          <h4 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
+          <h4 style={{ fontSize: '18px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
             TONNES DIVERTED
           </h4>
           <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
@@ -94,10 +87,10 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
 
         <motion.div 
           whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
-          style={{ backgroundColor: 'var(--bg-color)', padding: '36px', transition: 'background-color 0.2s ease' }}
+          style={{ backgroundColor: 'var(--bg-color)', padding: 'clamp(20px, 3.5vw, 36px)', transition: 'background-color 0.2s ease' }}
         >
           <div className="kinetic-giant-num" style={{ color: 'var(--accent-color)' }}>3.1M</div>
-          <h4 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
+          <h4 style={{ fontSize: '18px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
             LITERS WATER SAVED
           </h4>
           <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
@@ -107,10 +100,10 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
 
         <motion.div 
           whileHover={{ y: -4, backgroundColor: 'var(--muted-color)' }}
-          style={{ backgroundColor: 'var(--bg-color)', padding: '36px', transition: 'background-color 0.2s ease' }}
+          style={{ backgroundColor: 'var(--bg-color)', padding: 'clamp(20px, 3.5vw, 36px)', transition: 'background-color 0.2s ease' }}
         >
           <div className="kinetic-giant-num">₹48.2K</div>
-          <h4 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
+          <h4 style={{ fontSize: '18px', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
             FAIR VALUE PAID
           </h4>
           <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
@@ -123,11 +116,11 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
       <div style={{ 
         border: '2px solid var(--border-color)', 
         backgroundColor: 'var(--muted-color)', 
-        padding: '36px' 
+        padding: 'clamp(18px, 4vw, 36px)' 
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <h3 style={{ fontSize: '22px', fontWeight: 800, textTransform: 'uppercase' }}>
+            <h3 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase' }}>
               CALCULATE YOUR HOUSEHOLD CIRCULAR FOOTPRINT
             </h3>
             <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
@@ -138,6 +131,7 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="btn-kinetic-primary"
+            style={{ width: 'auto' }}
             onClick={handleGenerateCertificate}
           >
             <span className="btn-icon">
@@ -147,7 +141,7 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
           </motion.button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
+        <div className="impact-sliders-grid">
           <div>
             <label style={{ display: 'block', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
               OBSOLETE LAPTOPS: {calcLaptops} UNITS
@@ -157,7 +151,7 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
               min="0" 
               max="20" 
               value={calcLaptops} 
-              onChange={(e) => setCalcLaptops(Number(e.target.value))}
+              onChange={(e) => setCalcLaptops(Number(e.target.value))} 
               style={{ width: '100%', accentColor: 'var(--accent-color)' }}
             />
           </div>
@@ -171,7 +165,7 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
               min="0" 
               max="30" 
               value={calcPhones} 
-              onChange={(e) => setCalcPhones(Number(e.target.value))}
+              onChange={(e) => setCalcPhones(Number(e.target.value))} 
               style={{ width: '100%', accentColor: 'var(--accent-color)' }}
             />
           </div>
@@ -185,20 +179,14 @@ export default function ImpactLedger({ onOpenCertificateModal }) {
               min="0" 
               max="20" 
               value={calcBatteries} 
-              onChange={(e) => setCalcBatteries(Number(e.target.value))}
+              onChange={(e) => setCalcBatteries(Number(e.target.value))} 
               style={{ width: '100%', accentColor: 'var(--accent-color)' }}
             />
           </div>
         </div>
 
         {/* Calculated Yield Banner */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(3, 1fr)', 
-          gap: '16px',
-          borderTop: '2px solid var(--border-color)',
-          paddingTop: '24px'
-        }}>
+        <div className="impact-yield-grid">
           <div>
             <span style={{ fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--muted-fg-color)' }}>
               GOLD (AU) EXTRACTABLE:

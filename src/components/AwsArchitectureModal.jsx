@@ -161,7 +161,7 @@ when {
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2500,
-        padding: '20px'
+        padding: '12px'
       }} 
       onClick={onClose}
     >
@@ -169,15 +169,11 @@ when {
         initial={{ scale: 0.94, opacity: 0, y: 15 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="kinetic-modal-dialog"
         style={{
-          backgroundColor: '#09090b',
-          border: '2px solid var(--accent-color)',
           maxWidth: '960px',
-          width: '100%',
-          maxHeight: '90vh',
           display: 'flex',
           flexDirection: 'column',
-          color: '#fafafa',
           overflow: 'hidden'
         }} 
         onClick={(e) => e.stopPropagation()}
@@ -188,13 +184,15 @@ when {
           justifyContent: 'space-between', 
           alignItems: 'center', 
           borderBottom: '2px solid var(--border-color)', 
-          padding: '24px 32px',
-          backgroundColor: '#000000'
+          padding: '18px 20px',
+          backgroundColor: '#000000',
+          flexWrap: 'wrap',
+          gap: '8px'
         }}>
           <div>
             <span style={{ 
               fontFamily: 'var(--font-space)', 
-              fontSize: '12px', 
+              fontSize: '11px', 
               fontWeight: 800, 
               color: 'var(--accent-color)', 
               letterSpacing: '0.12em',
@@ -205,12 +203,13 @@ when {
               <span className="kinetic-live-dot" />
               [ AWS CLOUD ARCHITECTURE // DECENTRALIZED PROTOCOL ]
             </span>
-            <h2 style={{ fontFamily: 'var(--font-space)', fontSize: '26px', fontWeight: 900, textTransform: 'uppercase', marginTop: '6px' }}>
+            <h2 style={{ fontFamily: 'var(--font-space)', fontSize: 'clamp(20px, 4vw, 26px)', fontWeight: 900, textTransform: 'uppercase', marginTop: '6px' }}>
               CIRCLO PRODUCTION CLOUD TOPOLOGY
             </h2>
           </div>
           <button 
-            style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}
+            aria-label="Close AWS Architecture Modal"
+            style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer', padding: '6px' }}
             onClick={onClose}
           >
             <X size={24} />
@@ -218,7 +217,7 @@ when {
         </div>
 
         {/* Scrollable Body */}
-        <div style={{ padding: '32px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+        <div style={{ padding: 'clamp(16px, 4vw, 32px)', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           
           {/* Interactive Topology Pipeline Strip */}
           <div>
@@ -226,11 +225,7 @@ when {
               INTERACTIVE ARCHITECTURE PIPELINE (CLICK ANY SERVICE TO INSPECT CODE & POLICIES):
             </span>
             
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(4, 1fr)', 
-              gap: '12px'
-            }}>
+            <div className="arch-nodes-grid">
               {Object.values(ARCH_NODES).map((node) => {
                 const isSelected = activeNode === node.id;
                 return (
@@ -351,7 +346,7 @@ when {
           </div>
 
           {/* Cloud Resilience & Security Callouts */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+          <div className="arch-callouts-grid">
             <div style={{ border: '2px solid var(--border-color)', padding: '16px', backgroundColor: '#18181b' }}>
               <span style={{ fontFamily: 'var(--font-space)', fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)' }}>
                 [ LOCALSTACK TESTED ]

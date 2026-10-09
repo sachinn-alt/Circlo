@@ -1,0 +1,67 @@
+version: '3.8'
+
+# ==============================================================================
+# CIRCLO OPEN SOURCE FULL-STACK DOCKER COMPOSE
+# Run 100% locally with zero cloud costs
+# Usage: docker compose up -d
+# ==============================================================================
+
+services:
+  # LocalStack: Emulates AWS S3, Lambda, DynamoDB, EventBridge, SNS, SQS
+  localstack:
+    container_name: circlo-localstack
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - SERVICES=s3,lambda,dynamodb,sns,sqs,eventbridge
+      - DEBUG=0
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=ap-south-1
+    volumes:
+      - "./aws/localstack/localstack-data:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - circlo-net
+
+  # AWS OpenSearch: Geospatial & Circular Economy Indexing Engine
+  opensearch:
+    container_name: circlo-opensearch
+    image: opensearchproject/opensearch:2.11.1
+    environment:
+      - cluster.name=circlo-cluster
+      - node.name=circlo-node1
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - DISABLE_SECURITY_PLUGIN=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200"
+    networks:
+      - circlo-net
+
+  # OpenSearch Dashboards: Geospatial Map Explorer
+  opensearch-dashboards:
+    container_name: circlo-dashboards
+    image: opensearchproject/opensearch-dashboards:2.11.1
+    ports:
+      - "5601:5601"
+    environment:
+      - 'OPENSEARCH_HOSTS=["http://opensearch:9200"]'
+      - DISABLE_SECURITY_DASHBOARDS_PLUGIN=true
+    depends_on:
+      - opensearch
+    networks:
+      - circlo-net
+
+networks:
+  circlo-net:
+    driver: bridge

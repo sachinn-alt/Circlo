@@ -74,14 +74,7 @@ export default function KabadiwalaHub({ onRequestPickup }) {
       </motion.div>
 
       {/* Daily Scrap Market Ticker Grid */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(4, 1fr)', 
-        gap: '2px', 
-        backgroundColor: 'var(--border-color)',
-        border: '2px solid var(--border-color)',
-        marginBottom: '40px'
-      }}>
+      <div className="commodity-ticker-grid">
         {COMMODITY_PRICES.map((item, idx) => (
           <motion.div 
             key={idx}
@@ -119,10 +112,10 @@ export default function KabadiwalaHub({ onRequestPickup }) {
       <div style={{ 
         border: '2px solid var(--border-color)', 
         backgroundColor: 'var(--muted-color)', 
-        padding: '32px' 
+        padding: 'clamp(16px, 4vw, 32px)' 
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: 800, textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
+          <h3 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase' }}>
             ACTIVE PICKUP LEADS IN YOUR SECTOR
           </h3>
           <span style={{ 
@@ -141,7 +134,7 @@ export default function KabadiwalaHub({ onRequestPickup }) {
           </span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+        <div className="leads-grid">
           {leads.map((lead, lIdx) => (
             <motion.div 
               key={lead.id}
