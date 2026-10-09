@@ -1,161 +1,172 @@
 import React from 'react';
+import Marquee from 'react-fast-marquee';
 import { 
   Smartphone, 
   MapPin, 
   Coins, 
   Scale, 
   ShieldCheck, 
-  Flame, 
   CheckCircle2, 
   XCircle,
-  ArrowRight,
-  Sparkles
+  ArrowRight 
 } from 'lucide-react';
 
 export default function TracksSection({ onSelectWasteTrack }) {
   return (
-    <section className="section-wrapper" id="how-it-works">
-      <div className="app-container">
-        
-        {/* Section Heading */}
-        <div className="section-head">
-          <div className="section-eyebrow">Zero Hassle · Fair Pricing</div>
-          <h2 className="section-h2">How Circlo Works in 3 Easy Steps</h2>
-          <p className="section-desc">
-            Recycling your old electronics should be effortless. We eliminate middlemen cheating 
-            so you get maximum value while protecting local recycling workers.
-          </p>
-        </div>
-
-        {/* 3 Step Cards */}
-        <div className="steps-grid">
-          
-          {/* Step 1 */}
-          <div className="step-card">
-            <div className="step-number-tag">01</div>
-            <h3 className="step-title">Snap & Instant Valuation</h3>
-            <p className="step-text">
-              Take a photo of any broken gadget or dead battery. 
-              Our smart camera instantly identifies the materials inside (gold, copper, lithium) 
-              and calculates your guaranteed cash payout.
-            </p>
-            <div className="step-features-list">
-              <div className="step-feature-item">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>AI Material Identification</span>
-              </div>
-              <div className="step-feature-item">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>Live Gold & Copper Scrap Rates</span>
-              </div>
-            </div>
+    <div>
+      
+      {/* Testimonials Slower Marquee Strip */}
+      <div className="kinetic-marquee-dark">
+        <Marquee speed={45} gradient={false} autoFill={true}>
+          <div className="marquee-item">
+            <span>★ "EARNED ₹1,240 FOR DEAD SERVER BOARDS IN 15 MINUTES" — ANANYA R. (DELHI)</span>
+            <span className="marquee-divider" />
           </div>
-
-          {/* Step 2 */}
-          <div className="step-card">
-            <div className="step-number-tag">02</div>
-            <h3 className="step-title">Match Nearby Collector</h3>
-            <p className="step-text">
-              View verified neighborhood Kabadiwalas within 2 to 5 km. 
-              Book a free doorstep pickup at your preferred time or drop off at a verified civic collection point.
-            </p>
-            <div className="step-features-list">
-              <div className="step-feature-item">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>100% Calibrated Digital Scale</span>
-              </div>
-              <div className="step-feature-item">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>Verified Collector ID & Badges</span>
-              </div>
-            </div>
+          <div className="marquee-item">
+            <span>★ "DIGITAL SCALES PREVENTED 30% THEFT ON OUR SCRAP BATCH" — RESIDENTS WELFARE FORUM</span>
+            <span className="marquee-divider" />
           </div>
-
-          {/* Step 3 */}
-          <div className="step-card" style={{ borderColor: 'rgba(16, 185, 129, 0.35)', background: 'linear-gradient(180deg, #111827 0%, rgba(16, 185, 129, 0.05) 100%)' }}>
-            <div className="step-number-tag" style={{ background: 'var(--emerald-gradient)', color: '#ffffff' }}>03</div>
-            <h3 className="step-title">Instant Cash & Certificate</h3>
-            <p className="step-text">
-              The collector weighs your batch, verifies the price on the app, and pays you immediately via UPI. 
-              You instantly receive an official digital disposal certificate.
-            </p>
-            <div className="step-features-list">
-              <div className="step-feature-item">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>Zero Middlemen Deductions</span>
-              </div>
-              <div className="step-feature-item">
-                <CheckCircle2 size={16} className="text-emerald" />
-                <span>Audited CPCB Green Certificate</span>
-              </div>
-            </div>
+          <div className="marquee-item">
+            <span>★ "INCOME INCREASED BY +38% WITH TRANSPARENT DAILY COMMODITY RATES" — RAMESH K. (COLLECTOR)</span>
+            <span className="marquee-divider" />
           </div>
-
-        </div>
-
-        {/* Comparison Table: Traditional Scrap vs Circlo */}
-        <div className="comparison-card">
-          <div className="comparison-header">
-            <span style={{ fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-              Standard Feature
-            </span>
-            <span style={{ color: '#f87171', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <XCircle size={16} /> Traditional Scrap Market
-            </span>
-            <span style={{ color: 'var(--primary-emerald)', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <CheckCircle2 size={16} /> Circlo Verified Network
-            </span>
+          <div className="marquee-item">
+            <span>★ "CPCB RECYCLING CERTIFICATES VERIFIED FOR ISO AUDITS" — APEX TECH CLINIC</span>
+            <span className="marquee-divider" />
           </div>
-
-          {/* Row 1 */}
-          <div className="comparison-row">
-            <strong style={{ color: 'var(--text-white)' }}>Weighing Scales</strong>
-            <span className="col-traditional">Manual spring scales frequently rigged by 20–30% against you</span>
-            <span className="col-circlo">Certified digital Bluetooth scale with live photo verification</span>
-          </div>
-
-          {/* Row 2 */}
-          <div className="comparison-row">
-            <strong style={{ color: 'var(--text-white)' }}>Scrap Pricing</strong>
-            <span className="col-traditional">Arbitrary broker guessing; middlemen keep 75% of precious metal value</span>
-            <span className="col-circlo">MCX commodity spot pricing with strict 85% minimum price floor</span>
-          </div>
-
-          {/* Row 3 */}
-          <div className="comparison-row">
-            <strong style={{ color: 'var(--text-white)' }}>Worker Safety & Fumes</strong>
-            <span className="col-traditional">Burning wires in open backyards, releasing toxic lead & mercury smoke</span>
-            <span className="col-circlo">Zero open-air burning; certified protective safety gear for collectors</span>
-          </div>
-
-          {/* Row 4 */}
-          <div className="comparison-row" style={{ borderBottom: 'none' }}>
-            <strong style={{ color: 'var(--text-white)' }}>Payment & Proof</strong>
-            <span className="col-traditional">Untraced cash with zero receipt; discarded parts end up in landfills</span>
-            <span className="col-circlo">Instant direct UPI bank transfer + verifiable CPCB recycling certificate</span>
-          </div>
-        </div>
-
-        {/* Bottom CTA Banner */}
-        <div style={{ 
-          marginTop: '48px', 
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '16px',
-          alignItems: 'center',
-          flexWrap: 'wrap'
-        }}>
-          <button 
-            className="btn-emerald"
-            onClick={onSelectWasteTrack}
-          >
-            <Smartphone size={17} />
-            <span>Launch the AI Scanner & Test a Device</span>
-          </button>
-        </div>
-
+        </Marquee>
       </div>
-    </section>
+
+      <section className="kinetic-section" id="how-it-works">
+        <div className="kinetic-container">
+          
+          {/* Section Header */}
+          <div className="kinetic-section-header">
+            <span style={{ 
+              fontFamily: 'var(--font-space)', 
+              fontSize: '14px', 
+              fontWeight: 800, 
+              color: 'var(--accent-color)', 
+              letterSpacing: '0.12em' 
+            }}>
+              [ 02 // THREE-STAGE DISRUPTION PROTOCOL ]
+            </span>
+            <h2 className="kinetic-section-title" style={{ marginTop: '12px' }}>
+              HOW CIRCLO WORKS.
+            </h2>
+            <p style={{ fontFamily: 'var(--font-inter)', fontSize: '20px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '16px' }}>
+              We eliminate predatory scrap broker cartels with radical transparency, computer vision valuation, and instant digital payments.
+            </p>
+          </div>
+
+          {/* 3-Cell Connected Hairline Grid (Hard Hover Inversion) */}
+          <div className="hairline-grid-3">
+            
+            {/* Cell 01 */}
+            <div className="hairline-grid-cell">
+              <div className="kinetic-giant-num">01</div>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px' }}>
+                SCAN & VALUE TECH
+              </h3>
+              <p style={{ fontSize: '16px', lineHeight: 1.6, marginBottom: '24px' }}>
+                Snap a photo of any broken gadget. Our vision algorithms classify rare components, 
+                extract elemental yields (gold, copper, lithium), and compute guaranteed floor prices.
+              </p>
+              <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '2px solid currentColor' }}>
+                <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800 }}>
+                  [ LIVE MCX SPOT ORACLES ]
+                </span>
+              </div>
+            </div>
+
+            {/* Cell 02 */}
+            <div className="hairline-grid-cell">
+              <div className="kinetic-giant-num">02</div>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px' }}>
+                MATCH LOCAL COLLECTOR
+              </h3>
+              <p style={{ fontSize: '16px', lineHeight: 1.6, marginBottom: '24px' }}>
+                Locate certified neighborhood Kabadiwalas within walking distance. 
+                Request a doorstep pickup with certified digital scales or drop off at a verified civic hub.
+              </p>
+              <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '2px solid currentColor' }}>
+                <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800 }}>
+                  [ CALIBRATED BLUETOOTH SCALE ]
+                </span>
+              </div>
+            </div>
+
+            {/* Cell 03 */}
+            <div className="hairline-grid-cell">
+              <div className="kinetic-giant-num">03</div>
+              <h3 style={{ fontSize: '28px', fontWeight: 800, marginBottom: '14px' }}>
+                INSTANT CASH & PROOF
+              </h3>
+              <p style={{ fontSize: '16px', lineHeight: 1.6, marginBottom: '24px' }}>
+                Get paid immediately to your UPI bank handle without middlemen cuts. 
+                Receive an official digital certificate proving zero open-air toxic burning.
+              </p>
+              <div style={{ marginTop: 'auto', paddingTop: '16px', borderTop: '2px solid currentColor' }}>
+                <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800 }}>
+                  [ AUDITED CPCB EPR MINTING ]
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Brutalist Comparison Table */}
+          <div className="kinetic-table-container">
+            
+            {/* Header Row */}
+            <div className="kinetic-table-row kinetic-table-header">
+              <div>CRITERIA</div>
+              <div style={{ color: '#f87171' }}>TRADITIONAL SCRAP MIDDLEMEN</div>
+              <div style={{ color: 'var(--accent-color)' }}>CIRCLO VERIFIED NETWORK</div>
+            </div>
+
+            {/* Row 1 */}
+            <div className="kinetic-table-row">
+              <strong style={{ color: 'var(--fg-color)' }}>WEIGHING ACCURACY</strong>
+              <div style={{ color: '#f87171' }}>Rigged manual spring scales (-20% to -35% weight loss)</div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>100% Calibrated digital scale with live in-app photo lock</div>
+            </div>
+
+            {/* Row 2 */}
+            <div className="kinetic-table-row">
+              <strong style={{ color: 'var(--fg-color)' }}>PRICING TRANSPARENCY</strong>
+              <div style={{ color: '#f87171' }}>Brokers guess arbitrary rates; pocket 75% of precious metals</div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Live commodity market spot rates + guaranteed 85% floor price</div>
+            </div>
+
+            {/* Row 3 */}
+            <div className="kinetic-table-row">
+              <strong style={{ color: 'var(--fg-color)' }}>WORKER SAFETY & FUMES</strong>
+              <div style={{ color: '#f87171' }}>Acid baths & open wire burning releasing neurotoxic lead smoke</div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Zero open burning; protective gear & certified hydrometallurgy</div>
+            </div>
+
+            {/* Row 4 */}
+            <div className="kinetic-table-row">
+              <strong style={{ color: 'var(--fg-color)' }}>PAYMENT & RECORDS</strong>
+              <div style={{ color: '#f87171' }}>Delayed cash or IOUs; zero legal disposal proof</div>
+              <div style={{ color: 'var(--fg-color)', fontWeight: 700 }}>Instant direct UPI bank transfer + verifiable CPCB certificate</div>
+            </div>
+
+          </div>
+
+          {/* Action Trigger */}
+          <div style={{ marginTop: '56px', display: 'flex', justifyContent: 'center' }}>
+            <button 
+              className="btn-kinetic-primary"
+              onClick={onSelectWasteTrack}
+            >
+              <span>TEST THE AI VISION SCANNER RIGHT NOW →</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+    </div>
   );
 }

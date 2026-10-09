@@ -2,189 +2,189 @@ import React, { useState } from 'react';
 import { 
   ArrowRight, 
   MapPin, 
-  ShieldCheck, 
   Smartphone, 
-  Sparkles, 
-  CheckCircle2, 
   Scale, 
-  Flame, 
-  Leaf,
-  Coins
+  Coins, 
+  Zap,
+  ShieldCheck 
 } from 'lucide-react';
 
-const HERO_SAMPLES = [
+const KINETIC_SAMPLES = [
   {
     id: 'pcb',
-    label: 'Telecom PCBs',
-    device: 'High-Density Server Motherboard',
-    weight: '1.4 kg',
-    gold: '0.42g',
-    copper: '580g',
+    label: '01 / TELECOM PCBS',
+    name: 'HIGH-DENSITY SERVER BOARD',
+    weight: '1.4 KG',
+    gold: '0.42G GOLD',
+    copper: '580G COPPER',
     payout: '₹1,240',
-    hazard: 'Low Risk · Safe Sort'
+    status: 'HAZMAT VERIFIED'
   },
   {
     id: 'laptop',
-    label: 'Dead Laptop',
-    device: 'Obsolete Dell Core i5 Laptop',
-    weight: '2.1 kg',
-    gold: '0.18g',
-    copper: '350g',
+    label: '02 / DEAD LAPTOP',
+    name: 'DELL CORE I5 OBSOLETE CHASSIS',
+    weight: '2.1 KG',
+    gold: '0.18G GOLD',
+    copper: '350G COPPER',
     payout: '₹890',
-    hazard: 'Lithium Battery Present'
+    status: 'LITHIUM PROTECTED'
   },
   {
     id: 'phones',
-    label: 'Old Phones (x3)',
-    device: '3 Discarded Android Phones',
-    weight: '520g',
-    gold: '0.11g',
-    copper: '110g',
+    label: '03 / OLD PHONES (X3)',
+    name: '3 DISCARDED ANDROID PHONES',
+    weight: '520 GRAMS',
+    gold: '0.11G GOLD',
+    copper: '110G COPPER',
     payout: '₹460',
-    hazard: 'Low Risk · Instant Cash'
+    status: 'INSTANT UPI READY'
   }
 ];
 
 export default function HeroSection({ onNavigateTab }) {
-  const [activeSample, setActiveSample] = useState(HERO_SAMPLES[0]);
+  const [activeSample, setActiveSample] = useState(KINETIC_SAMPLES[0]);
 
   return (
-    <section className="hero-wrapper">
-      <div className="ambient-glow-top" />
-      <div className="app-container">
+    <section className="kinetic-hero">
+      <div className="kinetic-container">
         
-        <div className="hero-grid">
+        {/* Massive Viewport-Scaled Headline */}
+        <div style={{ marginBottom: '20px' }}>
+          <span style={{ 
+            fontFamily: 'var(--font-space)', 
+            fontSize: '14px', 
+            fontWeight: 800, 
+            letterSpacing: '0.15em', 
+            color: 'var(--accent-color)' 
+          }}>
+            [ 01 // FAIR TRADE RECYCLING ENGINE ]
+          </span>
+        </div>
+
+        <h1 className="kinetic-hero-headline">
+          RECYCLE TECH.<br />
+          <span className="text-accent">GET PAID CASH.</span><br />
+          STOP THE BURNING.
+        </h1>
+
+        {/* 2-Column Split: Mission & Interactive Hard Inversion Estimator */}
+        <div className="kinetic-hero-grid">
           
-          {/* Left Column: Headline & Value Proposition */}
-          <div className="hero-content">
-            
-            {/* Live Badge */}
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span className="badge-pill">
-                <span className="status-live-dot" />
-                <span>Fair Trade E-Waste Network · 100% Digital Scale Guarantee</span>
-              </span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="hero-h1">
-              Turn Broken Gadgets into <span className="hero-highlight">Fair Cash.</span> Protect Local Recyclers.
-            </h1>
-
-            {/* Lead Copy */}
-            <p className="hero-lead">
-              Circlo directly connects your household with verified neighborhood Kabadiwalas. 
-              Get paid fair market rates via instant UPI, verify weight on calibrated digital scales, 
-              and stop toxic backyard wire burning.
+          {/* Left Column: Mission, Oversized Stats, and Action Buttons */}
+          <div>
+            <p className="hero-body-paragraph">
+              Circlo bridges urban households directly with <strong>1.5 million certified local Kabadiwalas</strong>. 
+              We eliminate cheating middlemen, enforce digital scale accuracy, and put an end to toxic backyard wire burning.
             </p>
 
-            {/* CTA Buttons */}
-            <div className="hero-cta-row">
+            {/* Kinetic Action Buttons */}
+            <div style={{ display: 'flex', gap: '16px', marginTop: '36px', flexWrap: 'wrap' }}>
               <button 
-                className="btn-emerald"
+                className="btn-kinetic-primary"
                 onClick={() => onNavigateTab('scanner')}
               >
                 <Smartphone size={18} />
-                <span>Scan Your Broken Device</span>
+                <span>SCAN YOUR GADGET NOW</span>
               </button>
 
               <button 
-                className="btn-outline"
+                className="btn-kinetic-outline"
                 onClick={() => onNavigateTab('map')}
               >
-                <MapPin size={17} />
-                <span>Find Nearby Collector</span>
+                <MapPin size={18} />
+                <span>FIND NEARBY COLLECTORS</span>
               </button>
             </div>
 
-            {/* Live Stats Ticker */}
-            <div className="hero-stats-row">
-              <div className="stat-item">
-                <span className="stat-item-num">1.5M+</span>
-                <span className="stat-item-lbl">Verified Local Collectors</span>
+            {/* Massive Numerical Graphic Stats */}
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: '1fr 1fr', 
+              gap: '24px', 
+              marginTop: '56px',
+              paddingTop: '32px',
+              borderTop: '2px solid var(--border-color)'
+            }}>
+              <div>
+                <div className="kinetic-giant-num">1.5M</div>
+                <p style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted-fg-color)' }}>
+                  VERIFIED LOCAL COLLECTORS
+                </p>
               </div>
-              <div className="stat-item">
-                <span className="stat-item-num" style={{ color: 'var(--primary-emerald)' }}>₹48,250</span>
-                <span className="stat-item-lbl">Fair Payouts Protected</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-item-num" style={{ color: '#38bdf8' }}>0 kg</span>
-                <span className="stat-item-lbl">Toxic Backyard Burning</span>
+
+              <div>
+                <div className="kinetic-giant-num" style={{ color: 'var(--accent-color)' }}>85%</div>
+                <p style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--muted-fg-color)' }}>
+                  GUARANTEED FLOOR PRICE MINIMUM
+                </p>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Live Interactive Scrap Valuation Widget */}
-          <div className="hero-widget-card">
+          {/* Right Column: Hard Inversion Interactive Card */}
+          <div className="kinetic-card-inversion">
             
-            <div className="hero-widget-header">
-              <div className="widget-title">
-                <Sparkles size={18} className="text-emerald" />
-                <span>Instant Scrap Cash Estimator</span>
-              </div>
-              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                Live MCX Spot Rates
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <span className="kinetic-card-eyebrow">
+                INSTANT SCRAP VALUATOR
+              </span>
+              <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 700, color: 'var(--muted-fg-color)' }}>
+                [ HOVER TO INVERT ]
               </span>
             </div>
 
-            {/* Quick Sample Selector */}
-            <div className="widget-sample-selector">
-              <span style={{ fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 600 }}>
-                Select a test household item:
+            <h3 className="kinetic-card-title">
+              {activeSample.name}
+            </h3>
+
+            {/* 3 Preset Switchers */}
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+              {KINETIC_SAMPLES.map(sample => (
+                <button
+                  key={sample.id}
+                  style={{
+                    padding: '8px 14px',
+                    fontSize: '12px',
+                    fontWeight: 800,
+                    border: '2px solid var(--border-color)',
+                    backgroundColor: activeSample.id === sample.id ? 'var(--accent-color)' : 'transparent',
+                    color: activeSample.id === sample.id ? '#000000' : 'var(--fg-color)'
+                  }}
+                  onClick={() => setActiveSample(sample)}
+                >
+                  {sample.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Big Payout Number */}
+            <div style={{ marginBottom: '24px', borderTop: '2px solid var(--border-color)', borderBottom: '2px solid var(--border-color)', padding: '20px 0' }}>
+              <span style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--muted-fg-color)' }}>
+                CIVIC GUARANTEED CASH PAYOUT
               </span>
-              <div className="sample-pills">
-                {HERO_SAMPLES.map(sample => (
-                  <button
-                    key={sample.id}
-                    className={`sample-pill-btn ${activeSample.id === sample.id ? 'active' : ''}`}
-                    onClick={() => setActiveSample(sample)}
-                  >
-                    {sample.label}
-                  </button>
-                ))}
+              <div className="payout-big-number">
+                {activeSample.payout}
               </div>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--muted-fg-color)' }}>
+                WEIGHT: {activeSample.weight} · {activeSample.status}
+              </span>
             </div>
 
-            {/* Payout Display */}
-            <div className="widget-payout-box">
-              <div>
-                <span style={{ fontSize: '12px', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-                  Guaranteed Cash Payout
-                </span>
-                <div className="widget-payout-val">{activeSample.payout}</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <span className="badge-pill" style={{ fontSize: '12px', padding: '4px 10px' }}>
-                  <Scale size={13} />
-                  <span>{activeSample.weight}</span>
-                </span>
-              </div>
+            {/* Extracted Metal Breakdown */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', fontSize: '14px', fontWeight: 700 }}>
+              <span>{activeSample.gold}</span>
+              <span>{activeSample.copper}</span>
+              <span>DIRECT UPI TRANSFER</span>
             </div>
 
-            {/* Material Recovery Breakdown */}
-            <div style={{ marginBottom: '20px' }}>
-              <div className="widget-breakdown-row">
-                <span>Gold (Au) Recovered</span>
-                <strong style={{ color: 'var(--gold-accent)' }}>{activeSample.gold}</strong>
-              </div>
-              <div className="widget-breakdown-row">
-                <span>Copper (Cu) Recovered</span>
-                <strong>{activeSample.copper}</strong>
-              </div>
-              <div className="widget-breakdown-row">
-                <span>Safety Classification</span>
-                <span style={{ color: 'var(--primary-emerald)' }}>{activeSample.hazard}</span>
-              </div>
-            </div>
-
-            {/* Action Trigger */}
             <button 
-              className="btn-emerald" 
+              className="btn-kinetic-primary" 
               style={{ width: '100%' }}
               onClick={() => onNavigateTab('scanner')}
             >
-              <span>Scan Your Item with AI Camera →</span>
+              <span>LAUNCH FULL AI SPECTROMETER →</span>
             </button>
 
           </div>

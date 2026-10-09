@@ -4,13 +4,11 @@ import {
   Upload, 
   AlertTriangle, 
   CheckCircle2, 
-  DollarSign, 
   Layers, 
   ArrowRight, 
   ShieldCheck, 
   Sparkles,
-  Zap,
-  Info
+  Zap
 } from 'lucide-react';
 import { PRELOADED_EWASTE_SAMPLES } from '../data/mockData';
 
@@ -35,216 +33,249 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
       setCustomImage(url);
       setIsScanning(true);
       setTimeout(() => {
-        // Map custom image to a high-yield PCB sample for demo
         setSelectedSample({
           ...PRELOADED_EWASTE_SAMPLES[1],
-          title: `Custom Uploaded Device (${file.name})`,
+          title: `CUSTOM: ${file.name.toUpperCase()}`,
           imageUrl: url
         });
         setIsScanning(false);
-      }, 700);
+      }, 600);
     }
   };
 
   return (
-    <div className="scanner-container">
-      {/* Top Banner / Explainer */}
-      <div className="tab-banner">
-        <div>
-          <h2>AI E-Waste Scanner & Cash Calculator</h2>
-          <p>
-            Snap a photo or select an item below to discover the precious metals inside (gold, copper, lithium) and see your guaranteed cash payout.
-          </p>
-        </div>
-        <div className="ai-model-tag">
-          <Sparkles size={16} />
-          <span>Instant Scrap Valuation</span>
-        </div>
+    <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
+      
+      {/* Top Section Header */}
+      <div style={{ marginBottom: '32px' }}>
+        <span style={{ 
+          fontFamily: 'var(--font-space)', 
+          fontSize: '13px', 
+          fontWeight: 800, 
+          letterSpacing: '0.12em', 
+          color: 'var(--accent-color)' 
+        }}>
+          [ SPECTROMETER // REAL-TIME METAL YIELD ORACLE ]
+        </span>
+        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
+          AI E-WASTE SPECTROMETER.
+        </h2>
+        <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '12px' }}>
+          Classifies electronic device architecture, calculates extracted precious metals, and delivers guaranteed market rates.
+        </p>
       </div>
 
-      {/* Preset Selector Carousel */}
-      <div className="preset-selector-bar">
-        <span className="preset-label">Test with real-world e-waste presets:</span>
-        <div className="preset-chips">
-          {PRELOADED_EWASTE_SAMPLES.map((sample) => (
-            <button
-              key={sample.id}
-              className={`preset-chip ${selectedSample.id === sample.id ? 'active' : ''}`}
-              onClick={() => handleSelectPreset(sample)}
-            >
-              <span>{sample.title}</span>
-              <span 
-                className="chip-hazard" 
-                style={{ backgroundColor: sample.hazardColor }}
-              >
-                Lvl {sample.hazardLevel}
-              </span>
-            </button>
-          ))}
-          <label className="preset-upload-btn">
-            <Upload size={14} />
-            <span>Upload Photo</span>
-            <input type="file" accept="image/*" onChange={handleFileUpload} style={{ display: 'none' }} />
-          </label>
-        </div>
+      {/* Preset Selector Chips */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap', alignItems: 'center' }}>
+        <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--muted-fg-color)', marginRight: '8px' }}>
+          PRESETS:
+        </span>
+        {PRELOADED_EWASTE_SAMPLES.map((sample) => (
+          <button
+            key={sample.id}
+            style={{
+              padding: '10px 18px',
+              fontFamily: 'var(--font-space)',
+              fontSize: '13px',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              border: '2px solid var(--border-color)',
+              backgroundColor: selectedSample.id === sample.id ? 'var(--accent-color)' : 'var(--bg-color)',
+              color: selectedSample.id === sample.id ? '#000000' : 'var(--fg-color)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+            onClick={() => handleSelectPreset(sample)}
+          >
+            <span>{sample.title}</span>
+            <span style={{ 
+              fontSize: '11px', 
+              padding: '2px 6px', 
+              backgroundColor: selectedSample.id === sample.id ? '#000000' : 'var(--muted-color)',
+              color: selectedSample.id === sample.id ? 'var(--accent-color)' : 'var(--fg-color)'
+            }}>
+              LVL {sample.hazardLevel}
+            </span>
+          </button>
+        ))}
+
+        <label 
+          className="btn-kinetic-outline"
+          style={{ height: '42px', padding: '0 16px', fontSize: '12px', cursor: 'pointer' }}
+        >
+          <Upload size={14} />
+          <span>UPLOAD PHOTO</span>
+          <input type="file" accept="image/*" onChange={handleFileUpload} style={{ display: 'none' }} />
+        </label>
       </div>
 
-      {/* Main Scanner Workspace Grid */}
-      <div className="scanner-grid">
-        {/* Left Column: Vision Viewport */}
-        <div className="viewport-card">
-          <div className="viewport-header">
-            <div className="viewport-title">
-              <Camera size={16} className="text-cyan" />
-              <span>Inspection Viewport</span>
-            </div>
-            <div className="viewport-meta">
-              <span>Confidence: <strong>{(selectedSample.confidence * 100).toFixed(0)}%</strong></span>
-              <span className="status-live">● AI Live Ingestion</span>
-            </div>
+      {/* 2-Column Brutalist Split Grid */}
+      <div className="scanner-split-brutalist">
+        
+        {/* Left Column: Camera Viewport */}
+        <div className="scanner-pane">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, textTransform: 'uppercase' }}>
+              CAMERA VIEWPORT // {(selectedSample.confidence * 100).toFixed(0)}% CONFIDENCE
+            </span>
+            <span style={{ color: 'var(--accent-color)', fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800 }}>
+              ● LIVE AI FEED
+            </span>
           </div>
 
-          <div className="viewport-image-container">
+          <div className="scanner-camera-box">
             <img 
               src={customImage || selectedSample.imageUrl} 
               alt={selectedSample.title}
-              className={`viewport-img ${isScanning ? 'blur' : ''}`} 
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                filter: isScanning ? 'blur(4px)' : 'none',
+                transition: 'filter 0.3s'
+              }}
             />
 
             {/* Laser Scan Animation */}
-            {isScanning && <div className="scanner-laser animate-scan" />}
+            {isScanning && <div className="scanner-laser-kinetic" />}
 
             {/* Bounding Box Overlays */}
             {!isScanning && selectedSample.detectedFeatures?.map((feat, idx) => (
               <div 
                 key={idx}
-                className="bounding-box"
+                className="bounding-box-kinetic"
                 style={{
                   top: `${feat.box[0]}%`,
                   left: `${feat.box[1]}%`,
                   width: `${feat.box[2]}%`,
-                  height: `${feat.box[3]}%`,
-                  borderColor: selectedSample.hazardColor
+                  height: `${feat.box[3]}%`
                 }}
               >
-                <div 
-                  className="bounding-label"
-                  style={{ backgroundColor: selectedSample.hazardColor }}
-                >
+                <div className="bounding-box-label-kinetic">
                   {feat.label}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Safe Handling Directive Footer */}
-          <div className="handling-footer">
-            <div className="handling-notice-title">
-              <AlertTriangle size={16} style={{ color: selectedSample.hazardColor }} />
-              <strong>Handling Directive:</strong>
+          {/* Safety Notice */}
+          <div style={{ 
+            marginTop: '20px', 
+            padding: '16px', 
+            border: '2px solid var(--border-color)', 
+            backgroundColor: 'var(--muted-color)' 
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent-color)', marginBottom: '4px' }}>
+              <AlertTriangle size={16} />
+              <strong style={{ fontFamily: 'var(--font-space)', fontSize: '13px', textTransform: 'uppercase' }}>
+                SAFETY PROTOCOL:
+              </strong>
             </div>
-            <p className="handling-text">{selectedSample.handlingNotice}</p>
+            <p style={{ fontSize: '13px', color: 'var(--fg-color)' }}>
+              {selectedSample.handlingNotice}
+            </p>
           </div>
         </div>
 
-        {/* Right Column: AI Analytics & Valuation */}
-        <div className="analytics-card">
-          {/* Header & Hazard Level */}
-          <div className="device-header">
+        {/* Right Column: Analytics & Payout Details */}
+        <div className="scanner-pane" style={{ borderLeft: '2px solid var(--border-color)' }}>
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
             <div>
-              <span className="device-category">{selectedSample.category}</span>
-              <h3 className="device-name">{selectedSample.title}</h3>
+              <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, color: 'var(--accent-color)', textTransform: 'uppercase' }}>
+                {selectedSample.category}
+              </span>
+              <h3 style={{ fontSize: '26px', fontWeight: 800, marginTop: '4px', textTransform: 'uppercase' }}>
+                {selectedSample.title}
+              </h3>
             </div>
-            <div 
-              className="hazard-badge"
-              style={{ 
-                borderColor: selectedSample.hazardColor,
-                backgroundColor: `${selectedSample.hazardColor}15`,
-                color: selectedSample.hazardColor
-              }}
-            >
-              <AlertTriangle size={16} />
-              <span>Hazard Class {selectedSample.hazardLevel}/5</span>
+
+            <div style={{ 
+              padding: '6px 12px', 
+              border: '2px solid var(--accent-color)', 
+              fontFamily: 'var(--font-space)', 
+              fontSize: '12px', 
+              fontWeight: 800, 
+              color: 'var(--accent-color)',
+              textTransform: 'uppercase'
+            }}>
+              HAZARD CLASS {selectedSample.hazardLevel}/5
             </div>
           </div>
 
-          {/* Fair Value Benchmark Card */}
-          <div className="value-benchmark-card">
-            <div className="value-header">
-              <div>
-                <span className="value-label">Civic Guaranteed Scrap Value</span>
-                <div className="value-amount">
-                  ₹{selectedSample.recoveryValue.fairBenchmark}
-                  <small> (range ₹{selectedSample.recoveryValue.min} – ₹{selectedSample.recoveryValue.max})</small>
-                </div>
-              </div>
-              <div className="verified-shield">
-                <ShieldCheck size={28} className="text-emerald" />
-                <span>Anti-Gouging Benchmark</span>
-              </div>
+          {/* Big Payout Box */}
+          <div style={{ 
+            border: '2px solid var(--border-color)', 
+            padding: '24px', 
+            backgroundColor: 'var(--muted-color)',
+            marginBottom: '24px'
+          }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--muted-fg-color)' }}>
+              GUARANTEED CIVIC SCRAP VALUE
+            </span>
+            <div className="payout-big-number">
+              ₹{selectedSample.recoveryValue.fairBenchmark}
             </div>
-            <p className="value-explanation">
-              Calculated using live MCX commodity spot rates for recovered gold, copper, and cobalt yields. Protected by AWS Cedar Floor Price Policy.
-            </p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: 'var(--muted-fg-color)', fontFamily: 'var(--font-space)', fontWeight: 700 }}>
+              <span>FLOOR: ₹{selectedSample.recoveryValue.min}</span>
+              <span>CEILING: ₹{selectedSample.recoveryValue.max}</span>
+              <span>DIGITAL SCALE LOCKED</span>
+            </div>
           </div>
 
-          {/* Elemental & Material Recovery Breakdown */}
-          <div className="materials-breakdown">
-            <h4>
-              <Layers size={16} className="text-cyan" />
-              <span>Extracted Material Yield</span>
-            </h4>
-            <div className="material-tags-grid">
+          {/* Extracted Metal Yields */}
+          <div style={{ marginBottom: '24px' }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase' }}>
+              EXTRACTABLE PRECIOUS ELEMENTS:
+            </span>
+            <div className="materials-hairline-grid">
               {Object.entries(selectedSample.materials).map(([matKey, weight]) => (
-                <div key={matKey} className="material-tag">
-                  <span className="mat-name">
-                    {matKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                <div key={matKey} className="material-hairline-cell">
+                  <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', color: 'var(--muted-fg-color)' }}>
+                    {matKey.replace(/([A-Z])/g, ' $1')}
                   </span>
-                  <span className="mat-weight">{weight}</span>
+                  <span style={{ fontFamily: 'var(--font-space)', fontSize: '15px', fontWeight: 800, color: 'var(--fg-color)' }}>
+                    {weight}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* AWS Cedar Compliance Rule Preview */}
-          <div className="cedar-policy-preview">
-            <div className="policy-preview-header">
-              <div className="flex-align">
-                <Zap size={15} className="text-amber" />
-                <strong>AWS Cedar Compliance Rule:</strong>
-              </div>
-              <button 
-                className="btn-text-link"
-                onClick={() => onOpenCedarForBatch(selectedSample)}
-              >
-                Inspect in Cedar Lab →
-              </button>
-            </div>
-            <p className="policy-text">
+          {/* Rule Verdict Callout */}
+          <div style={{ 
+            padding: '16px', 
+            border: '2px solid var(--border-color)', 
+            marginBottom: '24px',
+            backgroundColor: 'var(--bg-color)'
+          }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent-color)' }}>
+              AUTOMATED SAFETY VERDICT:
+            </span>
+            <p style={{ fontSize: '14px', color: 'var(--fg-color)', marginTop: '4px' }}>
               {selectedSample.hazardLevel >= 3 ? (
-                <span className="text-red">
-                  ⛔ FORBIDDEN for informal dismantlers without HAZMAT_EWASTE_L2. Must route to R2 certified hydrometallurgical facility.
-                </span>
+                <span>⚠️ RESTRICTED: Requires trained specialist equipped with certified Hazmat L2 protection.</span>
               ) : (
-                <span className="text-emerald">
-                  ✅ PERMITTED for all verified KYC Kabadiwalas with SAFE_SORT badge under Policy 3.
-                </span>
+                <span>✅ APPROVED: Permitted for all verified neighborhood collectors with direct UPI payout.</span>
               )}
             </p>
           </div>
 
-          {/* CTA Actions */}
-          <div className="scanner-actions">
-            <button 
-              className="btn-primary-action"
-              onClick={() => onSelectRecyclerForScrap(selectedSample)}
-            >
-              <span>Find Verified Recycler for this item</span>
-              <ArrowRight size={18} />
-            </button>
-          </div>
+          {/* CTA Action */}
+          <button 
+            className="btn-kinetic-primary"
+            style={{ width: '100%' }}
+            onClick={() => onSelectRecyclerForScrap(selectedSample)}
+          >
+            <ArrowRight size={18} />
+            <span>FIND VERIFIED COLLECTOR FOR THIS ITEM</span>
+          </button>
+
         </div>
+
       </div>
+
     </div>
   );
 }

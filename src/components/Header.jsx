@@ -1,87 +1,112 @@
 import React from 'react';
+import Marquee from 'react-fast-marquee';
 import { 
-  Recycle, 
-  Sparkles, 
-  ShieldCheck, 
-  Smartphone,
-  TrendingUp
+  ArrowRight, 
+  Smartphone, 
+  TrendingUp, 
+  ShieldCheck 
 } from 'lucide-react';
 
 export default function Header({ activeTab, setActiveTab }) {
   return (
-    <header className="circlo-nav">
-      <div className="app-container">
-        <div className="circlo-nav-inner">
+    <header className="kinetic-nav">
+      
+      {/* 1. Infinite High-Energy Marquee Strip (No Gradients) */}
+      <div className="kinetic-marquee-strip">
+        <Marquee speed={75} gradient={false} autoFill={true}>
+          <div className="marquee-item">
+            <span>1,500,000 INFORMAL RECYCLERS EMPOWERED</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>100% DIGITAL SCALE ACCURACY GUARANTEED</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>ZERO TOXIC BACKYARD BURNING</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>GUARANTEED 85% FAIR SCRAP FLOOR PRICE</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>DIRECT INSTANT UPI BANK PAYOUTS</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>AUDITED CPCB GREEN RECYCLING CERTIFICATES</span>
+            <span className="marquee-divider" />
+          </div>
+        </Marquee>
+      </div>
+
+      {/* 2. Brutalist Navigation Bar */}
+      <div className="kinetic-container">
+        <div className="kinetic-nav-inner">
           
-          {/* Brand Logo */}
+          {/* Brand Mark */}
           <div 
-            className="nav-brand"
+            className="kinetic-brand"
             onClick={() => setActiveTab('overview')}
           >
-            <div className="nav-brand-logo">
-              <Recycle size={22} />
+            <div className="kinetic-brand-box">
+              C
             </div>
-            <div className="nav-brand-text">
-              <span className="nav-brand-name">Circlo</span>
-              <span className="nav-brand-sub">Circular Scrap Network</span>
+            <div>
+              <span className="kinetic-brand-title">CIRCLO</span>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="nav-links">
+          <nav className="kinetic-nav-links">
             <button 
-              className={`nav-link-btn ${activeTab === 'overview' ? 'active' : ''}`}
+              className={`kinetic-nav-btn ${activeTab === 'overview' ? 'active' : ''}`}
               onClick={() => setActiveTab('overview')}
             >
-              How It Works
+              HOW IT WORKS
             </button>
             <button 
-              className={`nav-link-btn ${activeTab === 'scanner' ? 'active' : ''}`}
+              className={`kinetic-nav-btn ${activeTab === 'scanner' ? 'active' : ''}`}
               onClick={() => setActiveTab('scanner')}
             >
-              AI Scanner
+              AI SCANNER
             </button>
             <button 
-              className={`nav-link-btn ${activeTab === 'map' ? 'active' : ''}`}
+              className={`kinetic-nav-btn ${activeTab === 'map' ? 'active' : ''}`}
               onClick={() => setActiveTab('map')}
             >
-              Find Recyclers
+              FIND RECYCLERS
             </button>
             <button 
-              className={`nav-link-btn ${activeTab === 'kabadiwala' ? 'active' : ''}`}
+              className={`kinetic-nav-btn ${activeTab === 'kabadiwala' ? 'active' : ''}`}
               onClick={() => setActiveTab('kabadiwala')}
             >
-              Collector Hub
+              COLLECTOR HUB
             </button>
             <button 
-              className={`nav-link-btn ${activeTab === 'cedar' ? 'active' : ''}`}
+              className={`kinetic-nav-btn ${activeTab === 'cedar' ? 'active' : ''}`}
               onClick={() => setActiveTab('cedar')}
             >
-              Fair Price Guard
+              FAIR PRICE GUARD
             </button>
             <button 
-              className={`nav-link-btn ${activeTab === 'impact' ? 'active' : ''}`}
+              className={`kinetic-nav-btn ${activeTab === 'impact' ? 'active' : ''}`}
               onClick={() => setActiveTab('impact')}
             >
-              Impact Ledger
+              IMPACT LEDGER
             </button>
           </nav>
 
-          {/* Nav Actions */}
-          <div className="nav-actions">
+          {/* Right Action Trigger */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button 
-              className="btn-outline sm"
-              onClick={() => setActiveTab('kabadiwala')}
-            >
-              <TrendingUp size={14} className="text-emerald" />
-              <span>Today's Rates</span>
-            </button>
-            <button 
-              className="btn-emerald sm"
+              className="btn-kinetic-primary"
+              style={{ height: '48px', padding: '0 24px', fontSize: '14px' }}
               onClick={() => setActiveTab('scanner')}
             >
-              <Smartphone size={15} />
-              <span>Scan Device</span>
+              <Smartphone size={16} />
+              <span>SCAN DEVICE</span>
             </button>
           </div>
 

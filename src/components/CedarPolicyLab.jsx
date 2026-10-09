@@ -3,17 +3,13 @@ import {
   ShieldAlert, 
   ShieldCheck, 
   Play, 
-  Code, 
   CheckCircle2, 
   XCircle, 
-  Clock, 
-  HelpCircle,
-  FileCode,
-  Zap,
-  RotateCcw
+  Zap, 
+  RotateCcw 
 } from 'lucide-react';
 import { CEDAR_SCENARIOS } from '../data/mockData';
-import { evaluateCedarRequest, CEDAR_POLICIES_SOURCE } from '../services/cedarEngine';
+import { evaluateCedarRequest } from '../services/cedarEngine';
 
 export default function CedarPolicyLab({ preselectedBatch }) {
   const [selectedScenarioIndex, setSelectedScenarioIndex] = useState(0);
@@ -49,7 +45,6 @@ export default function CedarPolicyLab({ preselectedBatch }) {
   };
 
   const handleRunEvaluation = () => {
-    // Construct modified principal and resource based on interactive controls
     const modifiedPrincipal = {
       ...currentScenario.principal,
       certifications: hasHazmatCert 
@@ -73,198 +68,201 @@ export default function CedarPolicyLab({ preselectedBatch }) {
   };
 
   return (
-    <div className="cedar-lab-container">
-      {/* Top Banner */}
-      <div className="tab-banner">
-        <div>
-          <h2>Automated Fair Price Guard & Worker Safety Engine</h2>
-          <p>
-            Circlo runs automated rule checks before every pickup to guarantee households are never underpaid by scrap brokers, 
-            and to ensure dangerous lithium batteries are only handled by trained, certified specialists.
-          </p>
-        </div>
-        <div className="cedar-brand-badge">
-          <ShieldCheck size={16} className="text-emerald" />
-          <span>Automated Consumer Safeguards</span>
-        </div>
+    <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
+      
+      {/* Section Header */}
+      <div style={{ marginBottom: '32px' }}>
+        <span style={{ 
+          fontFamily: 'var(--font-space)', 
+          fontSize: '13px', 
+          fontWeight: 800, 
+          letterSpacing: '0.12em', 
+          color: 'var(--accent-color)' 
+        }}>
+          [ COMPLIANCE ENGINE // AUTOMATED CITIZEN & WORKER PROTECTIONS ]
+        </span>
+        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
+          FAIR PRICE & SAFETY GUARD.
+        </h2>
+        <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '12px' }}>
+          Before any scrap hand-off occurs, automated policy rules evaluate the transaction. 
+          Brokers cannot bid below the 85% price floor, and hazardous batteries are forbidden without safety gear.
+        </p>
       </div>
 
-      {/* Scenario Selector Tabs */}
-      <div className="scenario-selector-grid">
+      {/* 3 Scenario Cards in Hairline Grid */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(3, 1fr)', 
+        gap: '2px', 
+        backgroundColor: 'var(--border-color)',
+        border: '2px solid var(--border-color)',
+        marginBottom: '32px'
+      }}>
         {CEDAR_SCENARIOS.map((sc, idx) => (
           <div 
             key={sc.id}
-            className={`scenario-card ${selectedScenarioIndex === idx ? 'active' : ''}`}
+            style={{
+              padding: '28px',
+              backgroundColor: selectedScenarioIndex === idx ? 'var(--accent-color)' : 'var(--bg-color)',
+              color: selectedScenarioIndex === idx ? '#000000' : 'var(--fg-color)',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
             onClick={() => handleSelectScenario(idx)}
           >
-            <div className="sc-header">
-              <span className="sc-idx">Scenario 0{idx + 1}</span>
-              <span className={`sc-badge ${sc.expectedDecision === 'ALLOW' ? 'allow' : 'deny'}`}>
-                Expected: {sc.expectedDecision}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '13px', fontWeight: 800 }}>
+              <span>RULE 0{idx + 1}</span>
+              <span style={{ 
+                padding: '2px 8px', 
+                backgroundColor: sc.expectedDecision === 'ALLOW' ? '#000000' : '#dc2626',
+                color: sc.expectedDecision === 'ALLOW' ? 'var(--accent-color)' : '#ffffff',
+                fontSize: '11px'
+              }}>
+                {sc.expectedDecision}
               </span>
             </div>
-            <h4 className="sc-title">{sc.title}</h4>
-            <p className="sc-rationale">{sc.triggerPolicy}</p>
+            <h4 style={{ 
+              fontSize: '20px', 
+              fontWeight: 800, 
+              textTransform: 'uppercase',
+              color: selectedScenarioIndex === idx ? '#000000' : 'var(--fg-color)'
+            }}>
+              {sc.title}
+            </h4>
+            <p style={{ 
+              fontSize: '13px', 
+              color: selectedScenarioIndex === idx ? 'rgba(0,0,0,0.8)' : 'var(--muted-fg-color)',
+              marginTop: '6px'
+            }}>
+              {sc.triggerPolicy}
+            </p>
           </div>
         ))}
       </div>
 
-      {/* Main Split: Code Viewer & Interactive Evaluator */}
-      <div className="cedar-workbench-split">
-        {/* Left Column: Cedar Policy Code Viewer */}
-        <div className="code-viewer-card">
-          <div className="card-header-row">
-            <div className="flex-align">
-              <FileCode size={16} className="text-cyan" />
-              <span>policies.cedar (Active AWS Policy Definitions)</span>
-            </div>
-            <span className="code-lang-tag">Cedar v2.4</span>
+      {/* Decision Banner (Massive Kinetic Announcement) */}
+      <div style={{ 
+        padding: '32px', 
+        backgroundColor: evaluationResult.decision === 'ALLOW' ? 'var(--accent-color)' : '#991b1b',
+        color: evaluationResult.decision === 'ALLOW' ? '#000000' : '#ffffff',
+        border: '2px solid var(--border-color)',
+        marginBottom: '32px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '20px'
+      }}>
+        <div>
+          <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, letterSpacing: '0.1em' }}>
+            AUTOMATED VERDICT:
+          </span>
+          <div style={{ fontFamily: 'var(--font-space)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1 }}>
+            {evaluationResult.decision === 'ALLOW' ? 'TRADE AUTHORIZED [PERMITTED]' : 'ACTION FORBIDDEN [BLOCKED]'}
           </div>
-          <div className="code-scroll-area">
-            <pre className="cedar-code-pre">
-              <code>{CEDAR_POLICIES_SOURCE}</code>
-            </pre>
-          </div>
+          <p style={{ 
+            fontFamily: 'var(--font-inter)', 
+            fontSize: '16px', 
+            fontWeight: 600, 
+            marginTop: '8px',
+            color: evaluationResult.decision === 'ALLOW' ? '#000000' : '#ffffff'
+          }}>
+            {evaluationResult.explanation}
+          </p>
         </div>
 
-        {/* Right Column: Interactive Test Bench & Result */}
-        <div className="evaluator-card">
-          <div className="card-header-row">
-            <div className="flex-align">
-              <Play size={16} className="text-emerald" />
-              <span>Interactive Evaluation Inspector</span>
-            </div>
-            <button className="btn-run-eval" onClick={handleRunEvaluation}>
-              <Play size={14} />
-              <span>Run Cedar Check</span>
+        <div style={{ 
+          padding: '16px 24px', 
+          backgroundColor: '#000000', 
+          color: 'var(--accent-color)', 
+          fontFamily: 'var(--font-space)',
+          fontSize: '14px',
+          fontWeight: 800,
+          border: '2px solid #000000'
+        }}>
+          LATENCY: {evaluationResult.latencyMs} MS
+        </div>
+      </div>
+
+      {/* Interactive Parameter Controls */}
+      <div style={{ 
+        border: '2px solid var(--border-color)', 
+        backgroundColor: 'var(--muted-color)', 
+        padding: '32px' 
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+          <h3 style={{ fontSize: '20px', fontWeight: 800, textTransform: 'uppercase' }}>
+            TEST LIVE PRICE & HAZARD CONTROLS
+          </h3>
+          <button 
+            className="btn-kinetic-primary"
+            style={{ height: '42px', padding: '0 20px', fontSize: '13px' }}
+            onClick={handleRunEvaluation}
+          >
+            <Play size={15} />
+            <span>REEVALUATE RULE ENGINE</span>
+          </button>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+          <div>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
+              OFFERED PRICE PER KG: ₹{offeredPrice}
+            </label>
+            <input 
+              type="range" 
+              min="200" 
+              max="1000" 
+              step="10" 
+              value={offeredPrice}
+              onChange={(e) => setOfferedPrice(Number(e.target.value))}
+              style={{ width: '100%', accentColor: 'var(--accent-color)' }}
+            />
+            <span style={{ fontSize: '12px', color: 'var(--muted-fg-color)' }}>
+              Benchmark floor: ₹{(benchmarkPrice * 0.85).toFixed(0)} (85% rule)
+            </span>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
+              MATERIAL HAZARD LEVEL: LVL {hazardLevel}
+            </label>
+            <input 
+              type="range" 
+              min="1" 
+              max="5" 
+              value={hazardLevel}
+              onChange={(e) => setHazardLevel(Number(e.target.value))}
+              style={{ width: '100%', accentColor: 'var(--accent-color)' }}
+            />
+            <span style={{ fontSize: '12px', color: 'var(--muted-fg-color)' }}>
+              Levels 3-5 require Hazmat certification
+            </span>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
+              WORKER CERTIFICATION
+            </label>
+            <button
+              style={{
+                width: '100%',
+                padding: '12px',
+                border: '2px solid var(--border-color)',
+                backgroundColor: hasHazmatCert ? 'var(--accent-color)' : 'var(--bg-color)',
+                color: hasHazmatCert ? '#000000' : 'var(--fg-color)',
+                fontWeight: 800,
+                fontSize: '13px'
+              }}
+              onClick={() => setHasHazmatCert(!hasHazmatCert)}
+            >
+              {hasHazmatCert ? '✅ HAZMAT L2 CERTIFIED' : '❌ STANDARD COLLECTOR'}
             </button>
-          </div>
-
-          {/* Live Decision Display Banner */}
-          <div className={`decision-banner ${evaluationResult.decision.toLowerCase()}`}>
-            <div className="decision-status-row">
-              <div className="flex-align">
-                {evaluationResult.decision === 'ALLOW' ? (
-                  <CheckCircle2 size={32} className="icon-allow" />
-                ) : (
-                  <XCircle size={32} className="icon-deny" />
-                )}
-                <div>
-                  <div className="decision-title">
-                    AUTHORIZATION DECISION: {evaluationResult.decision}
-                  </div>
-                  <div className="decision-latency">
-                    <Clock size={12} /> Evaluated in {evaluationResult.evaluationTimeMs} ms • AWS Cedar Engine
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p className="decision-reason">{evaluationResult.reason}</p>
-          </div>
-
-          {/* Interactive Parameters Editor */}
-          <div className="param-editor-panel">
-            <h4>Live Test Parameters (Tweak & Re-evaluate):</h4>
-
-            <div className="param-form-grid">
-              {/* Parameter 1: Principal Certifications */}
-              <div className="param-item">
-                <label className="param-label">Principal Hazmat L2 Certified?</label>
-                <div className="toggle-chip-group">
-                  <button 
-                    className={`btn-chip ${hasHazmatCert ? 'selected' : ''}`}
-                    onClick={() => setHasHazmatCert(true)}
-                  >
-                    Yes (HAZMAT_EWASTE_L2)
-                  </button>
-                  <button 
-                    className={`btn-chip ${!hasHazmatCert ? 'selected' : ''}`}
-                    onClick={() => setHasHazmatCert(false)}
-                  >
-                    No (Uncertified)
-                  </button>
-                </div>
-              </div>
-
-              {/* Parameter 2: Resource Hazard Level */}
-              <div className="param-item">
-                <label className="param-label">Scrap Hazard Level (1 - 5):</label>
-                <div className="hazard-range-row">
-                  <input 
-                    type="range" 
-                    min="1" 
-                    max="5" 
-                    value={hazardLevel} 
-                    onChange={(e) => setHazardLevel(Number(e.target.value))}
-                    className="range-slider"
-                  />
-                  <strong className={`hazard-num lvl-${hazardLevel}`}>Level {hazardLevel}</strong>
-                </div>
-              </div>
-
-              {/* Parameter 3: Pricing Check (if applicable) */}
-              {currentScenario.action.includes('submitPurchaseBid') && (
-                <div className="param-item full-width">
-                  <label className="param-label">
-                    Broker Offered Price vs Civic Floor Benchmark (₹/kg):
-                  </label>
-                  <div className="price-inputs-row">
-                    <div>
-                      <small>Offered Bid Price:</small>
-                      <input 
-                        type="number" 
-                        value={offeredPrice} 
-                        onChange={(e) => setOfferedPrice(Number(e.target.value))}
-                        className="param-input"
-                      />
-                    </div>
-                    <div>
-                      <small>Civic Benchmark Rate:</small>
-                      <input 
-                        type="number" 
-                        value={benchmarkPrice} 
-                        onChange={(e) => setBenchmarkPrice(Number(e.target.value))}
-                        className="param-input"
-                      />
-                    </div>
-                    <div className="calc-note">
-                      Min Allowed (85%): ₹{(benchmarkPrice * 0.85).toFixed(1)}/kg
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="eval-btn-row">
-              <button className="btn-re-evaluate" onClick={handleRunEvaluation}>
-                <RotateCcw size={14} />
-                <span>Evaluate with modified parameters</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Matched Policies Diagnostic */}
-          <div className="diagnostics-panel">
-            <h4>Evaluation Trace:</h4>
-            {evaluationResult.matchedForbids.length > 0 && (
-              <div className="trace-item forbid">
-                <strong>Matching Forbid Policies:</strong>
-                {evaluationResult.matchedForbids.map((f, i) => (
-                  <p key={i}>⛔ {f.clause}: {f.description}</p>
-                ))}
-              </div>
-            )}
-            {evaluationResult.matchedPermits.length > 0 && (
-              <div className="trace-item permit">
-                <strong>Matching Permit Policies:</strong>
-                {evaluationResult.matchedPermits.map((p, i) => (
-                  <p key={i}>✅ {p.clause}: {p.description}</p>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </div>
+
     </div>
   );
 }

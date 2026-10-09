@@ -9,7 +9,7 @@ import CedarPolicyLab from './components/CedarPolicyLab';
 import ImpactLedger from './components/ImpactLedger';
 import PickupModal from './components/PickupModal';
 import CertificateModal from './components/CertificateModal';
-import { Recycle, ShieldCheck, Heart, Sparkles } from 'lucide-react';
+import Marquee from 'react-fast-marquee';
 import './App.css';
 
 export default function App() {
@@ -20,7 +20,7 @@ export default function App() {
   const [pickupRecycler, setPickupRecycler] = useState(null);
   const [pickupItem, setPickupItem] = useState(null);
   
-  // Modals
+  // Certificate Modal State
   const [certModalData, setCertModalData] = useState(null);
 
   const handleSelectRecyclerForScrap = (sample) => {
@@ -38,13 +38,23 @@ export default function App() {
   };
 
   return (
-    <div className="app-shell">
-      {/* Top Floating Navbar */}
+    <div className="kinetic-shell">
+      
+      {/* Subtle Noise Texture Overlay */}
+      <svg className="kinetic-noise-overlay" aria-hidden="true">
+        <filter id="noiseFilter">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+      </svg>
+
+      {/* Top Floating Navbar with Marquee */}
       <Header 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab}
+        setActiveTab={setActiveTab} 
       />
 
+      {/* Main Content Area */}
       <main style={{ flex: 1 }}>
         {activeTab === 'overview' && (
           <>
@@ -52,16 +62,26 @@ export default function App() {
             <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
             
             {/* Live Interactive Scanner Playground directly in Overview */}
-            <section className="section-wrapper" style={{ paddingTop: '20px' }}>
-              <div className="app-container">
-                <div className="section-head">
-                  <div className="section-eyebrow">Interactive Studio</div>
-                  <h2 className="section-h2">Try the AI Vision Scanner Live</h2>
-                  <p className="section-desc">
-                    Select any sample device below or upload a photo to immediately detect components, 
-                    view precious metal yields, and check your guaranteed cash payout.
+            <section className="kinetic-section" style={{ borderBottom: 'none' }}>
+              <div className="kinetic-container">
+                <div style={{ marginBottom: '40px' }}>
+                  <span style={{ 
+                    fontFamily: 'var(--font-space)', 
+                    fontSize: '13px', 
+                    fontWeight: 800, 
+                    color: 'var(--accent-color)', 
+                    letterSpacing: '0.12em' 
+                  }}>
+                    [ 03 // LIVE CAMERA ENGINE ]
+                  </span>
+                  <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '12px' }}>
+                    TEST THE AI SPECTROMETER.
+                  </h2>
+                  <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '14px' }}>
+                    Click any sample preset below to inspect bounding box computer vision, extracted metal rates, and verified payouts.
                   </p>
                 </div>
+
                 <ScannerTab 
                   onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
                   onOpenCedarForBatch={handleOpenCedarForBatch}
@@ -72,119 +92,140 @@ export default function App() {
         )}
 
         {activeTab === 'scanner' && (
-          <div className="section-wrapper">
-            <div className="app-container">
-              <ScannerTab 
-                onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
-                onOpenCedarForBatch={handleOpenCedarForBatch}
-              />
-            </div>
+          <div className="kinetic-container">
+            <ScannerTab 
+              onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
+              onOpenCedarForBatch={handleOpenCedarForBatch}
+            />
           </div>
         )}
 
         {activeTab === 'map' && (
-          <div className="section-wrapper">
-            <div className="app-container">
-              <MapTab 
-                prefilteredSample={prefilteredSample}
-                onRequestPickup={handleRequestPickup}
-              />
-            </div>
+          <div className="kinetic-container">
+            <MapTab 
+              prefilteredSample={prefilteredSample}
+              onRequestPickup={handleRequestPickup}
+            />
           </div>
         )}
 
         {activeTab === 'kabadiwala' && (
-          <div className="section-wrapper">
-            <div className="app-container">
-              <KabadiwalaHub 
-                onRequestPickup={handleRequestPickup}
-              />
-            </div>
+          <div className="kinetic-container">
+            <KabadiwalaHub 
+              onRequestPickup={handleRequestPickup}
+            />
           </div>
         )}
 
         {activeTab === 'cedar' && (
-          <div className="section-wrapper">
-            <div className="app-container">
-              <CedarPolicyLab 
-                preselectedBatch={pickupItem}
-              />
-            </div>
+          <div className="kinetic-container">
+            <CedarPolicyLab 
+              preselectedBatch={pickupItem}
+            />
           </div>
         )}
 
         {activeTab === 'impact' && (
-          <div className="section-wrapper">
-            <div className="app-container">
-              <ImpactLedger 
-                onOpenCertificateModal={(data) => setCertModalData(data)}
-              />
-            </div>
+          <div className="kinetic-container">
+            <ImpactLedger 
+              onOpenCertificateModal={(data) => setCertModalData(data)}
+            />
           </div>
         )}
       </main>
 
-      {/* Clean Modern Platform Footer */}
-      <footer className="app-footer">
-        <div className="app-container">
-          <div className="footer-top">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div className="nav-brand-logo" style={{ width: '32px', height: '32px' }}>
-                <Recycle size={18} />
-              </div>
-              <div>
-                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '18px', color: '#ffffff' }}>
-                  Circlo
-                </span>
-                <span style={{ display: 'block', fontSize: '12px', color: 'var(--text-muted)' }}>
-                  Decentralized Circular E-Waste & Fair Scrap Economy
-                </span>
-              </div>
+      {/* Full Bleed Marquee Before Footer */}
+      <div className="kinetic-marquee-strip">
+        <Marquee speed={85} gradient={false} autoFill={true}>
+          <div className="marquee-item">
+            <span>NO RIGGED SCALES</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>NO BACKYARD WIRE BURNING</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>DIRECT TO COLLECTOR UPI PAYOUTS</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>85% COMMODITY FLOOR PRICE MANDATE</span>
+            <span className="marquee-divider" />
+          </div>
+          <div className="marquee-item">
+            <span>AUDITED CPCB CERTIFICATION</span>
+            <span className="marquee-divider" />
+          </div>
+        </Marquee>
+      </div>
+
+      {/* Monumental Kinetic Footer */}
+      <footer className="kinetic-footer">
+        <div className="kinetic-container">
+          
+          <div className="footer-massive-text">
+            CLOSE THE LOOP.<br />
+            PROTECT THE STREETS.
+          </div>
+
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            flexWrap: 'wrap', 
+            gap: '24px',
+            borderTop: '2px solid var(--border-color)',
+            paddingTop: '32px'
+          }}>
+            <div>
+              <span style={{ fontFamily: 'var(--font-space)', fontWeight: 900, fontSize: '24px', color: '#ffffff' }}>
+                CIRCLO.
+              </span>
+              <p style={{ fontSize: '13px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
+                DECENTRALIZED CIRCULAR E-WASTE & FAIR SCRAP NETWORK
+              </p>
             </div>
 
-            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', fontSize: '14px' }}>
+            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
               <button 
-                style={{ color: 'var(--text-secondary)' }}
+                className="btn-kinetic-ghost"
                 onClick={() => setActiveTab('overview')}
               >
-                How It Works
+                HOW IT WORKS
               </button>
               <button 
-                style={{ color: 'var(--text-secondary)' }}
+                className="btn-kinetic-ghost"
                 onClick={() => setActiveTab('scanner')}
               >
-                AI Scanner
+                AI SCANNER
               </button>
               <button 
-                style={{ color: 'var(--text-secondary)' }}
+                className="btn-kinetic-ghost"
                 onClick={() => setActiveTab('map')}
               >
-                Find Recyclers
+                FIND RECYCLERS
               </button>
               <button 
-                style={{ color: 'var(--text-secondary)' }}
+                className="btn-kinetic-ghost"
                 onClick={() => setActiveTab('kabadiwala')}
               >
-                Collector Welfare
+                COLLECTOR HUB
               </button>
               <button 
-                style={{ color: 'var(--text-secondary)' }}
+                className="btn-kinetic-ghost"
                 onClick={() => setActiveTab('impact')}
               >
-                Green Impact
+                IMPACT LEDGER
               </button>
             </div>
           </div>
 
-          <div className="footer-bottom">
-            <p>
-              © 2026 Circlo Network. Dedicated to the health, dignity, and economic empowerment of 1.5 million grassroots recycling workers.
-            </p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-emerald)', fontSize: '12px', fontWeight: 600 }}>
-              <ShieldCheck size={14} />
-              <span>CPCB Safe E-Waste Rules 2022 Compliant</span>
-            </div>
+          <div style={{ marginTop: '24px', fontSize: '12px', color: 'var(--muted-fg-color)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+            <span>© 2026 CIRCLO // DEDICATED TO 1.5 MILLION FRONTLINE KABADIWALAS</span>
+            <span style={{ color: 'var(--accent-color)' }}>[ CPCB E-WASTE MANAGEMENT RULES 2022 COMPLIANT ]</span>
           </div>
+
         </div>
       </footer>
 
@@ -204,6 +245,7 @@ export default function App() {
           onClose={() => setCertModalData(null)}
         />
       )}
+
     </div>
   );
 }

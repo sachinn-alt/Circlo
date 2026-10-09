@@ -3,11 +3,8 @@ import {
   X, 
   CheckCircle2, 
   Truck, 
-  MapPin, 
-  ShieldCheck, 
-  QrCode, 
-  CreditCard,
-  Scale
+  Scale, 
+  CreditCard 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -26,114 +23,154 @@ export default function PickupModal({ recycler, item, onClose }) {
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <div className="flex-align">
-            <Truck size={20} className="text-emerald" />
-            <h3>{pickupConfirmed ? "Pickup Dispatched!" : "Confirm Doorstep E-Waste Pickup"}</h3>
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2000,
+      padding: '20px'
+    }} onClick={onClose}>
+      
+      <div style={{
+        backgroundColor: '#09090b',
+        border: '2px solid var(--accent-color)',
+        maxWidth: '560px',
+        width: '100%',
+        padding: '36px',
+        color: '#fafafa'
+      }} onClick={(e) => e.stopPropagation()}>
+        
+        {/* Modal Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '16px', marginBottom: '24px' }}>
+          <div>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', letterSpacing: '0.1em' }}>
+              [ DOORSTEP DISPATCH PROTOCOL ]
+            </span>
+            <h3 style={{ fontFamily: 'var(--font-space)', fontSize: '24px', fontWeight: 800, textTransform: 'uppercase', marginTop: '4px' }}>
+              {pickupConfirmed ? "PICKUP DISPATCHED!" : "CONFIRM DOORSTEP PICKUP"}
+            </h3>
           </div>
-          <button className="btn-modal-close" onClick={onClose}>
-            <X size={18} />
+          <button 
+            style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer' }}
+            onClick={onClose}
+          >
+            <X size={22} />
           </button>
         </div>
 
         {!pickupConfirmed ? (
-          <div className="modal-body">
-            {/* Collector Summary Card */}
-            <div className="modal-collector-card">
-              <img src={recycler.avatar} alt={recycler.name} className="modal-avatar" />
+          <div>
+            {/* Collector Recap */}
+            <div style={{ 
+              backgroundColor: 'var(--muted-color)', 
+              border: '2px solid var(--border-color)', 
+              padding: '16px',
+              display: 'flex',
+              gap: '16px',
+              alignItems: 'center',
+              marginBottom: '20px'
+            }}>
+              <img 
+                src={recycler.avatar} 
+                alt={recycler.name} 
+                style={{ width: '48px', height: '48px', objectFit: 'cover', border: '2px solid var(--accent-color)' }}
+              />
               <div>
-                <div className="modal-collector-name">{recycler.name}</div>
-                <div className="modal-collector-meta">
-                  <span>{recycler.vehicleType}</span> • <span>ETA ~{recycler.currentEtaMinutes} mins</span>
-                </div>
-                <div className="modal-badges-row">
-                  <span className="badge-fair-price">★ Fair Floor Pledge</span>
-                  {recycler.certifications.includes("HAZMAT_EWASTE_L2") && (
-                    <span className="badge-hazmat">⚡ Hazmat L2 Certified</span>
-                  )}
-                </div>
+                <strong style={{ fontFamily: 'var(--font-space)', fontSize: '16px', textTransform: 'uppercase' }}>
+                  {recycler.name}
+                </strong>
+                <p style={{ fontSize: '12px', color: 'var(--muted-fg-color)', marginTop: '2px' }}>
+                  {recycler.vehicleType} • ETA ~{recycler.currentEtaMinutes} MINS • PINCODE: {recycler.pincode}
+                </p>
               </div>
             </div>
 
-            {/* Item being recycled */}
-            {item && (
-              <div className="modal-item-recap">
-                <span className="recap-label">Item for Pickup:</span>
-                <strong className="recap-title">{item.title}</strong>
-                <span className="recap-value">Est. Payout: ₹{item.recoveryValue?.fairBenchmark}</span>
-              </div>
-            )}
-
-            {/* Address & Contact Input */}
-            <div className="modal-form">
-              <label>
-                <span>Pickup Address:</span>
+            {/* Address & Phone */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', fontFamily: 'var(--font-space)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '6px' }}>
+                  PICKUP ADDRESS:
+                </label>
                 <input 
                   type="text" 
                   value={address} 
                   onChange={(e) => setAddress(e.target.value)} 
-                  className="modal-input"
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#000000',
+                    border: '2px solid var(--border-color)',
+                    color: '#fafafa',
+                    padding: '12px 14px',
+                    fontFamily: 'var(--font-space)',
+                    fontSize: '14px'
+                  }}
                 />
-              </label>
+              </div>
 
-              <label>
-                <span>Resident Contact Phone (for SMS PIN):</span>
+              <div>
+                <label style={{ display: 'block', fontSize: '12px', fontFamily: 'var(--font-space)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '6px' }}>
+                  RESIDENT PHONE FOR OTP:
+                </label>
                 <input 
                   type="text" 
                   value={phone} 
                   onChange={(e) => setPhone(e.target.value)} 
-                  className="modal-input"
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#000000',
+                    border: '2px solid var(--border-color)',
+                    color: '#fafafa',
+                    padding: '12px 14px',
+                    fontFamily: 'var(--font-space)',
+                    fontSize: '14px'
+                  }}
                 />
-              </label>
-            </div>
-
-            {/* Circlo Trust Guarantees */}
-            <div className="modal-guarantees">
-              <div className="guarantee-row">
-                <Scale size={16} className="text-cyan" />
-                <span><strong>Calibrated Digital Scale:</strong> Weight verified digitally via QR code.</span>
-              </div>
-              <div className="guarantee-row">
-                <CreditCard size={16} className="text-emerald" />
-                <span><strong>Direct UPI Instant Payout:</strong> Zero commission deducted from informal worker.</span>
-              </div>
-              <div className="guarantee-row">
-                <ShieldCheck size={16} className="text-amber" />
-                <span><strong>AWS Cedar Policy Guard:</strong> Zero landfill / zero toxic burning contract.</span>
               </div>
             </div>
 
-            <button className="btn-confirm-pickup" onClick={handleConfirm}>
-              <span>Confirm & Dispatch {recycler.name}</span>
+            {/* Action Trigger */}
+            <button 
+              className="btn-kinetic-primary"
+              style={{ width: '100%' }}
+              onClick={handleConfirm}
+            >
+              <span>CONFIRM PICKUP & DISPATCH OTP →</span>
             </button>
           </div>
         ) : (
-          <div className="modal-success-state">
-            <CheckCircle2 size={54} className="text-emerald" />
-            <h3>Collector Dispatched!</h3>
-            <p>
-              <strong>{recycler.name}</strong> is on their way in an <strong>{recycler.vehicleType}</strong>.
+          <div style={{ textAlign: 'center', padding: '24px 0' }}>
+            <div style={{ 
+              width: '64px', 
+              height: '64px', 
+              backgroundColor: 'var(--accent-color)', 
+              color: '#000000', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              margin: '0 auto 20px auto',
+              fontWeight: 900,
+              fontSize: '28px'
+            }}>
+              ✓
+            </div>
+            <h4 style={{ fontFamily: 'var(--font-space)', fontSize: '24px', fontWeight: 800, textTransform: 'uppercase' }}>
+              DISPATCH CONFIRMED!
+            </h4>
+            <p style={{ fontSize: '15px', color: 'var(--muted-fg-color)', margin: '12px 0 24px 0' }}>
+              {recycler.name} is on the way. Your calibrated Bluetooth scale security pin is <strong>#4821</strong>.
             </p>
-            <div className="eta-badge-large">
-              Estimated Arrival: ~{recycler.currentEtaMinutes} Minutes
-            </div>
-
-            <div className="qr-pass-box">
-              <QrCode size={90} className="qr-code-img" />
-              <div className="qr-pass-info">
-                <span>Handover Verification Code:</span>
-                <strong className="otp-code">7492</strong>
-                <small>Show this to {recycler.name} upon weight confirmation.</small>
-              </div>
-            </div>
-
-            <button className="btn-done" onClick={onClose}>
-              Done & Return to Dashboard
+            <button 
+              className="btn-kinetic-primary"
+              onClick={onClose}
+            >
+              <span>RETURN TO PLATFORM</span>
             </button>
           </div>
         )}
+
       </div>
     </div>
   );

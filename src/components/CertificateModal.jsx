@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Award, ShieldCheck, QrCode, Printer, CheckCircle2 } from 'lucide-react';
+import { X, Award, Printer, QrCode } from 'lucide-react';
 
 export default function CertificateModal({ certData, onClose }) {
   const handlePrint = () => {
@@ -7,81 +7,132 @@ export default function CertificateModal({ certData, onClose }) {
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal-card cert-print-card" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header no-print">
-          <div className="flex-align">
-            <Award size={20} className="text-emerald" />
-            <h3>Circular Economy & EPR Compliance Certificate</h3>
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 2000,
+      padding: '20px'
+    }} onClick={onClose}>
+      
+      <div style={{
+        backgroundColor: '#09090b',
+        border: '2px solid var(--accent-color)',
+        maxWidth: '720px',
+        width: '100%',
+        padding: '36px',
+        color: '#fafafa'
+      }} onClick={(e) => e.stopPropagation()}>
+        
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '16px', marginBottom: '24px' }}>
+          <div>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)', letterSpacing: '0.1em' }}>
+              [ CPCB VERIFIABLE AUDIT DOCKET ]
+            </span>
+            <h3 style={{ fontFamily: 'var(--font-space)', fontSize: '24px', fontWeight: 800, textTransform: 'uppercase', marginTop: '4px' }}>
+              CIRCULAR STEWARDSHIP CERTIFICATE
+            </h3>
           </div>
-          <div className="flex-align">
-            <button className="btn-print" onClick={handlePrint}>
-              <Printer size={15} />
-              <span>Print / Save PDF</span>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <button 
+              className="btn-kinetic-outline"
+              style={{ height: '38px', padding: '0 16px', fontSize: '12px' }}
+              onClick={handlePrint}
+            >
+              <Printer size={14} />
+              <span>PRINT / PDF</span>
             </button>
-            <button className="btn-modal-close" onClick={onClose}>
-              <X size={18} />
+            <button 
+              style={{ color: '#fafafa', background: 'none', border: 'none', cursor: 'pointer' }}
+              onClick={onClose}
+            >
+              <X size={22} />
             </button>
           </div>
         </div>
 
-        {/* Certificate Printable Body */}
-        <div className="cert-document-frame">
-          <div className="cert-inner-border">
-            <div className="cert-logo-row">
-              <div className="cert-logo-mark">CIRCLO</div>
-              <div className="cert-badge-tag">CPCB / EPR COMPLIANT</div>
+        {/* Certificate Printable Inner Frame */}
+        <div style={{ 
+          border: '2px solid var(--border-color)', 
+          padding: '28px',
+          backgroundColor: '#000000'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <div style={{ fontFamily: 'var(--font-space)', fontSize: '28px', fontWeight: 900, letterSpacing: '-0.05em' }}>
+              CIRCLO // 2026
             </div>
+            <span style={{ 
+              backgroundColor: 'var(--accent-color)', 
+              color: '#000000', 
+              fontFamily: 'var(--font-space)', 
+              fontSize: '11px', 
+              fontWeight: 800, 
+              padding: '4px 10px' 
+            }}>
+              CPCB EPR COMPLIANT
+            </span>
+          </div>
 
-            <h1 className="cert-main-title">Certificate of Circular Stewardship</h1>
-            <p className="cert-lead">
-              This document officially certifies verifiable e-waste recovery, toxic diversion, and informal recycler economic inclusion under the Central Pollution Control Board (CPCB) E-Waste Management Rules.
-            </p>
+          <p style={{ fontFamily: 'var(--font-inter)', fontSize: '14px', color: 'var(--muted-fg-color)', marginBottom: '24px' }}>
+            This document certifies verifiable e-waste diversion from burning landfills, heavy metal recovery, and informal collector economic inclusion.
+          </p>
 
-            <div className="cert-recipient-box">
-              <span className="recip-label">Issued to:</span>
-              <strong className="recip-name">Household Environmental Contributor / Circlo Member</strong>
-              <span className="recip-id">Transaction Batch UID: CIRCLO-2026-EW-98124</span>
+          {/* Key Metrics Grid */}
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(4, 1fr)', 
+            gap: '2px', 
+            backgroundColor: 'var(--border-color)',
+            border: '2px solid var(--border-color)',
+            marginBottom: '24px'
+          }}>
+            <div style={{ backgroundColor: '#09090b', padding: '16px' }}>
+              <strong style={{ fontFamily: 'var(--font-space)', fontSize: '24px', color: '#10b981', display: 'block' }}>
+                {certData?.co2Kg || 148} KG
+              </strong>
+              <span style={{ fontSize: '11px', color: 'var(--muted-fg-color)' }}>CO₂ ABATED</span>
             </div>
-
-            <div className="cert-metrics-showcase">
-              <div className="cert-stat-box">
-                <span className="val">{certData?.co2Kg || 148} kg</span>
-                <span className="lbl">CO₂ Emissions Abated</span>
-              </div>
-              <div className="cert-stat-box">
-                <span className="val">{certData?.goldGrams || 0.45}g</span>
-                <span className="lbl">Gold Diverted from Ore Mining</span>
-              </div>
-              <div className="cert-stat-box">
-                <span className="val">{certData?.copperKg || 1.85} kg</span>
-                <span className="lbl">Grade-1 Pure Copper Saved</span>
-              </div>
-              <div className="cert-stat-box">
-                <span className="val">100%</span>
-                <span className="lbl">Informal Fair Payout Honored</span>
-              </div>
+            <div style={{ backgroundColor: '#09090b', padding: '16px' }}>
+              <strong style={{ fontFamily: 'var(--font-space)', fontSize: '24px', color: 'var(--accent-color)', display: 'block' }}>
+                {certData?.goldGrams || 0.45}G
+              </strong>
+              <span style={{ fontSize: '11px', color: 'var(--muted-fg-color)' }}>GOLD SAVED</span>
             </div>
+            <div style={{ backgroundColor: '#09090b', padding: '16px' }}>
+              <strong style={{ fontFamily: 'var(--font-space)', fontSize: '24px', color: '#fafafa', display: 'block' }}>
+                {certData?.copperKg || 1.85} KG
+              </strong>
+              <span style={{ fontSize: '11px', color: 'var(--muted-fg-color)' }}>COPPER RECOVERED</span>
+            </div>
+            <div style={{ backgroundColor: '#09090b', padding: '16px' }}>
+              <strong style={{ fontFamily: 'var(--font-space)', fontSize: '24px', color: '#38bdf8', display: 'block' }}>
+                100%
+              </strong>
+              <span style={{ fontSize: '11px', color: 'var(--muted-fg-color)' }}>UPI PAID</span>
+            </div>
+          </div>
 
-            <div className="cert-footer-row">
-              <div className="cert-signatures">
-                <div className="sig-block">
-                  <div className="sig-line">CedarPolicyEngine()</div>
-                  <span>AWS Cedar Authorization Signer</span>
-                </div>
-                <div className="sig-block">
-                  <div className="sig-line">CPCB / C-Circle Registry</div>
-                  <span>Civic Sustainability Officer</span>
-                </div>
-              </div>
-
-              <div className="cert-qr-block">
-                <QrCode size={64} />
-                <small>Scan to verify on-chain & OpenSearch ledger</small>
-              </div>
+          {/* Verification Hash & Signature */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px solid var(--border-color)', paddingTop: '16px', fontSize: '12px' }}>
+            <div>
+              <span style={{ color: 'var(--muted-fg-color)', display: 'block' }}>TRANSACTION BATCH UID:</span>
+              <strong style={{ fontFamily: 'var(--font-space)', color: 'var(--accent-color)' }}>
+                CIRCLO-2026-EPR-98124-DELHI
+              </strong>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ color: 'var(--muted-fg-color)', display: 'block' }}>POLICY VERIFICATION:</span>
+              <strong style={{ fontFamily: 'var(--font-space)', color: '#ffffff' }}>
+                CEDAR.SAFE_DISPOSAL.AUTHORIZED
+              </strong>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );

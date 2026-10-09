@@ -2,26 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   MapPin, 
   Search, 
-  Sliders, 
   ShieldCheck, 
-  Navigation, 
   Clock, 
-  Code, 
-  ChevronDown, 
-  ChevronUp, 
-  Sparkles,
-  Truck,
-  CheckCircle,
-  AlertCircle
+  Truck, 
+  AlertCircle,
+  ArrowRight
 } from 'lucide-react';
-import { searchRecyclersOpenSearch, calculateDistanceKm } from '../services/openSearchClient';
+import { searchRecyclersOpenSearch } from '../services/openSearchClient';
 
 export default function MapTab({ prefilteredSample, onRequestPickup }) {
   const [userLocation, setUserLocation] = useState({ lat: 28.6139, lon: 77.2090, city: "New Delhi (Connaught Place)" });
   const [radiusKm, setRadiusKm] = useState(8);
   const [selectedMaterial, setSelectedMaterial] = useState(prefilteredSample ? prefilteredSample.category : "");
   const [verifiedOnly, setVerifiedOnly] = useState(true);
-  const [showQueryDsl, setShowQueryDsl] = useState(false);
   const [selectedRecycler, setSelectedRecycler] = useState(null);
 
   // Map DOM reference
@@ -29,7 +22,7 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
   const leafletMapRef = useRef(null);
   const markersRef = useRef([]);
 
-  // Perform OpenSearch Query
+  // Query Recyclers
   const searchResults = searchRecyclersOpenSearch(
     userLocation.lat,
     userLocation.lon,
@@ -40,21 +33,20 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
 
   const recyclers = searchResults.hits.hits.map(h => h._source);
 
-  // Initialize and update Leaflet Map
+  // Leaflet Map Lifecycle
   useEffect(() => {
     let L;
     import('leaflet').then((leaflet) => {
       L = leaflet.default;
 
       if (!leafletMapRef.current && mapContainerRef.current) {
-        // Initialize map
         const map = L.map(mapContainerRef.current, {
           center: [userLocation.lat, userLocation.lon],
           zoom: 13,
           zoomControl: false
         });
 
-        // Carto Dark Matter Basemap for sleek obsidian tech aesthetic
+        // Carto Dark Matter Tiles
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           subdomains: 'abcd',
@@ -72,43 +64,39 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
       markersRef.current.forEach(m => map.removeLayer(m));
       markersRef.current = [];
 
-      // Add User Marker (Cyan pulsing pin)
+      // User Marker
       const userIcon = L.divIcon({
         className: 'custom-user-marker',
-        html: `<div class="marker-user-pulse"><div class="marker-center-dot"></div></div>`,
-        iconSize: [28, 28],
-        iconAnchor: [14, 14]
+        html: `<div style="width:20px;height:20px;background:#dfe104;border:2px solid #000;box-shadow:0 0 12px #dfe104"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
       });
       const userMarker = L.marker([userLocation.lat, userLocation.lon], { icon: userIcon })
         .addTo(map)
-        .bindPopup(`<b>Your Intake Location</b><br/>${userLocation.city}`);
+        .bindPopup(`<b>YOUR LOCATION</b><br/>${userLocation.city}`);
       markersRef.current.push(userMarker);
 
-      // Add search radius circle (Electric Emerald Glow)
+      // Search Radius Circle
       const radiusCircle = L.circle([userLocation.lat, userLocation.lon], {
         radius: radiusKm * 1000,
-        color: '#10b981',
-        fillColor: '#10b981',
-        fillOpacity: 0.12,
-        weight: 1.5,
-        dashArray: '6, 6'
+        color: '#dfe104',
+        fillColor: '#dfe104',
+        fillOpacity: 0.08,
+        weight: 2,
+        dashArray: '4, 4'
       }).addTo(map);
       markersRef.current.push(radiusCircle);
 
-      // Add Recycler Markers
+      // Recycler Pins
       recyclers.forEach(rec => {
         const isSelected = selectedRecycler && selectedRecycler.id === rec.id;
-        const color = rec.collectorType === 'FORMAL_R2_FACILITY' 
-          ? '#06b6d4' 
-          : rec.kycVerified ? '#10b981' : '#ef4444';
-
         const recIcon = L.divIcon({
-          className: 'custom-rec-marker',
-          html: `<div class="marker-pin ${isSelected ? 'selected' : ''}" style="background: ${color}; border-color: #ffffff">
-                  <span>${rec.rating.toFixed(1)}</span>
+          className: 'custom-rec-marker-kinetic',
+          html: `<div class="marker-pin-box ${isSelected ? 'selected' : ''}">
+                  ${rec.rating.toFixed(1)}
                  </div>`,
-          iconSize: [34, 34],
-          iconAnchor: [17, 34]
+          iconSize: [38, 38],
+          iconAnchor: [19, 19]
         });
 
         const marker = L.marker([rec.location.lat, rec.location.lon], { icon: recIcon })
@@ -117,13 +105,12 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
             setSelectedRecycler(rec);
           });
 
-        marker.bindTooltip(`<b>${rec.name}</b><br/>${rec.distanceKm} km away • ${rec.vehicleType}`);
+        marker.bindTooltip(`<b>${rec.name.toUpperCase()}</b><br/>${rec.distanceKm} KM • ${rec.vehicleType}`);
         markersRef.current.push(marker);
       });
     });
 
     return () => {
-      // Cleanup map on unmount
       if (leafletMapRef.current) {
         leafletMapRef.current.remove();
         leafletMapRef.current = null;
@@ -132,17 +119,43 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
   }, [userLocation, radiusKm, recyclers.length, selectedRecycler?.id]);
 
   return (
-    <div className="map-view-container">
-      {/* Search & Control Filters Bar */}
-      <div className="map-controls-panel">
-        <div className="controls-row">
-          {/* Radius Slider */}
-          <div className="control-group slider-group">
-            <div className="control-label-row">
-              <span className="control-label">
-                <Navigation size={14} className="text-emerald" /> OpenSearch Geo-Distance:
+    <div style={{ paddingTop: '20px', paddingBottom: '60px' }}>
+      
+      {/* Section Header */}
+      <div style={{ marginBottom: '32px' }}>
+        <span style={{ 
+          fontFamily: 'var(--font-space)', 
+          fontSize: '13px', 
+          fontWeight: 800, 
+          letterSpacing: '0.12em', 
+          color: 'var(--accent-color)' 
+        }}>
+          [ CIVIC RADAR // HYPERLOCAL COLLECTOR LOCATOR ]
+        </span>
+        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '8px' }}>
+          FIND NEARBY COLLECTORS.
+        </h2>
+        <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '12px' }}>
+          Locate certified neighborhood Kabadiwalas within walking distance. 
+          All verified partners carry calibrated digital scales and transfer instant UPI payouts.
+        </p>
+      </div>
+
+      {/* Brutalist 2-Column Grid */}
+      <div className="radar-split-brutalist">
+        
+        {/* Left Column: Filter Controls & Recyclers Scroll List */}
+        <div style={{ backgroundColor: 'var(--bg-color)', padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          
+          {/* Radius Control */}
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+              <span style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, textTransform: 'uppercase' }}>
+                SEARCH RADIUS
               </span>
-              <strong className="text-emerald">{radiusKm} km</strong>
+              <span style={{ fontFamily: 'var(--font-space)', fontSize: '15px', fontWeight: 900, color: 'var(--accent-color)' }}>
+                {radiusKm} KM
+              </span>
             </div>
             <input 
               type="range" 
@@ -150,166 +163,123 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
               max="20" 
               value={radiusKm} 
               onChange={(e) => setRadiusKm(Number(e.target.value))}
-              className="range-slider"
+              style={{ width: '100%', accentColor: 'var(--accent-color)' }}
             />
           </div>
 
-          {/* Material Specialty Filter */}
-          <div className="control-group">
-            <span className="control-label">Material Specialization:</span>
-            <select 
-              value={selectedMaterial} 
-              onChange={(e) => setSelectedMaterial(e.target.value)}
-              className="control-select"
-            >
-              <option value="">All Categories</option>
-              <option value="PRINTED_CIRCUIT_BOARDS">Printed Circuit Boards (PCBs)</option>
-              <option value="LITHIUM_ION_BATTERY">Lithium-Ion Batteries (Hazmat)</option>
-              <option value="COPPER_WINDINGS">Copper Windings & Motors</option>
-              <option value="POWER_ELECTRONICS">Solar & Power Electronics</option>
-            </select>
+          {/* Recyclers Count Header */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid var(--border-color)', paddingBottom: '12px' }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '14px', fontWeight: 800, textTransform: 'uppercase' }}>
+              NEARBY COLLECTORS ({recyclers.length})
+            </span>
+            <span style={{ fontSize: '12px', color: 'var(--muted-fg-color)' }}>
+              SORTED BY DISTANCE
+            </span>
           </div>
 
-          {/* Verified Toggle */}
-          <div className="control-group toggle-group">
-            <label className="toggle-label">
-              <input 
-                type="checkbox" 
-                checked={verifiedOnly} 
-                onChange={(e) => setVerifiedOnly(e.target.checked)} 
-              />
-              <span className="checkbox-custom" />
-              <span>Verified KYC & Fair Price Only</span>
-            </label>
-          </div>
-
-          {/* DSL Inspector Toggle */}
-          <button 
-            className={`btn-dsl-toggle ${showQueryDsl ? 'active' : ''}`}
-            onClick={() => setShowQueryDsl(!showQueryDsl)}
-          >
-            <Code size={14} />
-            <span>OpenSearch DSL</span>
-            {showQueryDsl ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          </button>
-        </div>
-
-        {/* Collapsible OpenSearch Query DSL Viewer */}
-        {showQueryDsl && (
-          <div className="dsl-code-container">
-            <div className="dsl-header">
-              <span>OpenSearch Geospatial Query DSL (Executed in {searchResults.tookMs}ms)</span>
-              <span className="dsl-hits">{searchResults.hits.total.value} Matching Hits</span>
-            </div>
-            <pre className="dsl-pre">
-              <code>{JSON.stringify(searchResults.queryDsl, null, 2)}</code>
-            </pre>
-          </div>
-        )}
-      </div>
-
-      {/* Map Layout Split */}
-      <div className="map-content-split">
-        {/* Left: Leaflet Interactive Map Viewport */}
-        <div className="map-canvas-card">
-          <div ref={mapContainerRef} className="leaflet-map-element" />
-
-          {/* Floating Map Legend */}
-          <div className="map-floating-legend">
-            <div className="legend-item">
-              <span className="legend-dot user-dot" />
-              <span>Your Location</span>
-            </div>
-            <div className="legend-item">
-              <span className="legend-dot green-dot" />
-              <span>Verified Kabadiwala</span>
-            </div>
-            <div className="legend-item">
-              <span className="legend-dot cyan-dot" />
-              <span>Formal R2 Hub</span>
-            </div>
-            <div className="legend-item">
-              <span className="legend-dot red-dot" />
-              <span>Flagged / Unverified</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right: Recycler Hits List */}
-        <div className="recyclers-list-panel">
-          <div className="list-panel-header">
-            <h3>Nearby Verified Collectors ({recyclers.length})</h3>
-            <span className="text-dim">Sorted by Geo-Distance</span>
-          </div>
-
-          <div className="recyclers-scroll">
-            {recyclers.length === 0 ? (
-              <div className="no-hits-state">
-                <AlertCircle size={32} className="text-amber" />
-                <p>No collectors found within {radiusKm} km.</p>
-                <button 
-                  className="btn-expand-radius"
-                  onClick={() => setRadiusKm(15)}
-                >
-                  Expand Search Radius to 15 km
-                </button>
-              </div>
-            ) : (
-              recyclers.map(rec => (
-                <div 
-                  key={rec.id}
-                  className={`recycler-card ${selectedRecycler?.id === rec.id ? 'active' : ''}`}
-                  onClick={() => setSelectedRecycler(rec)}
-                >
-                  <div className="rec-card-top">
-                    <img src={rec.avatar} alt={rec.name} className="rec-avatar" />
-                    <div className="rec-info">
-                      <div className="rec-name-row">
-                        <h4>{rec.name}</h4>
-                        {rec.kycVerified && (
-                          <ShieldCheck size={16} className="text-emerald" title="KYC Verified" />
-                        )}
-                      </div>
-                      <span className="rec-vehicle">
-                        <Truck size={13} /> {rec.vehicleType}
-                      </span>
-                    </div>
-                    <div className="rec-distance-badge">
-                      <strong>{rec.distanceKm} km</strong>
-                      <span>~{rec.currentEtaMinutes} mins</span>
-                    </div>
+          {/* Collectors List */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '360px', overflowY: 'auto' }}>
+            {recyclers.map(rec => (
+              <div 
+                key={rec.id}
+                style={{
+                  border: '2px solid var(--border-color)',
+                  backgroundColor: selectedRecycler?.id === rec.id ? 'var(--accent-color)' : 'var(--muted-color)',
+                  color: selectedRecycler?.id === rec.id ? '#000000' : 'var(--fg-color)',
+                  padding: '16px',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                onClick={() => setSelectedRecycler(rec)}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <h4 style={{ 
+                      fontSize: '18px', 
+                      fontWeight: 800, 
+                      textTransform: 'uppercase',
+                      color: selectedRecycler?.id === rec.id ? '#000000' : 'var(--fg-color)'
+                    }}>
+                      {rec.name}
+                    </h4>
+                    <p style={{ 
+                      fontSize: '13px', 
+                      color: selectedRecycler?.id === rec.id ? 'rgba(0,0,0,0.7)' : 'var(--muted-fg-color)',
+                      marginTop: '2px'
+                    }}>
+                      {rec.vehicleType} • {rec.pincode}
+                    </p>
                   </div>
-
-                  {/* Certifications & Badges */}
-                  <div className="rec-badges-row">
-                    {rec.fairPricePledge && (
-                      <span className="badge-fair-price">★ Fair Floor Pledge</span>
-                    )}
-                    {rec.certifications.includes("HAZMAT_EWASTE_L2") && (
-                      <span className="badge-hazmat">⚡ Hazmat L2 Certified</span>
-                    )}
-                    <span className="badge-rating">⭐ {rec.rating.toFixed(1)} ({rec.totalBatchesCollected} pickups)</span>
-                  </div>
-
-                  {/* Dispatch Button */}
-                  <div className="rec-card-actions">
-                    <button 
-                      className="btn-book-pickup"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onRequestPickup(rec);
-                      }}
-                    >
-                      <Navigation size={14} />
-                      <span>Dispatch Doorstep Pickup</span>
-                    </button>
+                  <div style={{ textAlign: 'right' }}>
+                    <span style={{ fontFamily: 'var(--font-space)', fontWeight: 800, fontSize: '15px' }}>
+                      {rec.distanceKm} KM
+                    </span>
                   </div>
                 </div>
-              ))
-            )}
+
+                <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+                  {rec.specializations.map((spec, sIdx) => (
+                    <span 
+                      key={sIdx}
+                      style={{ 
+                        fontSize: '11px', 
+                        fontFamily: 'var(--font-space)',
+                        fontWeight: 800, 
+                        padding: '2px 6px',
+                        border: '1px solid currentColor'
+                      }}
+                    >
+                      {spec}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Request Pickup Button */}
+          {selectedRecycler && (
+            <button 
+              className="btn-kinetic-primary"
+              style={{ width: '100%', marginTop: 'auto' }}
+              onClick={() => onRequestPickup(selectedRecycler)}
+            >
+              <span>BOOK DOORSTEP PICKUP WITH {selectedRecycler.name} →</span>
+            </button>
+          )}
+
+        </div>
+
+        {/* Right Column: Leaflet Map Canvas */}
+        <div style={{ backgroundColor: '#000000', position: 'relative' }}>
+          <div ref={mapContainerRef} className="map-viewport-brutalist" />
+          
+          {/* Floating Legend */}
+          <div style={{ 
+            position: 'absolute', 
+            bottom: '20px', 
+            left: '20px', 
+            zIndex: 1000, 
+            backgroundColor: '#000000', 
+            border: '2px solid var(--border-color)',
+            padding: '12px 16px',
+            fontFamily: 'var(--font-space)',
+            fontSize: '12px',
+            fontWeight: 800
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span style={{ width: '10px', height: '10px', backgroundColor: 'var(--accent-color)', border: '1px solid #000' }} />
+              <span>VERIFIED KABADIWALA PIN</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ width: '10px', height: '10px', backgroundColor: '#dfe104', border: '1px solid #000', boxShadow: '0 0 6px #dfe104' }} />
+              <span>YOUR LOCATION</span>
+            </div>
           </div>
         </div>
+
       </div>
+
     </div>
   );
 }
