@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Circlo - AI E-Waste & Informal Recycler Network
+  Serverless ingestion, OpenSearch geospatial indexer & Cedar policy evaluator
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 256
+    Runtime: python3.11
+    Environment:
+      Variables:
+        OPENSEARCH_ENDPOINT: !Ref OpenSearchEndpointParameter
+        SCRAP_BATCH_TABLE: !Ref ScrapBatchTable
+        NOTIFICATION_TOPIC: !Ref RecyclerDispatchTopic
+
+Parameters:
+  OpenSearchEndpointParameter:
+    Type: String
+    Default: "http://localhost:9200"
+    Description: "OpenSearch cluster endpoint (LocalStack or AWS OpenSearch Service)"
+
+Resources:
+  # --------------------------------------------------------------------------
+  # S3 Bucket for E-Waste Photos uploaded by residents
+  # --------------------------------------------------------------------------
+  EwasteImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: circlo-ewaste-intake-photos
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [GET, PUT, POST]
+            AllowedOrigins: ['*']
+
+  # --------------------------------------------------------------------------
+  # DynamoDB Table for Real-time Scrap Batches & Escrow Status
+  # --------------------------------------------------------------------------
+  ScrapBatchTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: circlo-scrap-batches
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: batchId
+          AttributeType: S
+        - AttributeName: citizenId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: batchId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: CitizenBatchIndex
+          KeySchema:
+            - AttributeName: citizenId
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+
+  # --------------------------------------------------------------------------
+  # SNS Topic to dispatch SMS/Push alerts to nearby Kabadiwalas
+  # --------------------------------------------------------------------------
+  RecyclerDispatchTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: circlo-kabadiwala-dispatch
+
+  # --------------------------------------------------------------------------
+  # Lambda 1: Process Image, Run AI Inference & Evaluate Cedar Safety Policy
+  # --------------------------------------------------------------------------
+  ProcessEwasteScanFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handlers/
+      Handler: scan_handler.lambda_handler
+      Policies:
+        - S3ReadPolicy:
+            BucketName: circlo-ewaste-intake-photos
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ScrapBatchTable
+        - SNSPublishMessagePolicy:
+            TopicName: !GetAtt RecyclerDispatchTopic.TopicName
+      Events:
+        PhotoUploadEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref EwasteImageBucket
+            Events: s3:ObjectCreated:*
+
+  # --------------------------------------------------------------------------
+  # Lambda 2: OpenSearch Geospatial Search & Nearest Collector Dispatch API
+  # --------------------------------------------------------------------------
+  GeoSearchRecyclerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: handlers/
+      Handler: geo_handler.lambda_handler
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /recyclers/nearby
+            Method: get
+
+Outputs:
+  ImageBucketName:
+    Description: "S3 Bucket for e-waste images"
+    Value: !Ref EwasteImageBucket
+  ScrapBatchTableName:
+    Description: "DynamoDB table for scrap batches"
+    Value: !Ref ScrapBatchTable
+  RecyclerDispatchTopicArn:
+    Description: "SNS dispatch topic ARN"
+    Value: !Ref RecyclerDispatchTopic

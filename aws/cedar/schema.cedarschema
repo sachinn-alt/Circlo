@@ -1,0 +1,80 @@
+// ==============================================================================
+// AWS CEDAR SCHEMA FOR CIRCLO
+// Defines Entity Types, Actions, and Attributes for Cedar Policy Engine
+// ==============================================================================
+
+entity User,
+entity Recycler in [User] = {
+    kycVerified: Boolean,
+    certifications: Set<String>,
+    walletBalance: Long,
+    collectorTier: String
+};
+
+entity Aggregator in [User] = {
+    licenseId: String,
+    complianceScore: Long
+};
+
+entity EprBrand in [User] = {
+    isRegisteredBrand: Boolean,
+    cpcbRegistrationNo: String
+};
+
+entity ScrapBatch = {
+    hazardLevel: Long,
+    category: String,
+    sellerType: String,
+    weightKg: Decimal,
+    status: String,
+    hasChainOfCustodyProof: Boolean,
+    informalCollectorPayoutConfirmed: Boolean
+};
+
+action "dismantle" appliesTo {
+    principal: [Recycler, Aggregator],
+    resource: [ScrapBatch]
+};
+
+action "extractMetals" appliesTo {
+    principal: [Recycler, Aggregator],
+    resource: [ScrapBatch]
+};
+
+action "submitPurchaseBid" appliesTo {
+    principal: [Aggregator],
+    resource: [ScrapBatch],
+    context: {
+        offeredPricePerKg: Decimal,
+        benchmarkPricePerKg: Decimal
+    }
+};
+
+action "claimPickup" appliesTo {
+    principal: [Recycler],
+    resource: [ScrapBatch]
+};
+
+action "weighBatch" appliesTo {
+    principal: [Recycler],
+    resource: [ScrapBatch]
+};
+
+action "transport" appliesTo {
+    principal: [Recycler],
+    resource: [ScrapBatch]
+};
+
+action "transportToHub" appliesTo {
+    principal: [Recycler],
+    resource: [ScrapBatch],
+    context: {
+        destinationHubCertified: Boolean,
+        tamperSealIntact: Boolean
+    }
+};
+
+action "mintEprCredit" appliesTo {
+    principal: [EprBrand],
+    resource: [ScrapBatch]
+};

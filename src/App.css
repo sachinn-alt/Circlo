@@ -1,0 +1,662 @@
+/* ==============================================================================
+   DARK OBSIDIAN BLACK - WEMAKEDEVS AWS ENV REPLICA STYLES FOR CIRCLO
+   Obsidian pitch surfaces (#000000 / #06070a) • Neon mint accents • Crisp borders
+   ============================================================================== */
+
+/* Master Frame Container (1300px with dashed border-x) */
+.wmd-container {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1300px;
+  max-width: 100%;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  border-left: 1px dashed var(--border);
+  border-right: 1px dashed var(--border);
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .wmd-container {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ==============================================================================
+   NAVIGATION HEADER (Obsidian Dark Lockup)
+   ============================================================================== */
+.wmd-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.94);
+  backdrop-filter: blur(16px);
+}
+
+.wmd-nav-inner {
+  display: flex;
+  height: 3.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wmd-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.wmd-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--foreground);
+}
+
+.wmd-logo-icon {
+  width: 28px;
+  height: 28px;
+  background: #10b981;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  font-weight: 900;
+}
+
+.wmd-sep-x {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.wmd-aws-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.08);
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+
+.wmd-nav-links {
+  display: none;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+@media (min-width: 900px) {
+  .wmd-nav-links {
+    display: flex;
+  }
+}
+
+.wmd-nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--foreground);
+  opacity: 0.85;
+  transition: opacity 0.2s;
+  cursor: pointer;
+  background: none;
+}
+
+.wmd-nav-link:hover {
+  opacity: 1;
+  color: var(--theme-3-light);
+}
+
+.wmd-nav-link.active {
+  color: var(--theme-3-light);
+  opacity: 1;
+}
+
+.wmd-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-wmd-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 2px;
+  background-color: var(--theme-3-light);
+  color: #000000;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.45);
+}
+
+.btn-wmd-cta:hover {
+  background-color: var(--theme-3-dark);
+  color: #ffffff;
+}
+
+.btn-wmd-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2rem;
+  padding: 0 0.75rem;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+  background: var(--atmosphere-card);
+  color: var(--foreground);
+}
+
+.btn-wmd-outline:hover {
+  background: #11141c;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ==============================================================================
+   STICKY SUB-NAVIGATION BAR (Pure Obsidian)
+   ============================================================================== */
+.wmd-subnav-bar {
+  position: sticky;
+  top: 3.75rem;
+  z-index: 40;
+  border-bottom: 1px solid var(--border);
+  background: #000000;
+}
+
+.wmd-subnav-track {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 1px;
+  background: var(--border);
+  border: 0;
+  width: fit-content;
+}
+
+.wmd-subnav-item {
+  position: relative;
+  flex-shrink: 0;
+  padding: 0.8rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #000000;
+  color: var(--muted-foreground);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.wmd-subnav-item:hover {
+  background: var(--atmosphere-flat);
+  color: var(--foreground);
+}
+
+.wmd-subnav-item.active {
+  background: var(--atmosphere-flat);
+  color: var(--theme-3-light);
+}
+
+.wmd-subnav-item.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--theme-3-light);
+}
+
+/* ==============================================================================
+   HERO BANNER & TITLE SECTION (Obsidian Atmospheric Glow)
+   ============================================================================== */
+.wmd-hero-section {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  padding-top: 2.75rem;
+  padding-bottom: 3.75rem;
+  background: 
+    radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 65%),
+    #000000;
+}
+
+.wmd-event-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  background: rgba(7, 8, 12, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(243, 244, 246, 0.9);
+  border-radius: 2px;
+}
+
+.wmd-hero-h1 {
+  margin-top: 1.25rem;
+  font-size: clamp(2.25rem, 5vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--foreground-pure);
+}
+
+.wmd-hero-p {
+  margin-top: 1.25rem;
+  max-width: 44rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+.wmd-hero-bold-p {
+  margin-top: 0.85rem;
+  max-width: 44rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--foreground);
+}
+
+/* Event Details DL Box */
+.wmd-info-box {
+  margin-top: 2rem;
+  max-width: 44rem;
+  border: 1px solid var(--border);
+  background: var(--atmosphere-card);
+}
+
+.wmd-info-box-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #030406;
+}
+
+.wmd-info-dl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--border);
+  gap: 1px;
+}
+
+@media (min-width: 640px) {
+  .wmd-info-dl-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.wmd-info-cell {
+  background: var(--atmosphere-card);
+  padding: 1.1rem 1.25rem;
+}
+
+.wmd-cell-dt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(243, 244, 246, 0.8);
+}
+
+.wmd-cell-dd-main {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--foreground-pure);
+  margin-top: 0.65rem;
+}
+
+.wmd-cell-dd-sub {
+  display: block;
+  font-size: 0.825rem;
+  color: var(--muted-foreground);
+  margin-top: 0.35rem;
+}
+
+/* ==============================================================================
+   SECTION HEADERS
+   ============================================================================== */
+.wmd-section {
+  border-bottom: 1px solid var(--border);
+  padding-top: 3.5rem;
+  padding-bottom: 4.5rem;
+  background: #000000;
+}
+
+.wmd-section-header-split {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .wmd-section-header-split {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 4rem;
+  }
+}
+
+.wmd-section-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--theme-3-light);
+}
+
+.wmd-section-h2 {
+  margin-top: 0.65rem;
+  font-size: clamp(1.5rem, 3.5vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--foreground-pure);
+}
+
+.wmd-section-desc {
+  max-width: 28rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+@media (min-width: 1024px) {
+  .wmd-section-desc {
+    text-align: right;
+    flex-shrink: 0;
+  }
+}
+
+/* ==============================================================================
+   TRACK CARDS GRID (Obsidian Black Cards)
+   ============================================================================== */
+.wmd-tracks-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .wmd-tracks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.wmd-track-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--atmosphere-card);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.wmd-track-card.active-track {
+  border-color: var(--env-waste);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+  background: #06080c;
+}
+
+.wmd-track-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: #080a0f;
+}
+
+.wmd-track-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wmd-track-idx {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  opacity: 0.35;
+}
+
+.wmd-track-title {
+  margin-top: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground-pure);
+}
+
+.wmd-track-summary {
+  margin-top: 0.65rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+.wmd-track-tags {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.wmd-track-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  background: #000000;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.8125rem;
+  color: rgba(243, 244, 246, 0.85);
+}
+
+.wmd-track-tag-pill .pill-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+}
+
+/* ==============================================================================
+   TABLE: "TWO WAYS TO BUILD, IN ANY TRACK" (Obsidian Theme)
+   ============================================================================== */
+.wmd-build-table-container {
+  margin-top: 1.75rem;
+  border: 1px solid var(--border);
+  background: var(--atmosphere-card);
+  overflow: hidden;
+}
+
+.wmd-build-table-header {
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 14rem 1fr 1fr;
+  background: #030406;
+}
+
+@media (max-width: 900px) {
+  .wmd-build-table-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wmd-build-th {
+  padding: 0.85rem 1.25rem;
+}
+
+.wmd-build-th.border-l {
+  border-left: 1px solid var(--border);
+}
+
+.wmd-build-table-row {
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 14rem 1fr 1fr;
+  background: var(--atmosphere-card);
+}
+
+@media (max-width: 900px) {
+  .wmd-build-table-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wmd-build-category-col {
+  padding: 0.85rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  color: var(--foreground-pure);
+}
+
+.wmd-build-tools-col {
+  padding: 0.85rem 1.25rem;
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.tool-chip {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2px 7px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--foreground);
+}
+
+.tool-chip.highlight-green {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--theme-3-light);
+  border-color: rgba(16, 185, 129, 0.35);
+  font-weight: 600;
+}
+
+/* ==============================================================================
+   LIVE CIRCLO WORKSPACES IN OBSIDIAN
+   ============================================================================== */
+.scanner-grid, .map-content-split, .cedar-workbench-split, .hub-grid, .impact-metrics-grid {
+  gap: 1.25rem;
+}
+
+.viewport-card, .analytics-card, .map-canvas-card, .recyclers-list-panel, 
+.hub-card, .code-viewer-card, .evaluator-card, .calculator-card, .certificate-preview-card,
+.metric-card {
+  background: var(--atmosphere-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 2px !important;
+}
+
+.map-controls-panel, .tab-banner, .hub-hero {
+  background: var(--atmosphere-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 2px !important;
+}
+
+.wmd-preset-carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.wmd-preset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border: 1px solid var(--border);
+  background: #000000;
+  color: var(--muted-foreground);
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.wmd-preset-btn:hover {
+  color: var(--foreground);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.wmd-preset-btn.active {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: var(--theme-3-light);
+  color: var(--theme-3-light);
+  font-weight: 600;
+}
+
+.code-scroll-area, .dsl-code-container, .arch-code-section, .diagnostics-panel {
+  background: #020305 !important;
+  border: 1px solid var(--border) !important;
+}
+
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(16px);
+}
+
+.modal-card {
+  background: #06070a !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.95);
+}
+
+.modal-header {
+  background: #030406 !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Leaflet Container Adaptation */
+.wmd-map-frame {
+  height: 520px;
+  width: 100%;
+  border: 1px solid var(--border);
+  background: #000000;
+}

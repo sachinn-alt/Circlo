@@ -1,0 +1,38 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 2,
+      "number_of_replicas": 1,
+      "analysis": {
+        "analyzer": {
+          "ewaste_analyzer": {
+            "type": "custom",
+            "tokenizer": "standard",
+            "filter": ["lowercase", "stop", "snowball"]
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "recycler_id": { "type": "keyword" },
+      "name": { "type": "text", "analyzer": "ewaste_analyzer" },
+      "phone": { "type": "keyword" },
+      "collector_type": { "type": "keyword" },
+      "kyc_verified": { "type": "boolean" },
+      "fair_price_pledge": { "type": "boolean" },
+      "certifications": { "type": "keyword" },
+      "vehicle_type": { "type": "keyword" },
+      "rating": { "type": "float" },
+      "total_batches_collected": { "type": "integer" },
+      "location": {
+        "type": "geo_point"
+      },
+      "operating_radius_km": { "type": "float" },
+      "accepted_materials": { "type": "keyword" },
+      "status": { "type": "keyword" },
+      "updated_at": { "type": "date" }
+    }
+  }
+}

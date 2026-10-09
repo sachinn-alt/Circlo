@@ -1,0 +1,72 @@
+{
+  "queries": {
+    "geo_distance_nearby_recyclers": {
+      "description": "Find verified informal recyclers within 5km radius with fair price pledge",
+      "endpoint": "POST /circlo-recyclers/_search",
+      "body": {
+        "query": {
+          "bool": {
+            "must": [
+              { "term": { "status": "AVAILABLE" } },
+              { "term": { "kyc_verified": true } }
+            ],
+            "filter": {
+              "geo_distance": {
+                "distance": "5km",
+                "location": {
+                  "lat": 28.6139,
+                  "lon": 77.2090
+                }
+              }
+            }
+          }
+        },
+        "sort": [
+          {
+            "_geo_distance": {
+              "location": {
+                "lat": 28.6139,
+                "lon": 77.2090
+              },
+              "order": "asc",
+              "unit": "km",
+              "mode": "min",
+              "distance_type": "arc"
+            }
+          }
+        ]
+      }
+    },
+    "hazard_level_specialists": {
+      "description": "Filter recyclers with Hazmat L2 certification for dangerous lithium batteries",
+      "endpoint": "POST /circlo-recyclers/_search",
+      "body": {
+        "query": {
+          "bool": {
+            "must": [
+              { "term": { "certifications": "HAZMAT_EWASTE_L2" } },
+              { "terms": { "accepted_materials": ["LITHIUM_ION", "PRINTED_CIRCUIT_BOARDS"] } }
+            ]
+          }
+        }
+      }
+    },
+    "material_recovery_aggregation": {
+      "description": "Aggregate total precious metal recovered (gold, copper, lithium) by zone",
+      "endpoint": "POST /circlo-scrap-lots/_search",
+      "body": {
+        "size": 0,
+        "aggs": {
+          "recovery_by_zone": {
+            "terms": { "field": "zone.keyword", "size": 10 },
+            "aggs": {
+              "total_copper_kg": { "sum": { "field": "copper_recovered_kg" } },
+              "total_gold_grams": { "sum": { "field": "gold_recovered_grams" } },
+              "total_ewaste_kg": { "sum": { "field": "weight_kg" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

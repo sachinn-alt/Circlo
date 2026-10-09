@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap');
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  /* True Dark Obsidian Black Theme */
+  --background: #000000;
+  --background-obsidian: #030406;
+  --foreground: #f9fafb;
+  --foreground-pure: #ffffff;
+  --muted-foreground: #9ca3af;
+  --dim-foreground: #4b5563;
+
+  --atmosphere-flat: #07080c;
+  --atmosphere-flat-hover: #0c0e14;
+  --atmosphere-elevated: #090b10;
+  --atmosphere-card: #050609;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-muted: rgba(255, 255, 255, 0.04);
+  --border-dashed: rgba(255, 255, 255, 0.12);
+  --border-glow: rgba(52, 211, 153, 0.25);
+
+  /* The 3 Track Accent Colors */
+  --env-air: #38bdf8;
+  --env-air-ink: #0284c7;
+  --env-air-bg: rgba(56, 189, 248, 0.08);
+
+  --env-heat: #fb7185;
+  --env-heat-ink: #e11d48;
+  --env-heat-bg: rgba(251, 113, 133, 0.08);
+
+  --env-waste: #10b981;
+  --env-waste-ink: #059669;
+  --env-waste-bg: rgba(16, 185, 129, 0.08);
+
+  /* Active Theme (Environmental Hacks = Theme 3 Green) */
+  --theme-3-light: #34d399;
+  --theme-3-dark: #059669;
+  --theme-3-glow: rgba(52, 211, 153, 0.2);
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --pixel: 8px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 85% 90%, rgba(56, 189, 248, 0.03) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Monospace Utilities */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Pixel Corners Clip-Path */
+.pixel-corners {
+  clip-path: polygon(
+    0px var(--pixel, 8px),
+    var(--pixel, 8px) var(--pixel, 8px),
+    var(--pixel, 8px) 0px,
+    calc(100% - var(--pixel, 8px)) 0px,
+    calc(100% - var(--pixel, 8px)) var(--pixel, 8px),
+    100% var(--pixel, 8px),
+    100% calc(100% - var(--pixel, 8px)),
+    calc(100% - var(--pixel, 8px)) calc(100% - var(--pixel, 8px)),
+    calc(100% - var(--pixel, 8px)) 100%,
+    var(--pixel, 8px) 100%,
+    var(--pixel, 8px) calc(100% - var(--pixel, 8px)),
+    0px calc(100% - var(--pixel, 8px))
+  );
+}
+
+/* Tri-color Squares Badge */
+.tri-dot-badge {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.tri-dot-badge .dot-air {
+  width: 8px;
+  height: 8px;
+  background-color: var(--env-air);
+}
+
+.tri-dot-badge .dot-heat {
+  width: 8px;
+  height: 8px;
+  background-color: var(--env-heat);
+}
+
+.tri-dot-badge .dot-waste {
+  width: 8px;
+  height: 8px;
+  background-color: var(--env-waste);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #181920;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #252830;
+}
+
+/* Laser scan animation */
+@keyframes scanLaser {
+  0% { top: 0%; opacity: 0.8; }
+  50% { top: 96%; opacity: 1; }
+  100% { top: 0%; opacity: 0.8; }
+}
+
+.animate-scan {
+  animation: scanLaser 2.6s ease-in-out infinite;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
