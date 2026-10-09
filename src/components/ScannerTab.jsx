@@ -51,14 +51,14 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
       {/* Top Banner / Explainer */}
       <div className="tab-banner">
         <div>
-          <h2>Computer Vision E-Waste Classifier & Precious Yield Valuator</h2>
+          <h2>AI E-Waste Scanner & Cash Calculator</h2>
           <p>
-            Identifies complex electronic scrap, extracts elemental composition, gauges hazardous toxicity, and calculates fair minimum scrap market rates.
+            Snap a photo or select an item below to discover the precious metals inside (gold, copper, lithium) and see your guaranteed cash payout.
           </p>
         </div>
         <div className="ai-model-tag">
           <Sparkles size={16} />
-          <span>Vision AI + Spot Commodity Oracles</span>
+          <span>Instant Scrap Valuation</span>
         </div>
       </div>
 

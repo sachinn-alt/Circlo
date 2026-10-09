@@ -77,14 +77,15 @@ export default function CedarPolicyLab({ preselectedBatch }) {
       {/* Top Banner */}
       <div className="tab-banner">
         <div>
-          <h2>AWS Cedar Authorization & Policy Engine Workbench</h2>
+          <h2>Automated Fair Price Guard & Worker Safety Engine</h2>
           <p>
-            AWS Cedar is AWS's open source authorization language. In Circlo, Cedar strictly enforces worker safety rules, prevents price exploitation of informal collectors, and verifies EPR credit integrity.
+            Circlo runs automated rule checks before every pickup to guarantee households are never underpaid by scrap brokers, 
+            and to ensure dangerous lithium batteries are only handled by trained, certified specialists.
           </p>
         </div>
         <div className="cedar-brand-badge">
-          <Zap size={16} className="text-amber" />
-          <span>AWS Open Source • Cedar Policy Engine</span>
+          <ShieldCheck size={16} className="text-emerald" />
+          <span>Automated Consumer Safeguards</span>
         </div>
       </div>
 

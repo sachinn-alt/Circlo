@@ -8,8 +8,8 @@ import KabadiwalaHub from './components/KabadiwalaHub';
 import CedarPolicyLab from './components/CedarPolicyLab';
 import ImpactLedger from './components/ImpactLedger';
 import PickupModal from './components/PickupModal';
-import ArchitectureModal from './components/ArchitectureModal';
 import CertificateModal from './components/CertificateModal';
+import { Recycle, ShieldCheck, Heart, Sparkles } from 'lucide-react';
 import './App.css';
 
 export default function App() {
@@ -21,7 +21,6 @@ export default function App() {
   const [pickupItem, setPickupItem] = useState(null);
   
   // Modals
-  const [showArchModal, setShowArchModal] = useState(false);
   const [certModalData, setCertModalData] = useState(null);
 
   const handleSelectRecyclerForScrap = (sample) => {
@@ -39,47 +38,42 @@ export default function App() {
   };
 
   return (
-    <div className="evergreen-app">
+    <div className="app-shell">
+      {/* Top Floating Navbar */}
       <Header 
         activeTab={activeTab} 
         setActiveTab={setActiveTab}
-        onOpenArchitectureModal={() => setShowArchModal(true)}
       />
 
-      <main>
+      <main style={{ flex: 1 }}>
         {activeTab === 'overview' && (
           <>
             <HeroSection onNavigateTab={(tab) => setActiveTab(tab)} />
             <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
             
-            {/* Live Demo Teaser in Overview */}
-            <section className="evergreen-section">
-              <div className="evergreen-container">
-                <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-                  <span className="pill-tag" style={{ marginBottom: '12px' }}>Live Demo / Interactive Engine</span>
-                  <h2 className="section-title">Test Circlo Live Right Now</h2>
-                  <p className="section-subtitle">
-                    Switch between the AI Vision Spectrometer, OpenSearch Civic Radar, and AWS Cedar policy engine below.
+            {/* Live Interactive Scanner Playground directly in Overview */}
+            <section className="section-wrapper" style={{ paddingTop: '20px' }}>
+              <div className="app-container">
+                <div className="section-head">
+                  <div className="section-eyebrow">Interactive Studio</div>
+                  <h2 className="section-h2">Try the AI Vision Scanner Live</h2>
+                  <p className="section-desc">
+                    Select any sample device below or upload a photo to immediately detect components, 
+                    view precious metal yields, and check your guaranteed cash payout.
                   </p>
                 </div>
-                <div>
-                  <ScannerTab 
-                    onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
-                    onOpenCedarForBatch={handleOpenCedarForBatch}
-                  />
-                </div>
+                <ScannerTab 
+                  onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
+                  onOpenCedarForBatch={handleOpenCedarForBatch}
+                />
               </div>
             </section>
           </>
         )}
 
-        {activeTab === 'tracks' && (
-          <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
-        )}
-
         {activeTab === 'scanner' && (
-          <div className="evergreen-section">
-            <div className="evergreen-container">
+          <div className="section-wrapper">
+            <div className="app-container">
               <ScannerTab 
                 onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
                 onOpenCedarForBatch={handleOpenCedarForBatch}
@@ -89,8 +83,8 @@ export default function App() {
         )}
 
         {activeTab === 'map' && (
-          <div className="evergreen-section">
-            <div className="evergreen-container">
+          <div className="section-wrapper">
+            <div className="app-container">
               <MapTab 
                 prefilteredSample={prefilteredSample}
                 onRequestPickup={handleRequestPickup}
@@ -100,8 +94,8 @@ export default function App() {
         )}
 
         {activeTab === 'kabadiwala' && (
-          <div className="evergreen-section">
-            <div className="evergreen-container">
+          <div className="section-wrapper">
+            <div className="app-container">
               <KabadiwalaHub 
                 onRequestPickup={handleRequestPickup}
               />
@@ -110,8 +104,8 @@ export default function App() {
         )}
 
         {activeTab === 'cedar' && (
-          <div className="evergreen-section">
-            <div className="evergreen-container">
+          <div className="section-wrapper">
+            <div className="app-container">
               <CedarPolicyLab 
                 preselectedBatch={pickupItem}
               />
@@ -119,13 +113,9 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'build' && (
-          <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
-        )}
-
         {activeTab === 'impact' && (
-          <div className="evergreen-section">
-            <div className="evergreen-container">
+          <div className="section-wrapper">
+            <div className="app-container">
               <ImpactLedger 
                 onOpenCertificateModal={(data) => setCertModalData(data)}
               />
@@ -134,30 +124,71 @@ export default function App() {
         )}
       </main>
 
-      {/* Evergreen Footer */}
-      <footer className="evergreen-footer">
-        <div className="evergreen-container">
-          <div className="footer-content">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span className="pill-tag sage" style={{ fontSize: '13px', padding: '4px 14px' }}>
-                Circlo · Track 03: Waste & Energy
-              </span>
-              <span style={{ color: 'var(--color-charcoal)' }}>•</span>
-              <span style={{ fontFamily: 'var(--font-rubik)', fontSize: '14px', fontWeight: 500 }}>
-                WeMakeDevs Bharat Builds Tour × AWS
-              </span>
+      {/* Clean Modern Platform Footer */}
+      <footer className="app-footer">
+        <div className="app-container">
+          <div className="footer-top">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div className="nav-brand-logo" style={{ width: '32px', height: '32px' }}>
+                <Recycle size={18} />
+              </div>
+              <div>
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '18px', color: '#ffffff' }}>
+                  Circlo
+                </span>
+                <span style={{ display: 'block', fontSize: '12px', color: 'var(--text-muted)' }}>
+                  Decentralized Circular E-Waste & Fair Scrap Economy
+                </span>
+              </div>
             </div>
-            <p style={{ fontFamily: 'var(--font-rubik)', fontSize: '14px', color: 'var(--color-charcoal)', maxWidth: '580px', lineHeight: 1.6 }}>
-              Built with AWS OpenSearch geospatial indexes, AWS Cedar verification engine, and Finch / LocalStack tooling. Dedicated to India's 1.5 million frontline recycling workers.
+
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', fontSize: '14px' }}>
+              <button 
+                style={{ color: 'var(--text-secondary)' }}
+                onClick={() => setActiveTab('overview')}
+              >
+                How It Works
+              </button>
+              <button 
+                style={{ color: 'var(--text-secondary)' }}
+                onClick={() => setActiveTab('scanner')}
+              >
+                AI Scanner
+              </button>
+              <button 
+                style={{ color: 'var(--text-secondary)' }}
+                onClick={() => setActiveTab('map')}
+              >
+                Find Recyclers
+              </button>
+              <button 
+                style={{ color: 'var(--text-secondary)' }}
+                onClick={() => setActiveTab('kabadiwala')}
+              >
+                Collector Welfare
+              </button>
+              <button 
+                style={{ color: 'var(--text-secondary)' }}
+                onClick={() => setActiveTab('impact')}
+              >
+                Green Impact
+              </button>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <p>
+              © 2026 Circlo Network. Dedicated to the health, dignity, and economic empowerment of 1.5 million grassroots recycling workers.
             </p>
-            <p style={{ fontFamily: 'var(--font-rubik)', fontSize: '12px', color: 'rgba(51, 51, 51, 0.6)' }}>
-              Environmental Hacks • Event 02 • Oct 8 – 11, 2026 • Sunlit Greenhouse on Linen Paper
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary-emerald)', fontSize: '12px', fontWeight: 600 }}>
+              <ShieldCheck size={14} />
+              <span>CPCB Safe E-Waste Rules 2022 Compliant</span>
+            </div>
           </div>
         </div>
       </footer>
 
-      {/* Modals */}
+      {/* Booking Pickup Modal */}
       {pickupRecycler && (
         <PickupModal 
           recycler={pickupRecycler}
@@ -166,12 +197,7 @@ export default function App() {
         />
       )}
 
-      {showArchModal && (
-        <ArchitectureModal 
-          onClose={() => setShowArchModal(false)}
-        />
-      )}
-
+      {/* Verification Certificate Modal */}
       {certModalData && (
         <CertificateModal 
           certData={certModalData}
