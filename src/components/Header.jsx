@@ -1,10 +1,9 @@
 import React from 'react';
 import { 
-  Recycle, 
+  Sprout, 
   Layers, 
-  Coins, 
-  ExternalLink,
-  ChevronRight
+  ArrowRight,
+  ExternalLink
 } from 'lucide-react';
 
 export default function Header({ 
@@ -13,141 +12,106 @@ export default function Header({
   onOpenArchitectureModal 
 }) {
   return (
-    <header className="wmd-navbar">
-      {/* Top Navbar */}
-      <div className="wmd-container">
-        <div className="wmd-nav-inner">
-          <div className="wmd-nav-left">
-            <a href="#overview" className="wmd-brand-lockup" onClick={() => setActiveTab('overview')}>
-              <div className="wmd-logo-icon">W</div>
-              <span>WeMakeDevs</span>
-              <span className="wmd-sep-x">×</span>
-              <span className="wmd-aws-text">aws</span>
+    <header className="evergreen-header">
+      {/* 1. Ink Announcement Bar */}
+      <div className="ink-announcement-bar">
+        <span>Environmental Hacks · Bharat Builds Tour · Oct 8 to 11 · ₹20 Lakh Prize Pool</span>
+        <a 
+          href="https://bit.ly/wmd-aws-free" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          Claim $25 AWS Credits →
+        </a>
+      </div>
+
+      {/* 2. Top Navigation Bar */}
+      <nav className="evergreen-nav">
+        <div className="evergreen-container">
+          <div className="evergreen-nav-inner">
+            {/* Brand Logo with Botanical Leaf */}
+            <a 
+              href="#overview" 
+              className="evergreen-brand"
+              onClick={() => setActiveTab('overview')}
+            >
+              <Sprout className="evergreen-leaf-icon" />
+              <span className="evergreen-brand-name">Circlo</span>
+              <span className="evergreen-brand-tag">Track 03: Waste & Energy</span>
             </a>
 
-            <nav className="wmd-nav-links">
+            {/* Navigation Links */}
+            <div className="evergreen-nav-links">
               <button 
-                className={`wmd-nav-link ${activeTab === 'overview' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'overview' ? 'active' : ''}`}
                 onClick={() => setActiveTab('overview')}
               >
                 Overview
               </button>
               <button 
-                className={`wmd-nav-link ${activeTab === 'tracks' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'tracks' ? 'active' : ''}`}
                 onClick={() => setActiveTab('tracks')}
               >
                 Tracks
               </button>
               <button 
-                className={`wmd-nav-link ${activeTab === 'scanner' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'scanner' ? 'active' : ''}`}
                 onClick={() => setActiveTab('scanner')}
               >
                 AI Scanner
               </button>
               <button 
-                className={`wmd-nav-link ${activeTab === 'map' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'map' ? 'active' : ''}`}
                 onClick={() => setActiveTab('map')}
               >
                 Civic Radar
               </button>
               <button 
-                className={`wmd-nav-link ${activeTab === 'cedar' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'kabadiwala' ? 'active' : ''}`}
+                onClick={() => setActiveTab('kabadiwala')}
+              >
+                Kabadiwala Hub
+              </button>
+              <button 
+                className={`evergreen-nav-link ${activeTab === 'cedar' ? 'active' : ''}`}
                 onClick={() => setActiveTab('cedar')}
               >
                 Cedar Policies
               </button>
               <button 
-                className={`wmd-nav-link ${activeTab === 'build' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'build' ? 'active' : ''}`}
                 onClick={() => setActiveTab('build')}
               >
-                Two Ways to Build
+                Build Matrix
               </button>
               <button 
-                className={`wmd-nav-link ${activeTab === 'impact' ? 'active' : ''}`}
+                className={`evergreen-nav-link ${activeTab === 'impact' ? 'active' : ''}`}
                 onClick={() => setActiveTab('impact')}
               >
-                Impact Ledger
+                Impact
               </button>
-            </nav>
-          </div>
+            </div>
 
-          <div className="wmd-nav-actions">
-            <button 
-              className="btn-wmd-outline"
-              onClick={onOpenArchitectureModal}
-            >
-              <Layers size={14} className="text-emerald" />
-              <span>AWS Specs</span>
-            </button>
-
-            <a 
-              href="https://bit.ly/wmd-aws-free" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="btn-wmd-cta"
-            >
-              <Coins size={14} />
-              <span>Claim $25 Credits</span>
-            </a>
+            {/* Actions */}
+            <div className="evergreen-nav-actions">
+              <button 
+                className="btn-ghost-pill sm"
+                onClick={onOpenArchitectureModal}
+              >
+                <Layers size={14} />
+                <span>AWS Specs</span>
+              </button>
+              <button 
+                className="btn-primary-pill"
+                style={{ padding: '8px 20px', fontSize: '15px' }}
+                onClick={() => setActiveTab('scanner')}
+              >
+                <span>Start Intake</span>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Sticky Sub-Navigation */}
-      <div className="wmd-subnav-bar">
-        <div className="wmd-container">
-          <div className="wmd-subnav-track">
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'overview' ? 'active' : ''}`}
-              onClick={() => setActiveTab('overview')}
-            >
-              Overview
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'tracks' ? 'active' : ''}`}
-              onClick={() => setActiveTab('tracks')}
-            >
-              02 / Tracks
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'scanner' ? 'active' : ''}`}
-              onClick={() => setActiveTab('scanner')}
-            >
-              AI Vision Scanner
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'map' ? 'active' : ''}`}
-              onClick={() => setActiveTab('map')}
-            >
-              Civic Radar (OpenSearch)
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'kabadiwala' ? 'active' : ''}`}
-              onClick={() => setActiveTab('kabadiwala')}
-            >
-              Kabadiwala Hub
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'cedar' ? 'active' : ''}`}
-              onClick={() => setActiveTab('cedar')}
-            >
-              Cedar Policy Lab
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'build' ? 'active' : ''}`}
-              onClick={() => setActiveTab('build')}
-            >
-              Two Ways to Build
-            </button>
-            <button 
-              className={`wmd-subnav-item ${activeTab === 'impact' ? 'active' : ''}`}
-              onClick={() => setActiveTab('impact')}
-            >
-              EPR Impact Ledger
-            </button>
-          </div>
-        </div>
-      </div>
+      </nav>
     </header>
   );
 }

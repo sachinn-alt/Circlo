@@ -54,8 +54,8 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
           zoomControl: false
         });
 
-        // OpenStreetMap Dark Tile Layer
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        // CARTO Voyager Light Tile Layer for Warm Linen Paper Aesthetic
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
           subdomains: 'abcd',
           maxZoom: 19
@@ -84,14 +84,14 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
         .bindPopup(`<b>Your Intake Location</b><br/>${userLocation.city}`);
       markersRef.current.push(userMarker);
 
-      // Add OpenSearch search radius circle
+      // Add OpenSearch search radius circle (Sage Mint Wash on Linen)
       const radiusCircle = L.circle([userLocation.lat, userLocation.lon], {
         radius: radiusKm * 1000,
-        color: '#10b981',
-        fillColor: '#10b981',
-        fillOpacity: 0.08,
+        color: '#000000',
+        fillColor: '#beedc0',
+        fillOpacity: 0.22,
         weight: 1.5,
-        dashArray: '6, 6'
+        dashArray: '5, 5'
       }).addTo(map);
       markersRef.current.push(radiusCircle);
 

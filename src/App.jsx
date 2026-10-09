@@ -39,7 +39,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="evergreen-app">
       <Header 
         activeTab={activeTab} 
         setActiveTab={setActiveTab}
@@ -52,19 +52,17 @@ export default function App() {
             <HeroSection onNavigateTab={(tab) => setActiveTab(tab)} />
             <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
             
-            {/* Quick Teaser for Scanner in Overview */}
-            <section className="wmd-section">
-              <div className="wmd-container">
-                <div className="wmd-section-header-split">
-                  <div>
-                    <p className="wmd-section-num">Live Demo / Interactive Engine</p>
-                    <h2 className="wmd-section-h2">Test Circlo Live Right Now</h2>
-                  </div>
-                  <p className="wmd-section-desc">
+            {/* Live Demo Teaser in Overview */}
+            <section className="evergreen-section">
+              <div className="evergreen-container">
+                <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+                  <span className="pill-tag" style={{ marginBottom: '12px' }}>Live Demo / Interactive Engine</span>
+                  <h2 className="section-title">Test Circlo Live Right Now</h2>
+                  <p className="section-subtitle">
                     Switch between the AI Vision Spectrometer, OpenSearch Civic Radar, and AWS Cedar policy engine below.
                   </p>
                 </div>
-                <div style={{ marginTop: '2rem' }}>
+                <div>
                   <ScannerTab 
                     onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
                     onOpenCedarForBatch={handleOpenCedarForBatch}
@@ -80,8 +78,8 @@ export default function App() {
         )}
 
         {activeTab === 'scanner' && (
-          <div className="wmd-section">
-            <div className="wmd-container">
+          <div className="evergreen-section">
+            <div className="evergreen-container">
               <ScannerTab 
                 onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
                 onOpenCedarForBatch={handleOpenCedarForBatch}
@@ -91,8 +89,8 @@ export default function App() {
         )}
 
         {activeTab === 'map' && (
-          <div className="wmd-section">
-            <div className="wmd-container">
+          <div className="evergreen-section">
+            <div className="evergreen-container">
               <MapTab 
                 prefilteredSample={prefilteredSample}
                 onRequestPickup={handleRequestPickup}
@@ -102,8 +100,8 @@ export default function App() {
         )}
 
         {activeTab === 'kabadiwala' && (
-          <div className="wmd-section">
-            <div className="wmd-container">
+          <div className="evergreen-section">
+            <div className="evergreen-container">
               <KabadiwalaHub 
                 onRequestPickup={handleRequestPickup}
               />
@@ -112,8 +110,8 @@ export default function App() {
         )}
 
         {activeTab === 'cedar' && (
-          <div className="wmd-section">
-            <div className="wmd-container">
+          <div className="evergreen-section">
+            <div className="evergreen-container">
               <CedarPolicyLab 
                 preselectedBatch={pickupItem}
               />
@@ -126,8 +124,8 @@ export default function App() {
         )}
 
         {activeTab === 'impact' && (
-          <div className="wmd-section">
-            <div className="wmd-container">
+          <div className="evergreen-section">
+            <div className="evergreen-container">
               <ImpactLedger 
                 onOpenCertificateModal={(data) => setCertModalData(data)}
               />
@@ -136,18 +134,24 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer matching WeMakeDevs */}
-      <footer className="border-t border-border" style={{ borderTop: '1px solid var(--border)', background: 'var(--background)', padding: '3rem 0' }}>
-        <div className="wmd-container">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
-            <div className="flex items-center gap-3" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div className="wmd-logo-icon">W</div>
-              <span className="font-mono text-xs uppercase text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+      {/* Evergreen Footer */}
+      <footer className="evergreen-footer">
+        <div className="evergreen-container">
+          <div className="footer-content">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span className="pill-tag sage" style={{ fontSize: '13px', padding: '4px 14px' }}>
+                Circlo · Track 03: Waste & Energy
+              </span>
+              <span style={{ color: 'var(--color-charcoal)' }}>•</span>
+              <span style={{ fontFamily: 'var(--font-rubik)', fontSize: '14px', fontWeight: 500 }}>
                 WeMakeDevs Bharat Builds Tour × AWS
               </span>
             </div>
-            <p className="font-mono text-xs text-muted-foreground" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
-              Environmental Hacks • Event 02 • Oct 8 – 11, 2026
+            <p style={{ fontFamily: 'var(--font-rubik)', fontSize: '14px', color: 'var(--color-charcoal)', maxWidth: '580px', lineHeight: 1.6 }}>
+              Built with AWS OpenSearch geospatial indexes, AWS Cedar verification engine, and Finch / LocalStack tooling. Dedicated to India's 1.5 million frontline recycling workers.
+            </p>
+            <p style={{ fontFamily: 'var(--font-rubik)', fontSize: '12px', color: 'rgba(51, 51, 51, 0.6)' }}>
+              Environmental Hacks • Event 02 • Oct 8 – 11, 2026 • Sunlit Greenhouse on Linen Paper
             </p>
           </div>
         </div>
