@@ -1,5 +1,6 @@
 import React from 'react';
 import KineticMarquee from './KineticMarquee';
+import CircloBrandMark from './CircloBrandMark';
 import { motion } from 'framer-motion';
 import { 
   ArrowRight, 
@@ -53,8 +54,8 @@ export default function Header({ activeTab, setActiveTab }) {
             className="kinetic-brand"
             onClick={() => setActiveTab('overview')}
           >
-            <div className="kinetic-brand-box">
-              C
+            <div className="kinetic-brand-box" title="Circlo — Fair Trade Circular E-Waste Protocol">
+              <CircloBrandMark size={26} color="#000000" />
             </div>
             <div>
               <span className="kinetic-brand-title">CIRCLO</span>

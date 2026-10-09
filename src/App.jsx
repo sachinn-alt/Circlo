@@ -11,6 +11,7 @@ import ImpactLedger from './components/ImpactLedger';
 import PickupModal from './components/PickupModal';
 import CertificateModal from './components/CertificateModal';
 import KineticMarquee from './components/KineticMarquee';
+import CircloBrandMark from './components/CircloBrandMark';
 import './App.css';
 
 export default function App() {
@@ -226,13 +227,18 @@ export default function App() {
             borderTop: '2px solid var(--border-color)',
             paddingTop: '32px'
           }}>
-            <div>
-              <span style={{ fontFamily: 'var(--font-space)', fontWeight: 900, fontSize: '24px', color: '#ffffff' }}>
-                CIRCLO.
-              </span>
-              <p style={{ fontSize: '13px', color: 'var(--muted-fg-color)', marginTop: '4px' }}>
-                DECENTRALIZED CIRCULAR E-WASTE & FAIR SCRAP NETWORK
-              </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+              <div className="kinetic-brand-box" style={{ width: '40px', height: '40px' }}>
+                <CircloBrandMark size={24} color="#000000" />
+              </div>
+              <div>
+                <span style={{ fontFamily: 'var(--font-space)', fontWeight: 900, fontSize: '24px', color: '#ffffff' }}>
+                  CIRCLO.
+                </span>
+                <p style={{ fontSize: '13px', color: 'var(--muted-fg-color)', marginTop: '2px' }}>
+                  DECENTRALIZED CIRCULAR E-WASTE & FAIR SCRAP NETWORK
+                </p>
+              </div>
             </div>
 
             <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
