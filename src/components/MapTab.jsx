@@ -241,7 +241,7 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
-                  {rec.specializations.map((spec, sIdx) => (
+                  {(rec.specializations || rec.certifications || []).map((spec, sIdx) => (
                     <span 
                       key={sIdx}
                       style={{ 
