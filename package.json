@@ -12,7 +12,8 @@
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report",
     "simulate": "node scripts/simulate_pipeline.js",
-    "ingest": "node scripts/ingest_open_data.js"
+    "ingest": "node scripts/ingest_open_data.js",
+    "train": "python training/train_ewaste_model.py"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

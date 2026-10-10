@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { PRELOADED_EWASTE_SAMPLES } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
+import { analyzeEwasteImage } from '../services/visionClassifier';
 
 export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBatch }) {
   const { t } = useLanguage();
@@ -39,45 +40,21 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
     }, 350);
   };
 
-  const processUploadedFile = (file) => {
+  const processUploadedFile = async (file) => {
     stopWebcam();
     const url = URL.createObjectURL(file);
     setCustomImage(url);
     setIsScanning(true);
     
-    // Generate simulated dynamic multi-spectral analysis for custom image
-    setTimeout(() => {
-      setSelectedSample({
-        id: `custom_${Date.now()}`,
-        title: file.name.replace(/\.[^/.]+$/, "").toUpperCase(),
-        category: "CUSTOM_HARDWARE_SURFACE",
-        imageUrl: url,
-        confidence: 0.97,
-        hazardLevel: 2,
-        hazardName: "Standard Consumer E-Scrap (RoHS Compliant)",
-        hazardColor: "#f59e0b",
-        detectedFeatures: [
-          { label: "BGA Logic Processor Array [98%]", box: [18, 22, 28, 28] },
-          { label: "High-Purity Copper Bus Grounding [95%]", box: [52, 15, 38, 42] },
-          { label: "Gold Flash Surface Connectors [93%]", box: [12, 60, 24, 25] }
-        ],
-        materials: {
-          cleanCopperFoil: "165g",
-          goldFlashPlating: "0.42g",
-          aluminumHeatsink: "88g",
-          tinSilverSolder: "14g",
-          epoxyFiberglass: "140g"
-        },
-        recoveryValue: {
-          min: 380,
-          max: 480,
-          fairBenchmark: 435
-        },
-        handlingNotice: "Verified non-hazardous standard e-scrap. Ready for certified neighborhood Kabadiwala digital scale weighing.",
-        safeDismantleDirective: "Authorized for local circular collection and zero-emission hydrometallurgical recovery."
-      });
+    try {
+      const result = await analyzeEwasteImage(url);
+      result.title = file.name.replace(/\.[^/.]+$/, "").toUpperCase();
+      setSelectedSample(result);
+    } catch (err) {
+      console.warn("Vision analysis error:", err);
+    } finally {
       setIsScanning(false);
-    }, 600);
+    }
   };
 
   const handleFileInput = (e) => {
@@ -130,7 +107,7 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
     setIsWebcamActive(false);
   };
 
-  const captureWebcamFrame = () => {
+  const captureWebcamFrame = async () => {
     if (!videoRef.current || !canvasRef.current) return;
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -144,35 +121,15 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
     setCustomImage(dataUrl);
     setIsScanning(true);
 
-    setTimeout(() => {
-      setSelectedSample({
-        id: `webcam_${Date.now()}`,
-        title: "LIVE WEBCAM HARDWARE SCAN",
-        category: "LIVE_MULTISPECTRAL_SAMPLE",
-        imageUrl: dataUrl,
-        confidence: 0.99,
-        hazardLevel: 1,
-        hazardName: "Low Hazard - Direct Circular Recovery",
-        hazardColor: "#10b981",
-        detectedFeatures: [
-          { label: "Target Micro-Circuitry Identified [99%]", box: [20, 20, 45, 45] },
-          { label: "Electrolytic Capacitance Trace [96%]", box: [55, 30, 25, 25] }
-        ],
-        materials: {
-          cleanCopper: "210g",
-          goldElectrolyte: "0.38g",
-          crgoSteelCore: "140g"
-        },
-        recoveryValue: {
-          min: 290,
-          max: 360,
-          fairBenchmark: 325
-        },
-        handlingNotice: "Capture confirmed. Hardware analyzed against CPCB safety standards.",
-        safeDismantleDirective: "Authorized for fair price Kabadiwala collection."
-      });
+    try {
+      const result = await analyzeEwasteImage(canvas);
+      result.title = "LIVE CAMERA SPECTROMETER CAPTURE";
+      setSelectedSample(result);
+    } catch (err) {
+      console.warn("Vision analysis error:", err);
+    } finally {
       setIsScanning(false);
-    }, 600);
+    }
   };
 
   useEffect(() => {

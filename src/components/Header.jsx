@@ -138,10 +138,10 @@ export default function Header({ activeTab, setActiveTab, onOpenAwsArch }) {
               className="btn-kinetic-outline"
               style={{ height: '42px', padding: '0 12px', fontSize: '12px' }}
               onClick={toggleLanguage}
-              title="Toggle Hindi / English localization"
+              title="Toggle English / Hindi / Bengali localization"
             >
               <Globe size={14} />
-              <span>{language === 'en' ? 'हिन्दी' : 'EN'}</span>
+              <span>{language === 'en' ? 'हिन्दी' : language === 'hi' ? 'বাংলা' : 'EN'}</span>
             </motion.button>
 
             {/* AWS Cloud Architecture Trigger Button (Desktop Only) */}
@@ -269,7 +269,7 @@ export default function Header({ activeTab, setActiveTab, onOpenAwsArch }) {
                     onClick={toggleLanguage}
                     style={{ background: 'none', border: '1px solid var(--border-color)', color: 'var(--accent-color)', padding: '4px 10px', fontWeight: 800, cursor: 'pointer' }}
                   >
-                    {language === 'en' ? 'हिन्दी में बदलें' : 'Switch to EN'}
+                    {language === 'en' ? 'हिन्दी में बदलें' : language === 'hi' ? 'বাংলায় পরিবর্তন করুন' : 'Switch to EN'}
                   </button>
                 </div>
               </div>

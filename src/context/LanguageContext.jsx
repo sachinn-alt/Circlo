@@ -141,8 +141,80 @@ export const translations = {
     certShareWhatsapp: "व्हाट्सएप पर शेयर करें",
     certCopyHash: "ऑडिट हैश कॉपी करें",
     certHashCopied: "हैश कॉपी हो गया!",
+  },
+
+  bn: {
+    // Navigation
+    navHowItWorks: "কীভাবে কাজ করে",
+    navAiScanner: "এআই স্ক্যানার",
+    navFindRecyclers: "ভাঙারি খুঁজুন",
+    navCollectorHub: "ভাঙারি হাব",
+    navFairPriceGuard: "ন্যায্য মূল্য গার্ড",
+    navImpactLedger: "ইমপ্যাক্ট লেজার",
+    navScanDevice: "গ্যাজেট স্ক্যান করুন",
+    navAwsArchitecture: "AWS আর্কিটেকচার",
+
+    // Marquee
+    marqueeRecyclers: "১৫,০০,০০০ প্রান্তিক ভাঙারি কর্মী ক্ষমতায়িত",
+    marqueeScale: "১০০% ডিজিটাল স্কেল নির্ভুলতার নিশ্চয়তা",
+    marqueeZeroBurn: "বিষাক্ত তার পোড়ানো নিষিদ্ধ",
+    marqueeFairPrice: "গ্যারান্টিযুক্ত ৮৫% ন্যায্য মূল্যের ন্যূনতম সীমা",
+    marqueeUpi: "সরাসরি ব্যাংক অ্যাকাউন্টে তাৎক্ষণিক UPI পেমেন্ট",
+    marqueeCpcb: "CPCB অডিটেড গ্রিন রিসাইক্লিং সার্টিফিকেট",
+
+    // Hero
+    heroHeadline1: "ই-বর্জ্য রিসাইকেল করুন।",
+    heroHeadline2: "তাৎক্ষণিক টাকা পান।",
+    heroHeadline3: "তার পোড়ানো বন্ধ করুন।",
+    heroSubhead: "সার্কলো শহুরে পরিবারগুলিকে ১৫ লক্ষ প্রত্যয়িত স্থানীয় ভাঙারিদের সাথে সরাসরি সংযুক্ত করে। আমরা মধ্যস্বত্বভোগীদের প্রতারণা দূর করি, ডিজিটাল স্কেলের ওজন নিশ্চিত করি এবং মারাত্মক তার পোড়ানো বন্ধ করি।",
+    heroScanBtn: "আপনার গ্যাজেট এখন স্ক্যান করুন",
+    heroFindBtn: "কাছের ভাঙারি খুঁজুন",
+    heroStatRecyclers: "প্রান্তিক ভাঙারি কর্মীদের ক্ষমতায়ন",
+    heroStatPayout: "MCX বেঞ্চমার্ক মূল্যের টাকা সরাসরি গ্রাহককে",
+    heroStatToxic: "CEDAR দ্বারা বিপজ্জনক তার দহন নিষিদ্ধ",
+
+    // Valuator Card
+    valuatorTitle: "তাৎক্ষণিক ই-স্ক্র্যাপ মূল্যায়ন",
+    valuatorHover: "[ উল্টাতে হোভার করুন ]",
+    valuatorGuaranteed: "নাগরিক গ্যারান্টিযুক্ত নগদ অর্থ",
+    valuatorPickupBtn: "ন্যায্য মূল্য লক করুন ও ভাঙারি ডাকুন",
+
+    // Scanner
+    scannerKicker: "[ স্পেকট্রোমিটার // রিয়েল-টাইম ধাতু মূল্য ]",
+    scannerHeading: "এআই ই-বর্জ্য স্পেকট্রোমিটার।",
+    scannerSubhead: "ইলেকট্রনিক যন্ত্রাংশ শনাক্ত করে, মূল্যবান ধাতু পরিমাপ করে এবং নিশ্চিত বাজারদর প্রদান করে।",
+    scannerCameraViewport: "ক্যামেরা ভিউপোর্ট",
+    scannerLiveSpectrometer: "লাইভ স্পেকট্রোমিটার",
+    scannerGuaranteedPayout: "নাগরিক গ্যারান্টিযুক্ত স্ক্র্যাপ মূল্য",
+    scannerExtractableElements: "নিষ্কাশনযোগ্য মূল্যবান ধাতু",
+    scannerBookPickup: "এই ব্যাচের জন্য ডোরস্টেপ পিকআপ বুক করুন",
+    scannerLiveWebcam: "লাইভ ওয়েবক্যাম স্ক্যান",
+    scannerUploadPhoto: "ছবি আপলোড করুন",
+    scannerCaptureFrame: "ফ্রেম ক্যাপচার ও বিশ্লেষণ",
+    scannerStopWebcam: "ক্যামেরা বন্ধ করুন",
+
+    // Map
+    mapKicker: "[ সিভিক রাডার // স্থানীয় ভাঙারি সংগ্রাহক ]",
+    mapHeading: "কাছের ভাঙারি খুঁজুন।",
+    mapSubhead: "পায়ে হাঁটা দূরত্বের মধ্যে প্রত্যয়িত এলাকার ভাঙারি খুঁজুন। সকল সংগ্রাহক ডিজিটাল স্কেলে সঠিক ওজন ও তাৎক্ষণিক UPI অর্থ প্রদান করেন।",
+    mapRadius: "অনুসন্ধানের পরিধি",
+    mapNearbyCollectors: "কাছের সংগ্রাহকবৃন্দ",
+    mapBookPickup: "ডোরস্টেপ পিকআপ বুক করুন",
+
+    // Architecture
+    archTitle: "প্রোডাকশন ক্লাউড আর্কিটেকচার",
+    archSubhead: "AWS OpenSearch সার্ভারলেস, AWS Cedar পলিসি ইঞ্জিন এবং Bedrock মাল্টিমোডাল এআই।",
+
+    // Certificate
+    certTitle: "সার্কুলার স্টুয়ার্ডশিপ সার্টিফিকেট",
+    certPrint: "প্রিন্ট / PDF ডকেট",
+    certShareWhatsapp: "হোয়াটসঅ্যাপে শেয়ার করুন",
+    certCopyHash: "অডিট হ্যাশ কপি করুন",
+    certHashCopied: "হ্যাশ কপি হয়েছে!",
   }
 };
+
+const LANGUAGE_CYCLE = ['en', 'hi', 'bn'];
 
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState('en');
@@ -152,7 +224,11 @@ export function LanguageProvider({ children }) {
   };
 
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === 'en' ? 'hi' : 'en'));
+    setLanguage((prev) => {
+      const currentIndex = LANGUAGE_CYCLE.indexOf(prev);
+      const nextIndex = (currentIndex + 1) % LANGUAGE_CYCLE.length;
+      return LANGUAGE_CYCLE[nextIndex];
+    });
   };
 
   return (

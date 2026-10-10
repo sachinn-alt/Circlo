@@ -114,14 +114,22 @@ circlo/
 │   │   └── docker-compose.yml   # LocalStack + OpenSearch local container stack
 │   └── serverless/
 │       └── template.yaml        # AWS SAM serverless orchestration pipeline
+├── docs/
+│   └── DIGITAL_PUBLIC_GOODS.md  # UN SDG 12 & 8 assessment and 9 DPG Standard indicators
 ├── data/
-│   └── cpcb_authorized_recyclers.json # Real CPCB registered dismantler & recycler dataset
+│   ├── cpcb_authorized_recyclers.json # Real CPCB registered dismantler & recycler dataset
+│   └── images/                  # Labeled e-waste computer vision training dataset directories
+├── training/
+│   ├── train_ewaste_model.py    # PyTorch Multi-Task CNN training script (MobileNetV3 -> ONNX)
+│   ├── dataset_downloader.py    # Open-source e-waste dataset ingestion utility (TACO/Roboflow)
+│   ├── requirements.txt         # ML dependencies (PyTorch, Torchvision, ONNX)
+│   └── MODEL_CARD.md            # Hugging Face-style model documentation & ethical safeguards
 ├── scripts/
 │   ├── ingest_open_data.js      # OpenSearch bulk seed generator & validation pipeline
 │   └── simulate_pipeline.js     # End-to-end headless CLI simulation pipeline
 ├── src/
 │   ├── components/
-│   │   ├── Header.jsx           # Brand header, mobile drawer menu, nav tabs
+│   │   ├── Header.jsx           # Brand header, mobile drawer menu, trilingual nav tabs
 │   │   ├── CommodityTicker.jsx  # Live scrap commodity rates (MCX linked)
 │   │   ├── ScannerTab.jsx       # AI E-Waste Vision classifier & material yields
 │   │   ├── MapTab.jsx           # Leaflet map + OpenSearch geo_distance radar
@@ -131,9 +139,12 @@ circlo/
 │   │   ├── PickupModal.jsx      # Doorstep dispatch & digital scale escrow pass
 │   │   ├── AwsArchitectureModal.jsx # System architecture & code viewer for judges
 │   │   └── CertificateModal.jsx # Printable CPCB compliance certificate
+│   ├── context/
+│   │   └── LanguageContext.jsx  # Trilingual localization engine (English, Hindi, Bengali)
 │   ├── data/
 │   │   └── mockData.js          # Commodity prices, e-waste samples, recyclers
 │   ├── services/
+│   │   ├── visionClassifier.js  # In-browser multi-spectral canvas pixel decomposition
 │   │   ├── cedarEngine.js       # In-browser Cedar Policy Evaluator & AST diagnostics
 │   │   └── openSearchClient.js  # OpenSearch geospatial query builder & simulator
 │   ├── App.jsx                  # Main app controller, routing & sticky bottom mobile dock
@@ -169,19 +180,24 @@ circlo/
 
 ## 🚀 Recent Engineering Milestones & Changelog
 
-### 📱 Full Mobile Responsiveness & Kinetic Touch Architecture
-- **Dual Mobile Navigation System**:
-  - Compact `MENU` header toggle (< 990px) opening a full brutalist drawer menu with quick tab switching, Hindi/English localization, and instant camera scanner access.
-  - Sticky **1-Thumb Bottom Dock** (< 768px) with direct navigation icons for *Home*, *AI Scanner*, *Map*, *Collector Hub*, *Fair Price Guard*, and *Impact Ledger*.
-- **Zero Horizontal Overflow Guarantee**: Fluid typography clamping (`clamp(2.3rem, 8.5vw, 11.5rem)`) and container padding tuning guaranteeing `scrollWidth === clientWidth` on all mobile viewports (tested on iPhone 14 / 390px, Galaxy / 360px).
-- **Responsive Grids**: Refactored rigid multi-column layouts across all modules and modals into fluid CSS grid layouts (`.commodity-ticker-grid`, `.leads-grid`, `.cedar-scenarios-grid`, `.impact-metrics-grid`, `.cert-metrics-grid`).
+### 🤖 Real Computer Vision Engine & Deep Learning Training Pipeline
+- **In-Browser Multi-Spectral Vision** (`src/services/visionClassifier.js`): Real pixel buffer inspection via HTML5 Canvas, color histogram decomposition (gold flash plating, copper coil, PCB green mask, lithium dark mass), Sobel gradient edge analysis, and dynamic bounding box clustering for both uploaded images and webcam frames.
+- **PyTorch Deep Learning Training Pipeline** (`training/train_ewaste_model.py`):
+  - Backbone: MobileNetV3-Small with multi-task prediction heads (Category Classifier, Hazard Severity Regressor, and Precious Metals Estimator).
+  - Automated export to **ONNX Runtime Web format** (`models/circlo_ewaste_v1.onnx`) with dynamic batch axes.
+  - Complete Hugging Face-style **Model Card** (`training/MODEL_CARD.md`) and dataset downloader (`training/dataset_downloader.py`).
 
-### 🌐 Open Source Platform Foundation & DPG Readiness
-- **Official Open-Source License**: Apache 2.0 License (`LICENSE`).
-- **Community Governance**: Comprehensive `CONTRIBUTING.md` with 4 dedicated contribution tracks, `CODE_OF_CONDUCT.md` (Contributor Covenant 2.1), and `SECURITY.md`.
-- **GitHub Issue & PR Templates**: Bug reports, feature requests, PR checklist, and a dedicated `new_cedar_policy.md` template for submitting new e-waste worker safety rules.
-- **1-Click Self-Hosting**: Root `docker-compose.yml` to launch LocalStack, OpenSearch 2.11, and OpenSearch Dashboards locally with zero cloud costs.
-- **Real Open Data Ingestion Pipeline**: `data/cpcb_authorized_recyclers.json` dataset and `npm run ingest` CLI tool validating and generating OpenSearch bulk index payloads.
+### 🌏 Trilingual Grassroots Localization (English, Hindi, Bengali)
+- Added native Bengali (**বাংলা**) translation dictionary across all navigation links, tickers, hero copy, valuator, camera spectrometer, radar map, and compliance certificates (`src/context/LanguageContext.jsx`).
+- Header and mobile drawer language toggles now smoothly cycle between **EN / हिन्दी / বাংলা** to support West Bengal & Kolkata informal recycler collectives.
+
+### 🏛️ Digital Public Goods (DPG) Standard & UN SDG Compliance
+- Documented complete compliance against the 9 Digital Public Goods Alliance criteria in `docs/DIGITAL_PUBLIC_GOODS.md`.
+- Directly targets **UN SDG 12** (Responsible Consumption and Production) and **UN SDG 8** (Decent Work and Economic Dignity for 1.5M informal waste workers).
+
+### 📱 Mobile-First Architecture & Kinetic Navigation
+- Slide-out mobile drawer menu (< 990px) and sticky 1-thumb bottom dock (< 768px).
+- Zero horizontal overflow guarantee across all mobile viewports (`scrollWidth === clientWidth`).
 
 ---
 
