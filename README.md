@@ -28,11 +28,15 @@ However, three critical breakdowns plague the ecosystem:
 ## ⚡ The Solution: Circlo
 **Circlo** bridges informal grassroots recyclers with households, civic authorities, and global electronics manufacturers through an intelligent decentralized network powered by **AWS Open Source tools**:
 
-- 🔍 **AWS OpenSearch (Open Source)**: Powers hyperlocal geospatial discovery (`geo_point` indexing and `geo_distance` queries) matching citizens with nearby verified informal collectors in under 10ms.
+- 🔍 **AWS OpenSearch (Open Source)**: Powers hyperlocal geospatial discovery (`geo_point` indexing and `geo_distance` queries) matching citizens with nearby verified informal collectors in under 10ms with 1-tap browser GPS (`navigator.geolocation`) and rapid metro city presets (Delhi NCR, Kolkata, Bengaluru, Mumbai).
 - 🗺️ **100% Free Open-Source Mapping (Zero API Keys & Zero Watermarks)**: Built on **Leaflet** with multi-provider tile options (ESRI Dark Canvas, Inverted Dark OpenStreetMap, and Standard OSM). Completely eliminates proprietary watermarks and requires zero Google Maps or Mapbox API keys, zero credit cards, and zero billing quotas.
-- 🛡️ **AWS Cedar Policy Engine (Open Source)**: Enforces fine-grained worker safety rules (forbids uncertified workers from dismantling Class 3+ hazardous e-waste) and guarantees a **Fair Minimum Floor Price** (forbids brokers from bidding <85% of civic commodity benchmark).
-- 📷 **Computer Vision E-Waste Scanner**: Classifies device components, flags hazard classes, computes extracted metal yield (Au, Ag, Cu, Li, Co), and delivers live fair market payouts.
-- 🤝 **Kabadiwala Empowerment Hub**: Transparent daily scrap rates, direct citizen leads, digital weighing scale verification, and safety training pathways for Hazmat L2 certification.
+- 🛡️ **AWS Cedar Policy Engine (Open Source)**: Enforces fine-grained worker safety rules (forbids uncertified workers from dismantling Class 3+ hazardous e-waste) and guarantees a **Fair Minimum Floor Price** (forbids brokers from bidding <85% of civic commodity benchmark), paired with an interactive **Live Cedar AST Code Editor**.
+- 📷 **Computer Vision E-Waste Scanner with OOD Rejection**: Classifies device components, flags hazard classes, computes extracted metal yield (Au, Ag, Cu, Li, Co), and includes an **Out-of-Distribution (OOD) Guard** that rejects non-electronic household objects to protect data integrity.
+- 🤝 **Kabadiwala Empowerment Hub (कास्ट रक्षक)**: 
+  - **Multi-Item Weighing Cart & Dynamic UPI QR Pass**: Weigher supporting combined multi-item batch slips with instant UPI QR code settlement (`circlo.escrow@icici`).
+  - **Paytm-Style Soundbox Voice Readout (बोलने वाला कांटा)**: Web Speech synthesis announcing certified weights and payments aloud in Hindi and English.
+  - **Direct CPCB Tier-1 Refinery Bidding Board**: Bypasses exploitative brokers with +₹20-30/kg factory green bonuses and 1-tap statutory CPCB Form 6 Hazardous Manifest passes.
+  - **Aaj Ka Khata (दैनिक बही-खाता) & Social Security Passport**: Micro-ledger tracking daily earnings and CO₂ saved, linked to E-Shram and PM-JAY Ayushman Bharat social security.
 - 📜 **EPR Circular Impact Ledger & Verifiable Certificates**: Audit-ready diversion logs tracking CO₂ savings, toxic lead interception, and formal CPCB compliance credits.
 
 ---
@@ -174,18 +178,25 @@ circlo/
 
 ## 🧪 Hackathon Judging Highlights
 
-1. **AWS Open Source Compliance ("Build It" Track)**:
-   - Uses **AWS Cedar** (`aws/cedar/policies.cedar`) with real policies and interactive in-app evaluation engine.
-   - Uses **AWS OpenSearch** (`aws/opensearch/mappings.json` & `queries.json`) for `geo_point` spatial queries and dynamic radius filtering.
-   - Includes **LocalStack & SAM** (`docker-compose.yml` and `template.yaml`) for 100% zero-cost local development.
-2. **Tangible Impact on Track 03 (Waste & Energy)**:
-   - Protects informal waste workers (*Kabadiwalas*) from fatal e-waste accidents.
-   - Prevents scrap broker cartels with an automated 85% commodity floor price rule.
-   - Diverts toxic mercury, lead, and lithium from entering urban groundwater.
-3. **Interactive "Wow" Factor**:
-   - Live bounding box computer vision scanner with elemental breakdown (Au, Ag, Cu, Li).
-   - Interactive Leaflet dark map with real OpenSearch DSL query viewer.
-   - Live Cedar Policy Playground allowing judges to test and tweak authorization scenarios in real time.
+1. **AWS Open Source Compliance ("Build It" & "Ship It" Tracks)**:
+   - **AWS Cedar Policy Engine**: Production Cedar policy definitions (`aws/cedar/policies.cedar` & `schema.cedarschema`) coupled with an in-browser live AST editor allowing dynamic threshold compilation and fine-grained authorization.
+   - **AWS OpenSearch (Open Source)**: Hyperlocal `geo_point` schema (`aws/opensearch/mappings.json` & `queries.json`) executing sub-10ms distance queries and aggregations.
+   - **LocalStack & SAM Integration**: Complete offline development container stack (`aws/localstack/docker-compose.yml` and `aws/serverless/template.yaml`) allowing 100% cloud development with zero AWS billing.
+2. **Grassroots Informal Recycler Dignity & Tangible Impact (Track 03: Waste & Energy)**:
+   - **Zero Backyard Fumes**: Cedar safety guardrails forbid uncertified informal workers from open burning or toxic acid leaching of hazardous Class 3+ e-waste.
+   - **Zero Middleman Gouging**: Automated 85% commodity floor price rule linked to daily MCX spot oracles protects 1.5 million kabadiwalas from predatory scrap brokers.
+   - **Direct Tier-1 Smelter Off-Take**: Connects informal workers directly to CPCB-registered hydrometallurgical refineries (Attero, E-Parisaraa, Green Waves) with +₹20-30/kg Green Premiums and CPCB Form 6 Hazardous Manifest passes.
+3. **Robust Computer Vision & Edge AI (PyTorch + MobileNetV3 + OOD Guard)**:
+   - Multi-spectral canvas pixel decomposition and Sobel edge clustering providing elemental yields (Au, Ag, Cu, Li).
+   - **Out-of-Distribution (OOD) Rejection Guard**: Rejects non-electronic household objects (e.g. fruit, cups) with low confidence warnings, eliminating the classic hackathon AI hallucination trap.
+   - Full PyTorch multi-task training pipeline, ONNX runtime web export, and Hugging Face Hub packaging (`sachinn-alt/circlo-ewaste-mobilenet`).
+4. **100% Free Open-Source Hyperlocal Radar (Zero API Keys & Zero Watermarks)**:
+   - Multi-provider Leaflet tile infrastructure (ESRI Dark Canvas, Inverted Dark OpenStreetMap, Standard OSM) requiring zero Google Maps/Mapbox API keys, credit cards, or rate limits.
+   - Native HTML5 Geolocation (`navigator.geolocation`) + 1-tap Metro City presets (Delhi NCR, Kolkata, Bengaluru, Mumbai).
+5. **Authentic Grassroots Fintech & Consumer-First UX**:
+   - Multi-item digital scale cart, scannable Dynamic SVG UPI QR Code pass (`circlo.escrow@icici`), and Web Speech API soundbox voice readout (बोलने वाला कांटा).
+   - Trilingual accessibility in English, Hindi, and Bengali (বাংলা).
+   - Discreet technical specifications relocated to the footer for judges, delivering a clean, consumer-grade user experience.
 
 ---
 
