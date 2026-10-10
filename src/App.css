@@ -732,6 +732,11 @@
   position: relative;
 }
 
+/* Inverted Neo-Brutalist Dark Map Tiles for OpenStreetMap (Zero API Keys & Zero Watermarks) */
+.dark-osm-tiles {
+  filter: invert(100%) hue-rotate(180deg) brightness(88%) contrast(115%);
+}
+
 /* 360-Degree Kinetic Radar Sweep in Header / Radar UI */
 @keyframes radarSpin {
   from { transform: rotate(0deg); }

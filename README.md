@@ -29,7 +29,7 @@ However, three critical breakdowns plague the ecosystem:
 **Circlo** bridges informal grassroots recyclers with households, civic authorities, and global electronics manufacturers through an intelligent decentralized network powered by **AWS Open Source tools**:
 
 - 🔍 **AWS OpenSearch (Open Source)**: Powers hyperlocal geospatial discovery (`geo_point` indexing and `geo_distance` queries) matching citizens with nearby verified informal collectors in under 10ms.
-- 🗺️ **100% Free Open-Source Mapping (Zero API Keys)**: Built on **Leaflet** + **OpenStreetMap** with Carto Dark Matter basemaps. Requires zero Google Maps or Mapbox API keys, zero credit cards, and zero usage quotas, with automatic fallback to standard OSM tiles.
+- 🗺️ **100% Free Open-Source Mapping (Zero API Keys & Zero Watermarks)**: Built on **Leaflet** with multi-provider tile options (ESRI Dark Canvas, Inverted Dark OpenStreetMap, and Standard OSM). Completely eliminates proprietary watermarks and requires zero Google Maps or Mapbox API keys, zero credit cards, and zero billing quotas.
 - 🛡️ **AWS Cedar Policy Engine (Open Source)**: Enforces fine-grained worker safety rules (forbids uncertified workers from dismantling Class 3+ hazardous e-waste) and guarantees a **Fair Minimum Floor Price** (forbids brokers from bidding <85% of civic commodity benchmark).
 - 📷 **Computer Vision E-Waste Scanner**: Classifies device components, flags hazard classes, computes extracted metal yield (Au, Ag, Cu, Li, Co), and delivers live fair market payouts.
 - 🤝 **Kabadiwala Empowerment Hub**: Transparent daily scrap rates, direct citizen leads, digital weighing scale verification, and safety training pathways for Hazmat L2 certification.

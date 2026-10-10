@@ -12,17 +12,74 @@ import {
 } from 'lucide-react';
 import { searchRecyclersOpenSearch } from '../services/openSearchClient';
 
+const MAP_PROVIDERS = {
+  esriDark: {
+    id: 'esriDark',
+    name: 'DARK CANVAS',
+    badge: 'ESRI DARK CANVAS (ZERO KEYS)',
+    layers: [
+      {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+          maxNativeZoom: 16,
+          maxZoom: 19
+        }
+      },
+      {
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
+        options: {
+          attribution: '',
+          maxNativeZoom: 16,
+          maxZoom: 19
+        }
+      }
+    ]
+  },
+  osmDark: {
+    id: 'osmDark',
+    name: 'DARK OSM',
+    badge: 'OPENSTREETMAP DARK (ZERO KEYS)',
+    layers: [
+      {
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        options: {
+          attribution: '&copy; OpenStreetMap contributors',
+          className: 'dark-osm-tiles',
+          maxZoom: 19
+        }
+      }
+    ]
+  },
+  osmStandard: {
+    id: 'osmStandard',
+    name: 'CLEAN OSM',
+    badge: 'OPENSTREETMAP STANDARD (ZERO KEYS)',
+    layers: [
+      {
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        options: {
+          attribution: '&copy; OpenStreetMap contributors',
+          maxZoom: 19
+        }
+      }
+    ]
+  }
+};
+
 export default function MapTab({ prefilteredSample, onRequestPickup }) {
   const [userLocation, setUserLocation] = useState({ lat: 28.6139, lon: 77.2090, city: "New Delhi (Connaught Place)" });
   const [radiusKm, setRadiusKm] = useState(8);
   const [selectedMaterial, setSelectedMaterial] = useState(prefilteredSample ? prefilteredSample.category : "");
   const [verifiedOnly, setVerifiedOnly] = useState(true);
   const [selectedRecycler, setSelectedRecycler] = useState(null);
+  const [activeMapTheme, setActiveMapTheme] = useState('esriDark');
 
   // Map DOM reference
   const mapContainerRef = useRef(null);
   const leafletMapRef = useRef(null);
   const markersRef = useRef([]);
+  const tileLayersRef = useRef([]);
 
   // Query Recyclers
   const searchResults = searchRecyclersOpenSearch(
@@ -52,29 +109,25 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
             zoomControl: false
           });
 
-          // 100% Free Open-Source Tiles: Carto Dark Matter + OpenStreetMap fallback (Zero API keys needed)
-          const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            subdomains: 'abcd',
-            maxZoom: 19
-          });
-
-          // Automatic fallback to standard OpenStreetMap tiles if CDN has any connectivity issues
-          tileLayer.on('tileerror', () => {
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-              attribution: '&copy; OpenStreetMap contributors',
-              maxZoom: 19
-            }).addTo(map);
-          });
-
-          tileLayer.addTo(map);
-
           L.control.zoom({ position: 'bottomright' }).addTo(map);
           leafletMapRef.current = map;
         }
 
         const map = leafletMapRef.current;
         if (!map) return;
+
+        // Apply selected tile layer provider (100% Watermark-Free & Zero API Keys)
+        tileLayersRef.current.forEach(layer => {
+          try { map.removeLayer(layer); } catch (e) {}
+        });
+        tileLayersRef.current = [];
+
+        const provider = MAP_PROVIDERS[activeMapTheme] || MAP_PROVIDERS.esriDark;
+        provider.layers.forEach(lDef => {
+          const layer = L.tileLayer(lDef.url, lDef.options);
+          layer.addTo(map);
+          tileLayersRef.current.push(layer);
+        });
 
         // Clear existing markers
         markersRef.current.forEach(m => {
@@ -134,7 +187,7 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
     return () => {
       isMounted = false;
     };
-  }, [userLocation, radiusKm, recyclers.length, selectedRecycler?.id]);
+  }, [userLocation, radiusKm, recyclers.length, selectedRecycler?.id, activeMapTheme]);
 
   // Clean up on complete unmount
   useEffect(() => {
@@ -292,26 +345,72 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
         <div style={{ backgroundColor: '#000000', position: 'relative' }}>
           <div ref={mapContainerRef} className="map-viewport-brutalist" />
           
-          {/* 100% Free Open-Source Badge */}
+          {/* Top Bar on Map: Free Badge + Theme Selector */}
           <div style={{ 
             position: 'absolute', 
             top: '16px', 
             left: '16px', 
+            right: '16px',
             zIndex: 1000, 
-            backgroundColor: 'rgba(0, 0, 0, 0.85)', 
-            border: '2px solid var(--border-color)',
-            padding: '6px 12px',
-            fontFamily: 'var(--font-space)',
-            fontSize: '11px',
-            fontWeight: 800,
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            flexWrap: 'wrap',
             gap: '8px',
-            backdropFilter: 'blur(4px)'
+            pointerEvents: 'none'
           }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
-            <span style={{ color: 'var(--accent-color)' }}>100% FREE OPEN-SOURCE MAP</span>
-            <span style={{ color: 'var(--muted-fg-color)' }}>// LEAFLET + OSM (ZERO API KEYS)</span>
+            {/* Free Badge */}
+            <div style={{ 
+              backgroundColor: 'rgba(0, 0, 0, 0.9)', 
+              border: '2px solid var(--border-color)',
+              padding: '6px 12px',
+              fontFamily: 'var(--font-space)',
+              fontSize: '11px',
+              fontWeight: 800,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              backdropFilter: 'blur(4px)',
+              pointerEvents: 'auto'
+            }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
+              <span style={{ color: 'var(--accent-color)' }}>100% FREE OPEN MAP</span>
+              <span style={{ color: 'var(--muted-fg-color)' }}>// ZERO WATERMARKS • ZERO API KEYS</span>
+            </div>
+
+            {/* Map Style Pills */}
+            <div style={{ 
+              display: 'flex', 
+              gap: '4px',
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              border: '2px solid var(--border-color)',
+              padding: '4px',
+              backdropFilter: 'blur(4px)',
+              pointerEvents: 'auto'
+            }}>
+              {Object.values(MAP_PROVIDERS).map(prov => {
+                const isActive = activeMapTheme === prov.id;
+                return (
+                  <button
+                    key={prov.id}
+                    onClick={() => setActiveMapTheme(prov.id)}
+                    style={{
+                      border: 'none',
+                      backgroundColor: isActive ? 'var(--accent-color)' : 'transparent',
+                      color: isActive ? '#000000' : 'var(--fg-color)',
+                      fontFamily: 'var(--font-space)',
+                      fontSize: '10px',
+                      fontWeight: 800,
+                      padding: '4px 8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    {prov.name}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Floating Legend */}
