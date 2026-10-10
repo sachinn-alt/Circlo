@@ -52,12 +52,22 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
             zoomControl: false
           });
 
-          // Carto Dark Matter Tiles
-          L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          // 100% Free Open-Source Tiles: Carto Dark Matter + OpenStreetMap fallback (Zero API keys needed)
+          const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
             subdomains: 'abcd',
             maxZoom: 19
-          }).addTo(map);
+          });
+
+          // Automatic fallback to standard OpenStreetMap tiles if CDN has any connectivity issues
+          tileLayer.on('tileerror', () => {
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; OpenStreetMap contributors',
+              maxZoom: 19
+            }).addTo(map);
+          });
+
+          tileLayer.addTo(map);
 
           L.control.zoom({ position: 'bottomright' }).addTo(map);
           leafletMapRef.current = map;
@@ -282,6 +292,28 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
         <div style={{ backgroundColor: '#000000', position: 'relative' }}>
           <div ref={mapContainerRef} className="map-viewport-brutalist" />
           
+          {/* 100% Free Open-Source Badge */}
+          <div style={{ 
+            position: 'absolute', 
+            top: '16px', 
+            left: '16px', 
+            zIndex: 1000, 
+            backgroundColor: 'rgba(0, 0, 0, 0.85)', 
+            border: '2px solid var(--border-color)',
+            padding: '6px 12px',
+            fontFamily: 'var(--font-space)',
+            fontSize: '11px',
+            fontWeight: 800,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backdropFilter: 'blur(4px)'
+          }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
+            <span style={{ color: 'var(--accent-color)' }}>100% FREE OPEN-SOURCE MAP</span>
+            <span style={{ color: 'var(--muted-fg-color)' }}>// LEAFLET + OSM (ZERO API KEYS)</span>
+          </div>
+
           {/* Floating Legend */}
           <div style={{ 
             position: 'absolute', 
