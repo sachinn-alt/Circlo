@@ -1,0 +1,39 @@
+{
+  "model_name": "Circlo-MobileNetV3-EWaste-v1",
+  "architecture": "MobileNetV3-Small-MultiTask",
+  "framework": "PyTorch / ONNX Runtime",
+  "input_resolution": [
+    224,
+    224,
+    3
+  ],
+  "categories": [
+    "PRINTED_CIRCUIT_BOARDS",
+    "LITHIUM_ION_BATTERY",
+    "CRT_TELEVISION_TUBE",
+    "INDUCTION_COIL_TRANSFORMER",
+    "SOLAR_INVERTER",
+    "GENERAL_E_SCRAP"
+  ],
+  "hazard_levels": {
+    "min": 1.0,
+    "max": 5.0,
+    "thresholds": {
+      "L1": "Safe/Direct",
+      "L2": "Standard/PPE",
+      "L3": "Hazmat L1",
+      "L4": "Hazmat L2",
+      "L5": "Restricted/R2"
+    }
+  },
+  "metals_tracked": [
+    "gold",
+    "silver",
+    "copper",
+    "lithium",
+    "cobalt"
+  ],
+  "target_runtime": "ONNX Runtime Web / WebAssembly / PyTorch",
+  "timestamp": "2026-10-10T06:35:10Z",
+  "license": "Apache-2.0"
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import { TrendingUp, TrendingDown, Minus, ShieldCheck } from 'lucide-react';
-import { COMMODITY_PRICES } from '../data/mockData';
+import { getLiveCommodityPrices } from '../services/commodityOracle';
 
 export default function CommodityTicker() {
+  const prices = getLiveCommodityPrices();
   // Duplicate array for seamless infinite marquee
-  const tickerItems = [...COMMODITY_PRICES, ...COMMODITY_PRICES];
+  const tickerItems = [...prices, ...prices];
 
   return (
     <div className="ticker-wrapper">

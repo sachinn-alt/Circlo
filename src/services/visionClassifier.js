@@ -6,6 +6,22 @@
 
 import { COMMODITY_PRICES } from '../data/mockData';
 
+export const HUGGING_FACE_MODEL_CONFIG = {
+  repoId: "sachinn-alt/circlo-ewaste-mobilenet",
+  onnxUrl: "https://huggingface.co/sachinn-alt/circlo-ewaste-mobilenet/resolve/main/model.onnx",
+  manifestUrl: "https://huggingface.co/sachinn-alt/circlo-ewaste-mobilenet/resolve/main/model_manifest.json",
+  architecture: "MobileNetV3-Small-MultiTask",
+  targetResolution: [224, 224],
+  categories: [
+    "PRINTED_CIRCUIT_BOARDS",
+    "LITHIUM_ION_BATTERY",
+    "CRT_TELEVISION_TUBE",
+    "INDUCTION_COIL_TRANSFORMER",
+    "SOLAR_INVERTER",
+    "GENERAL_E_SCRAP"
+  ]
+};
+
 /**
  * Analyzes an image element, video frame, or dataURL to extract physical hardware features,
  * compute localized bounding boxes, evaluate hazard classification, and project metal recovery.

@@ -10,9 +10,11 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { COMMODITY_PRICES } from '../data/mockData';
+import { getLiveCommodityPrices, getOracleMetadata } from '../services/commodityOracle';
 
 export default function KabadiwalaHub({ onRequestPickup }) {
+  const commodityPrices = getLiveCommodityPrices();
+  const oracleMeta = getOracleMetadata();
   const [leads] = useState([
     {
       id: "lead_701",
@@ -74,8 +76,12 @@ export default function KabadiwalaHub({ onRequestPickup }) {
       </motion.div>
 
       {/* Daily Scrap Market Ticker Grid */}
+      <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', fontFamily: 'var(--font-space)', color: 'var(--accent-color)' }}>
+        <span className="kinetic-live-dot" />
+        <span>ORACLE FEED: {oracleMeta.exchange} | SIGNATURE: {oracleMeta.signature.slice(0, 14)}... | STATUTORY FLOOR: {oracleMeta.floorRule}</span>
+      </div>
       <div className="commodity-ticker-grid">
-        {COMMODITY_PRICES.map((item, idx) => (
+        {commodityPrices.map((item, idx) => (
           <motion.div 
             key={idx}
             initial={{ opacity: 0, y: 15 }}

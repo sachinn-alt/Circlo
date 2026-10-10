@@ -102,7 +102,9 @@ circlo/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/          # Structured Bug Report, Feature Request & Cedar Policy templates
 │   ├── PULL_REQUEST_TEMPLATE.md # Standardized PR review checklist
-│   └── workflows/ci.yml         # Automated GitHub Actions CI/CD (Playwright + Oxlint)
+│   └── workflows/
+│       ├── ci.yml               # Automated GitHub Actions CI/CD (Playwright + Oxlint)
+│       └── commodity-oracle.yml # Daily automated MCX scrap oracle refresh & Cedar floor sync
 ├── aws/
 │   ├── cedar/
 │   │   ├── policies.cedar       # Production Cedar policies (Safety & Fair Pricing)
@@ -118,22 +120,25 @@ circlo/
 │   └── DIGITAL_PUBLIC_GOODS.md  # UN SDG 12 & 8 assessment and 9 DPG Standard indicators
 ├── data/
 │   ├── cpcb_authorized_recyclers.json # Real CPCB registered dismantler & recycler dataset
+│   ├── commodity_oracle_history.json  # 30-day historical oracle pricing & integrity hashes
 │   └── images/                  # Labeled e-waste computer vision training dataset directories
 ├── training/
 │   ├── train_ewaste_model.py    # PyTorch Multi-Task CNN training script (MobileNetV3 -> ONNX)
+│   ├── huggingface_hub_export.py# Automated Hugging Face Hub packaging (sachinn-alt/circlo-ewaste-mobilenet)
 │   ├── dataset_downloader.py    # Open-source e-waste dataset ingestion utility (TACO/Roboflow)
 │   ├── requirements.txt         # ML dependencies (PyTorch, Torchvision, ONNX)
 │   └── MODEL_CARD.md            # Hugging Face-style model documentation & ethical safeguards
 ├── scripts/
+│   ├── fetch_live_commodity_rates.js  # Live MCX/LME commodity oracle fetcher & floor calculator
 │   ├── ingest_open_data.js      # OpenSearch bulk seed generator & validation pipeline
 │   └── simulate_pipeline.js     # End-to-end headless CLI simulation pipeline
 ├── src/
 │   ├── components/
 │   │   ├── Header.jsx           # Brand header, mobile drawer menu, trilingual nav tabs
-│   │   ├── CommodityTicker.jsx  # Live scrap commodity rates (MCX linked)
+│   │   ├── CommodityTicker.jsx  # Live scrap commodity rates (MCX linked via Oracle)
 │   │   ├── ScannerTab.jsx       # AI E-Waste Vision classifier & material yields
 │   │   ├── MapTab.jsx           # Leaflet map + OpenSearch geo_distance radar
-│   │   ├── KabadiwalaHub.jsx    # Informal recycler welfare, leads, price board
+│   │   ├── KabadiwalaHub.jsx    # Informal recycler welfare, leads, live oracle rates board
 │   │   ├── CedarPolicyLab.jsx   # Interactive AWS Cedar authorization workbench
 │   │   ├── ImpactLedger.jsx     # Circular footprint calculator & EPR counters
 │   │   ├── PickupModal.jsx      # Doorstep dispatch & digital scale escrow pass
@@ -142,9 +147,11 @@ circlo/
 │   ├── context/
 │   │   └── LanguageContext.jsx  # Trilingual localization engine (English, Hindi, Bengali)
 │   ├── data/
-│   │   └── mockData.js          # Commodity prices, e-waste samples, recyclers
+│   │   ├── live_commodity_prices.json # Synced live oracle spot prices with SHA-256 signature
+│   │   └── mockData.js          # Commodity prices baseline, e-waste samples, recyclers
 │   ├── services/
-│   │   ├── visionClassifier.js  # In-browser multi-spectral canvas pixel decomposition
+│   │   ├── commodityOracle.js   # Live MCX pricing oracle service & 85% Cedar floor validator
+│   │   ├── visionClassifier.js  # In-browser multi-spectral canvas pixel decomposition & HF config
 │   │   ├── cedarEngine.js       # In-browser Cedar Policy Evaluator & AST diagnostics
 │   │   └── openSearchClient.js  # OpenSearch geospatial query builder & simulator
 │   ├── App.jsx                  # Main app controller, routing & sticky bottom mobile dock
@@ -194,6 +201,15 @@ circlo/
 ### 🏛️ Digital Public Goods (DPG) Standard & UN SDG Compliance
 - Documented complete compliance against the 9 Digital Public Goods Alliance criteria in `docs/DIGITAL_PUBLIC_GOODS.md`.
 - Directly targets **UN SDG 12** (Responsible Consumption and Production) and **UN SDG 8** (Decent Work and Economic Dignity for 1.5M informal waste workers).
+
+### 🤗 Hugging Face Model Hub Integration & Pre-Trained Weights Distribution
+- **Hugging Face Hub Packaging** (`training/huggingface_hub_export.py`): Automates bundling and publishing model weights, ONNX runtime graphs, and Model Card to `sachinn-alt/circlo-ewaste-mobilenet`.
+- **Hybrid Inference Architecture** (`src/services/visionClassifier.js`): Configured to support remote CDN streaming of ONNX Web weights while preserving 100% offline, zero-latency WebGL canvas execution.
+
+### 📈 Automated Commodity Spot Oracle & Daily Cedar Floor Price Sync
+- **Cryptographic Spot Oracle** (`scripts/fetch_live_commodity_rates.js`): Ingests daily scrap metal benchmark indices from MCX (India) and LME, automatically calculates the **85% Fair Minimum Floor Price** mandated by AWS Cedar policies, and signs dockets with SHA-256 integrity hashes (`src/data/live_commodity_prices.json`).
+- **Frontend Reactive Oracle Service** (`src/services/commodityOracle.js`): Directly feeds live spot rates to `CommodityTicker.jsx`, `KabadiwalaHub.jsx`, and `CedarPolicyLab.jsx`.
+- **Automated GitHub Action Cron** (`.github/workflows/commodity-oracle.yml`): Runs daily at 00:00 UTC to execute `npm run oracle:update`, test against Playwright, and commit synchronized pricing.
 
 ### 📱 Mobile-First Architecture & Kinetic Navigation
 - Slide-out mobile drawer menu (< 990px) and sticky 1-thumb bottom dock (< 768px).

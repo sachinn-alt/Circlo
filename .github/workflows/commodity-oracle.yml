@@ -1,0 +1,39 @@
+name: Commodity Spot Oracle — Daily MCX/LME Refresh
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Executes daily at 00:00 UTC
+  workflow_dispatch:      # Allows manual trigger from GitHub UI
+
+jobs:
+  refresh-oracle-rates:
+    name: Ingest Metal Spot Benchmarks & Compute Cedar Floors
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: ⚡ Execute Commodity Spot Oracle
+        run: npm run oracle:update
+
+      - name: 🧪 Verify Playwright Tests Against New Commodity Rates
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright test
+
+      - name: 🚀 Commit & Push Updated Oracle Docket
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(oracle): synchronize daily MCX scrap rates and Cedar floor prices'
+          file_pattern: 'src/data/live_commodity_prices.json data/commodity_oracle_history.json'
