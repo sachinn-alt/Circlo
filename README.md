@@ -192,6 +192,11 @@ circlo/
 ## 🚀 Recent Engineering Milestones & Changelog
 
 ### ⚖️ Hackathon Judge Deep-Dive Upgrades & Real-World Hardening
+- **Collector Hub Multi-Item Cart & Soundbox Voice Readout** (`src/components/KabadiwalaHub.jsx`):
+  - **Multi-Item Weighing Cart**: Supports adding multiple scrap items (e.g. 2.5 kg copper + 1.2 kg server PCBs) into a single batch with itemized subtotals, net certified weight, and combined digital parchi receipts.
+  - **Paytm-Style Soundbox Voice Readout (बोलने वाला कांटा)**: Implemented Web Speech API speech synthesis (`window.speechSynthesis`) announcing certified weight and total payouts aloud in Hindi/English, paired with a live animated soundbox equalizer broadcast banner.
+  - **Direct CPCB Tier-1 Refinery Bulk Off-Take Board**: Bypasses predatory scrap broker cartels by connecting informal collectors directly to CPCB registered hydrometallurgical refineries (Attero, E-Parisaraa, Green Waves) with +₹20-30/kg Green Premiums and 1-tap statutory CPCB Form 6 Hazardous Manifest passes.
+  - **Aaj Ka Khata (दैनिक बही-खाता) & Social Dignity Passport**: Real-time daily collection ledger with 1-tap quick offline transaction entry, daily CO₂/lead diversion counters, and verified links to E-Shram and PM-JAY Ayushman Bharat social security.
 - **Computer Vision Out-of-Distribution (OOD) Guard** (`src/services/visionClassifier.js` & `src/components/ScannerTab.jsx`):
   - Solves the classic hackathon trap of classification overconfidence (e.g., classifying a random household object or coffee mug as a "Telecom Server PCB").
   - Evaluates color histogram distribution across electronic/metallic spectral wavelengths (`hasElectronicVariance`).
