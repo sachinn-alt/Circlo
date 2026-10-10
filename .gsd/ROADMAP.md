@@ -39,7 +39,7 @@
 ---
 
 ## Phase 5: Hackathon Demo & Submission 🚀 [ACTIVE]
-- [ ] Push repository to GitHub.
+- [x] Push repository to GitHub (`https://github.com/sachinn-alt/Circlo.git`).
 - [ ] Record 2-minute video demo / walkthrough.
 - [ ] Submit project on WeMakeDevs AWS Environmental Hacks portal under Track 03 (Waste & Energy).
 

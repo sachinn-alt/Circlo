@@ -17,7 +17,11 @@
 - [x] **TASK-12:** Build standalone pipeline CLI test script (`npm run simulate`).
 - [x] **TASK-13:** Initialize standalone Git repository and create clean initial commit.
 
+- [x] **TASK-14:** Add GitHub remote URL and push commits (`https://github.com/sachinn-alt/Circlo.git`).
+- [x] **TASK-15:** Implement mobile-first responsiveness, kinetic touch bottom dock, and drawer navigation.
+- [x] **TASK-16:** Implement automated Playwright E2E test suite (7/7 tests passing) and GitHub Actions CI.
+- [x] **TASK-17:** Open data ingestion pipeline (`data/cpcb_authorized_recyclers.json`, `npm run ingest`) and open-source governance.
+
 ### Remaining Tasks ⏳
-- [ ] **TASK-14:** Add GitHub remote URL and push commits (`git push -u origin main`).
-- [ ] **TASK-15:** Record quick walkthrough demo video of the live app.
-- [ ] **TASK-16:** Complete hackathon submission form on WeMakeDevs portal.
+- [ ] **TASK-18:** Record interactive walkthrough demo video artifact of the live app.
+- [ ] **TASK-19:** Final hackathon pitch readiness and submission checklist.
