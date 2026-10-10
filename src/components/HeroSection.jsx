@@ -8,9 +8,11 @@ import {
   Coins, 
   Zap,
   ShieldCheck,
-  Cloud
+  Cloud,
+  MessageCircle
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { generateWhatsAppBookingUrl } from '../services/whatsappService';
 
 const KINETIC_SAMPLES = [
   {
@@ -276,18 +278,52 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
             </div>
 
 
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="btn-kinetic-primary" 
-              style={{ width: '100%' }}
-              onClick={() => onNavigateTab('scanner')}
-            >
-              <span>LAUNCH FULL AI SPECTROMETER</span>
-              <span className="btn-icon">
-                <ArrowRight size={18} />
-              </span>
-            </motion.button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  const url = generateWhatsAppBookingUrl({
+                    itemName: activeSample.name,
+                    estimatedWeight: activeSample.weight,
+                    payout: activeSample.payout,
+                    city: "Kolkata / Salt Lake (Doorstep Dispatch)"
+                  });
+                  window.open(url, '_blank');
+                }}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  backgroundColor: '#25D366',
+                  color: '#000000',
+                  fontWeight: 900,
+                  fontSize: '13px',
+                  fontFamily: 'var(--font-space)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px'
+                }}
+              >
+                <MessageCircle size={16} />
+                <span>BOOK THIS CASH VIA WHATSAPP (1-TAP)</span>
+              </motion.button>
+
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="btn-kinetic-primary" 
+                style={{ width: '100%' }}
+                onClick={() => onNavigateTab('scanner')}
+              >
+                <span>LAUNCH FULL AI SPECTROMETER</span>
+                <span className="btn-icon">
+                  <ArrowRight size={18} />
+                </span>
+              </motion.button>
+            </div>
 
           </motion.div>
 

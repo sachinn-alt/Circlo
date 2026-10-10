@@ -19,6 +19,7 @@ import ImpactLedger from './components/ImpactLedger';
 import PickupModal from './components/PickupModal';
 import CertificateModal from './components/CertificateModal';
 import AwsArchitectureModal from './components/AwsArchitectureModal';
+import MetalXRayInspector from './components/MetalXRayInspector';
 import KineticMarquee from './components/KineticMarquee';
 import CircloBrandMark from './components/CircloBrandMark';
 import './App.css';
@@ -85,36 +86,12 @@ export default function App() {
               />
               <TracksSection onSelectWasteTrack={() => setActiveTab('scanner')} />
               
-              {/* Live Interactive Scanner Playground directly in Overview */}
-              <section className="kinetic-section" style={{ borderBottom: 'none' }}>
-                <div className="kinetic-container">
-                  <div style={{ marginBottom: '40px' }}>
-                    <span style={{ 
-                      fontFamily: 'var(--font-space)', 
-                      fontSize: '13px', 
-                      fontWeight: 800, 
-                      color: 'var(--accent-color)', 
-                      letterSpacing: '0.12em',
-                      display: 'inline-flex',
-                      alignItems: 'center'
-                    }}>
-                      <span className="kinetic-live-dot" />
-                      [ 03 // LIVE CAMERA ENGINE ]
-                    </span>
-                    <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, textTransform: 'uppercase', marginTop: '12px' }}>
-                      TEST THE AI SPECTROMETER.
-                    </h2>
-                    <p style={{ fontFamily: 'var(--font-inter)', fontSize: '18px', color: 'var(--muted-fg-color)', maxWidth: '640px', marginTop: '14px' }}>
-                      Click any sample preset below to inspect bounding box computer vision, extracted metal rates, and verified payouts.
-                    </p>
-                  </div>
-
-                  <ScannerTab 
-                    onSelectRecyclerForScrap={handleSelectRecyclerForScrap}
-                    onOpenCedarForBatch={handleOpenCedarForBatch}
-                  />
-                </div>
-              </section>
+              {/* Interactive Precious Metals X-Ray Inspector (Simple, Awe-Inspiring, Clean) */}
+              <MetalXRayInspector 
+                onExploreKabadiwala={() => setActiveTab('kabadiwala')}
+                onExploreGovt={() => setActiveTab('cedar')}
+                onScan={() => setActiveTab('scanner')}
+              />
             </motion.div>
           )}
 
@@ -161,6 +138,9 @@ export default function App() {
             >
               <KabadiwalaHub 
                 onRequestPickup={handleRequestPickup}
+                onExploreScanner={() => setActiveTab('scanner')}
+                onExploreCedar={() => setActiveTab('cedar')}
+                onExploreMap={() => setActiveTab('map')}
               />
             </motion.div>
           )}

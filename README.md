@@ -135,10 +135,12 @@ circlo/
 ├── src/
 │   ├── components/
 │   │   ├── Header.jsx           # Brand header, mobile drawer menu, trilingual nav tabs
+│   │   ├── HeroSection.jsx      # Kinetic typography, valuator card with 1-tap WhatsApp booking
+│   │   ├── MetalXRayInspector.jsx# Interactive gadget X-ray blueprint, precious metal yields, dual exploration
 │   │   ├── CommodityTicker.jsx  # Live scrap commodity rates (MCX linked via Oracle)
 │   │   ├── ScannerTab.jsx       # AI E-Waste Vision classifier & material yields
 │   │   ├── MapTab.jsx           # Leaflet map + OpenSearch geo_distance radar
-│   │   ├── KabadiwalaHub.jsx    # Informal recycler welfare, leads, live oracle rates board
+│   │   ├── KabadiwalaHub.jsx    # Recycler welfare, digital scale calculator, mandi parchi, WhatsApp leads
 │   │   ├── CedarPolicyLab.jsx   # Interactive AWS Cedar authorization workbench
 │   │   ├── ImpactLedger.jsx     # Circular footprint calculator & EPR counters
 │   │   ├── PickupModal.jsx      # Doorstep dispatch & digital scale escrow pass
@@ -150,6 +152,7 @@ circlo/
 │   │   ├── live_commodity_prices.json # Synced live oracle spot prices with SHA-256 signature
 │   │   └── mockData.js          # Commodity prices baseline, e-waste samples, recyclers
 │   ├── services/
+│   │   ├── whatsappService.js   # Universal 1-tap WhatsApp pickup booking & lead dispatch deep links
 │   │   ├── commodityOracle.js   # Live MCX pricing oracle service & 85% Cedar floor validator
 │   │   ├── visionClassifier.js  # In-browser multi-spectral canvas pixel decomposition & HF config
 │   │   ├── cedarEngine.js       # In-browser Cedar Policy Evaluator & AST diagnostics
@@ -186,6 +189,12 @@ circlo/
 ---
 
 ## 🚀 Recent Engineering Milestones & Changelog
+
+### ⚡ Streamlined Dual-Persona UX, WhatsApp 1-Tap Dispatch & Digital Mandi Parchi
+- **Uncluttered Citizen Experience**: Replaced dense multi-tool developer viewports on the default screen with an educational, awe-inspiring **Interactive Precious Metals X-Ray Inspector** (`src/components/MetalXRayInspector.jsx`). Hotspots reveal microscopic yields of 24K gold flash, fine silver solder, pure copper traces, and cobalt battery cells inside obsolete phones, laptops, and batteries.
+- **1-Tap WhatsApp Booking for Indian Households** (`src/services/whatsappService.js`): Eliminates complex multi-step login friction. Citizens can lock in guaranteed payouts from the Hero Valuator or X-Ray Inspector and dispatch verified nearby kabadiwalas via pre-formatted WhatsApp deep links.
+- **Zero-Cheating Digital Weighing Scale & Mandi Parchi (रसीद) Calculator** (`src/components/KabadiwalaHub.jsx`): Informal scrap workers can select scrap categories, enter weights, compute statutory MCX payouts, claim citizen leads via WhatsApp in 1 tap, and instantly generate printable/WhatsApp digital scale slips to eliminate consumer trust disputes.
+- **Interconnected Exploration Pathways**: High-visibility cross-exploration bridges linking urban consumers with the Kabadiwala Welfare Portal, and linking informal collectors with CPCB-authorized recycler networks and AWS Cedar safety rules.
 
 ### 🤖 Real Computer Vision Engine & Deep Learning Training Pipeline
 - **In-Browser Multi-Spectral Vision** (`src/services/visionClassifier.js`): Real pixel buffer inspection via HTML5 Canvas, color histogram decomposition (gold flash plating, copper coil, PCB green mask, lithium dark mass), Sobel gradient edge analysis, and dynamic bounding box clustering for both uploaded images and webcam frames.
