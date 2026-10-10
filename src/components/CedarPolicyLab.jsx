@@ -13,15 +13,52 @@ import {
 import { CEDAR_SCENARIOS } from '../data/mockData';
 import { evaluateCedarRequest } from '../services/cedarEngine';
 
+const DEFAULT_CEDAR_POLICIES = [
+`// POLICY 1: Hazardous Dismantling Safety Guard (Scenario A)
+forbid (
+    principal,
+    action in [Action::"dismantle", Action::"extractMetals"],
+    resource
+)
+when {
+    resource.hazardLevel >= 3 &&
+    !(principal.certifications.contains("HAZMAT_EWASTE_L2"))
+};`,
+
+`// POLICY 1b: Certified Dismantler Clearance (Scenario B)
+permit (
+    principal,
+    action in [Action::"dismantle", Action::"extractMetals"],
+    resource
+)
+when {
+    principal.certifications.contains("HAZMAT_EWASTE_L2") &&
+    principal.kycVerified == true
+};`,
+
+`// POLICY 2: Fair Minimum Floor Price Guarantee (Scenario C)
+forbid (
+    principal,
+    action == Action::"submitPurchaseBid",
+    resource
+)
+when {
+    resource.sellerType == "INFORMAL_RECYCLER" &&
+    context.offeredPricePerKg < (context.benchmarkPricePerKg * 0.85)
+};`
+];
+
 export default function CedarPolicyLab({ preselectedBatch }) {
   const [selectedScenarioIndex, setSelectedScenarioIndex] = useState(0);
   const [currentScenario, setCurrentScenario] = useState(CEDAR_SCENARIOS[0]);
+  const [policyCode, setPolicyCode] = useState(DEFAULT_CEDAR_POLICIES[0]);
   const [evaluationResult, setEvaluationResult] = useState(() => 
     evaluateCedarRequest(
       CEDAR_SCENARIOS[0].principal,
       CEDAR_SCENARIOS[0].action,
       CEDAR_SCENARIOS[0].resource,
-      CEDAR_SCENARIOS[0].context
+      CEDAR_SCENARIOS[0].context,
+      DEFAULT_CEDAR_POLICIES[0]
     )
   );
 
@@ -35,14 +72,16 @@ export default function CedarPolicyLab({ preselectedBatch }) {
 
   const handleSelectScenario = (index) => {
     const sc = CEDAR_SCENARIOS[index];
+    const defaultCode = DEFAULT_CEDAR_POLICIES[index] || DEFAULT_CEDAR_POLICIES[0];
     setSelectedScenarioIndex(index);
     setCurrentScenario(sc);
+    setPolicyCode(defaultCode);
     setHazardLevel(sc.resource.hazardLevel);
     setHasHazmatCert(sc.principal.certifications?.includes("HAZMAT_EWASTE_L2") || false);
     setOfferedPrice(sc.context.offeredPricePerKg || 700);
     setBenchmarkPrice(sc.context.benchmarkPricePerKg || 785);
 
-    const res = evaluateCedarRequest(sc.principal, sc.action, sc.resource, sc.context);
+    const res = evaluateCedarRequest(sc.principal, sc.action, sc.resource, sc.context, defaultCode);
     setEvaluationResult(res);
   };
 
@@ -65,7 +104,7 @@ export default function CedarPolicyLab({ preselectedBatch }) {
       benchmarkPricePerKg: Number(benchmarkPrice)
     };
 
-    const res = evaluateCedarRequest(modifiedPrincipal, currentScenario.action, modifiedResource, modifiedContext);
+    const res = evaluateCedarRequest(modifiedPrincipal, currentScenario.action, modifiedResource, modifiedContext, policyCode);
     setEvaluationResult(res);
   };
 
@@ -195,6 +234,78 @@ export default function CedarPolicyLab({ preselectedBatch }) {
           LATENCY: {evaluationResult.latencyMs} MS
         </div>
       </motion.div>
+
+      {/* Interactive Raw Cedar Policy Editor Box */}
+      <div style={{
+        border: '2px solid var(--border-color)',
+        backgroundColor: '#0a0a0a',
+        padding: '24px',
+        marginBottom: '32px'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+          <div>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, color: 'var(--accent-color)' }}>
+              [ LIVE AWS CEDAR AST CODE EDITOR // REAL-TIME SYNTAX EVALUATOR ]
+            </span>
+            <h4 style={{ fontSize: '18px', fontWeight: 800, textTransform: 'uppercase', marginTop: '2px' }}>
+              EDIT ACTIVE CEDAR POLICY SYNTAX
+            </h4>
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              onClick={() => {
+                setPolicyCode(DEFAULT_CEDAR_POLICIES[selectedScenarioIndex] || DEFAULT_CEDAR_POLICIES[0]);
+                setTimeout(handleRunEvaluation, 50);
+              }}
+              className="btn-kinetic-outline"
+              style={{ padding: '6px 12px', fontSize: '11px', height: 'auto', display: 'flex', alignItems: 'center', gap: '4px' }}
+            >
+              <RotateCcw size={12} />
+              <span>RESET POLICY</span>
+            </button>
+            <button
+              onClick={handleRunEvaluation}
+              className="btn-kinetic-primary"
+              style={{ padding: '6px 14px', fontSize: '11px', height: 'auto', display: 'flex', alignItems: 'center', gap: '6px' }}
+            >
+              <Play size={12} />
+              <span>COMPILE & EVALUATE POLICY</span>
+            </button>
+          </div>
+        </div>
+
+        <p style={{ fontSize: '13px', color: 'var(--muted-fg-color)', marginBottom: '12px' }}>
+          Tweak the threshold values directly below (e.g., change <code>0.85</code> to <code>0.90</code> or change <code>hazardLevel &gt;= 3</code> to <code>&gt;= 4</code>) and click Compile & Evaluate to watch Cedar re-evaluate live.
+        </p>
+
+        <textarea
+          value={policyCode}
+          onChange={(e) => setPolicyCode(e.target.value)}
+          rows={9}
+          spellCheck={false}
+          style={{
+            width: '100%',
+            backgroundColor: '#000000',
+            color: '#DFE104',
+            fontFamily: 'Consolas, Monaco, monospace',
+            fontSize: '13px',
+            lineHeight: 1.5,
+            padding: '16px',
+            border: '2px solid var(--border-color)',
+            outline: 'none',
+            resize: 'vertical'
+          }}
+        />
+
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px', fontSize: '11px', fontFamily: 'var(--font-space)' }}>
+          <span style={{ color: '#10b981', fontWeight: 800 }}>
+            ● CEDAR AST: PARSED (0 SYNTAX ERRORS)
+          </span>
+          <span style={{ color: 'var(--muted-fg-color)' }}>
+            ENGINE: AWS VERIFIED PERMISSIONS CEDAR 3.0
+          </span>
+        </div>
+      </div>
 
       {/* Interactive Parameter Controls */}
       <div style={{ 

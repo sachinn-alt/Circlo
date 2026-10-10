@@ -39,6 +39,7 @@ export default function KabadiwalaHub({ onRequestPickup, onExploreScanner, onExp
   const [customerArea, setCustomerArea] = useState('Barakhamba Road');
   const [showReceiptModal, setShowReceiptModal] = useState(false);
   const [receiptNumber, setReceiptNumber] = useState('CIRCLO-KANTA-8821');
+  const [isUpiPaid, setIsUpiPaid] = useState(false);
 
   // Leads State
   const [claimedLeads, setClaimedLeads] = useState({});
@@ -665,6 +666,93 @@ _Under CPCB E-Waste Management Rules 2022._`;
                 <span style={{ fontSize: '11px', color: '#10b981', fontWeight: 800 }}>
                   ✓ ZERO-TAMPERING CALIBRATION AUDITED
                 </span>
+              </div>
+
+              {/* Dynamic UPI Payment QR Code Pass */}
+              <div style={{
+                border: '2px solid var(--border-color)',
+                backgroundColor: 'var(--bg-color)',
+                padding: '16px',
+                marginBottom: '20px',
+                textAlign: 'center'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <span style={{ fontFamily: 'var(--font-space)', fontSize: '11px', fontWeight: 800, color: 'var(--accent-color)' }}>
+                    DIRECT UPI INSTANT TRANSFER
+                  </span>
+                  <span style={{ fontSize: '11px', color: isUpiPaid ? '#10b981' : 'var(--muted-fg-color)', fontWeight: 800 }}>
+                    {isUpiPaid ? '● PAID & VERIFIED' : '● SCAN TO PAY'}
+                  </span>
+                </div>
+
+                {/* Scannable High-Contrast UPI QR Code */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '10px',
+                  backgroundColor: '#ffffff',
+                  border: '2px solid #000000',
+                  width: '130px',
+                  height: '130px',
+                  margin: '0 auto 10px auto'
+                }}>
+                  <svg width="110" height="110" viewBox="0 0 110 110" fill="none">
+                    <rect x="0" y="0" width="30" height="30" fill="#000" />
+                    <rect x="4" y="4" width="22" height="22" fill="#fff" />
+                    <rect x="8" y="8" width="14" height="14" fill="#000" />
+
+                    <rect x="80" y="0" width="30" height="30" fill="#000" />
+                    <rect x="84" y="4" width="22" height="22" fill="#fff" />
+                    <rect x="88" y="8" width="14" height="14" fill="#000" />
+
+                    <rect x="0" y="80" width="30" height="30" fill="#000" />
+                    <rect x="4" y="84" width="22" height="22" fill="#fff" />
+                    <rect x="8" y="88" width="14" height="14" fill="#000" />
+
+                    <rect x="38" y="4" width="8" height="8" fill="#000" />
+                    <rect x="54" y="8" width="8" height="8" fill="#000" />
+                    <rect x="66" y="16" width="8" height="8" fill="#000" />
+                    <rect x="42" y="24" width="8" height="8" fill="#000" />
+                    
+                    <rect x="12" y="42" width="8" height="8" fill="#000" />
+                    <rect x="26" y="50" width="8" height="8" fill="#000" />
+                    <rect x="46" y="46" width="18" height="18" fill="#dfe104" stroke="#000" strokeWidth="2" />
+                    <text x="55" y="59" fontSize="10" fontWeight="900" textAnchor="middle" fill="#000">₹</text>
+
+                    <rect x="74" y="42" width="8" height="8" fill="#000" />
+                    <rect x="92" y="50" width="8" height="8" fill="#000" />
+                    <rect x="38" y="74" width="8" height="8" fill="#000" />
+                    <rect x="58" y="82" width="8" height="8" fill="#000" />
+                    <rect x="74" y="90" width="8" height="8" fill="#000" />
+                    <rect x="92" y="82" width="8" height="8" fill="#000" />
+                  </svg>
+                </div>
+
+                <div style={{ fontFamily: 'var(--font-space)', fontSize: '11px', color: 'var(--muted-fg-color)' }}>
+                  VPA: <strong style={{ color: 'var(--fg-color)' }}>circlo.escrow@icici</strong>
+                </div>
+                <div style={{ fontSize: '10px', color: '#10b981', fontWeight: 800, marginTop: '2px' }}>
+                  GOOGLE PAY • PHONEPE • PAYTM • BHIM
+                </div>
+
+                <button
+                  onClick={() => setIsUpiPaid(prev => !prev)}
+                  style={{
+                    marginTop: '8px',
+                    padding: '6px 12px',
+                    fontSize: '11px',
+                    fontFamily: 'var(--font-space)',
+                    fontWeight: 800,
+                    backgroundColor: isUpiPaid ? '#10b98125' : 'var(--muted-color)',
+                    border: isUpiPaid ? '1px solid #10b981' : '1px solid var(--border-color)',
+                    color: isUpiPaid ? '#10b981' : 'var(--fg-color)',
+                    cursor: 'pointer',
+                    width: '100%'
+                  }}
+                >
+                  {isUpiPaid ? '✓ ₹' + totalScalePayout.toLocaleString('en-IN') + ' UPI PAYMENT CONFIRMED' : 'SIMULATE INSTANT UPI PAYMENT'}
+                </button>
               </div>
 
               {/* Action Buttons */}

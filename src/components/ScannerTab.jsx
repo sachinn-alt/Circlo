@@ -451,11 +451,13 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
             marginBottom: '24px',
             backgroundColor: 'var(--bg-color)'
           }}>
-            <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--accent-color)' }}>
+            <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: selectedSample.isEwaste === false ? '#f59e0b' : 'var(--accent-color)' }}>
               AUTOMATED SAFETY VERDICT:
             </span>
             <p style={{ fontSize: '14px', color: 'var(--fg-color)', marginTop: '4px' }}>
-              {selectedSample.hazardLevel >= 3 ? (
+              {selectedSample.isEwaste === false ? (
+                <span>⚠️ NON-E-WASTE DETECTED: Spectral variance indicates an organic or household object. Please position an electronic component inside the frame.</span>
+              ) : selectedSample.hazardLevel >= 3 ? (
                 <span>⚠️ RESTRICTED: Requires trained specialist equipped with certified Hazmat L2 protection.</span>
               ) : (
                 <span>✅ APPROVED: Permitted for all verified neighborhood collectors with direct UPI payout.</span>
@@ -464,18 +466,33 @@ export default function ScannerTab({ onSelectRecyclerForScrap, onOpenCedarForBat
           </div>
 
           {/* CTA Action */}
-          <motion.button 
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-kinetic-primary"
-            style={{ width: '100%' }}
-            onClick={() => onSelectRecyclerForScrap(selectedSample)}
-          >
-            <span>{t('scannerBookPickup')}</span>
-            <span className="btn-icon">
-              <ArrowRight size={18} />
-            </span>
-          </motion.button>
+          {selectedSample.isEwaste !== false ? (
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="btn-kinetic-primary"
+              style={{ width: '100%' }}
+              onClick={() => onSelectRecyclerForScrap(selectedSample)}
+            >
+              <span>{t('scannerBookPickup')}</span>
+              <span className="btn-icon">
+                <ArrowRight size={18} />
+              </span>
+            </motion.button>
+          ) : (
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="btn-kinetic-outline"
+              style={{ width: '100%', borderColor: '#f59e0b', color: '#f59e0b' }}
+              onClick={startWebcam}
+            >
+              <span>RE-SCAN WITH AN ELECTRONIC GADGET</span>
+              <span className="btn-icon">
+                <Camera size={18} />
+              </span>
+            </motion.button>
+          )}
 
         </div>
 

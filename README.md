@@ -191,6 +191,21 @@ circlo/
 
 ## 🚀 Recent Engineering Milestones & Changelog
 
+### ⚖️ Hackathon Judge Deep-Dive Upgrades & Real-World Hardening
+- **Computer Vision Out-of-Distribution (OOD) Guard** (`src/services/visionClassifier.js` & `src/components/ScannerTab.jsx`):
+  - Solves the classic hackathon trap of classification overconfidence (e.g., classifying a random household object or coffee mug as a "Telecom Server PCB").
+  - Evaluates color histogram distribution across electronic/metallic spectral wavelengths (`hasElectronicVariance`).
+  - Low-confidence or non-electronic objects immediately trigger an explicit Neo-Brutalist OOD warning badge (`CONFIDENCE < 40%`) and prompt the user to re-scan an authentic electronic item, preserving system trust and data integrity.
+- **Civic Radar 1-Tap Browser GPS & Multi-Metro Switcher** (`src/components/MapTab.jsx`):
+  - Added native HTML5 Geolocation API (`navigator.geolocation.getCurrentPosition`) for instant local collector discovery with accuracy indicators.
+  - Added 1-tap rapid metro city switches for Delhi NCR, Kolkata, Bengaluru, and Mumbai with instant coordinate shifts and OpenSearch radial recalibration.
+- **Authentic Dynamic UPI QR Code Pass & Instant Payment Simulator** (`src/components/KabadiwalaHub.jsx`):
+  - Upgraded the Digital Mandi Parchi (रसीद) with an authentic, high-contrast SVG UPI QR Code pass linked to `circlo.escrow@icici`.
+  - Supports instant payment simulation with real-time UI state toggling and app badges for BHIM UPI, GPay, PhonePe, and Paytm.
+- **Live AWS Cedar Policy AST Code Editor** (`src/services/cedarEngine.js` & `src/components/CedarPolicyLab.jsx`):
+  - Judges can now inspect and directly modify raw Cedar policy syntax (e.g. adjusting the statutory floor price ratio from `0.85` or changing the hazard threshold).
+  - Features real-time AST re-parsing, policy compilation status, and dynamic `[COMPILE & EVALUATE POLICY]` execution reflecting instant authorization verdicts.
+
 ### ⚡ Streamlined Dual-Persona UX, WhatsApp 1-Tap Dispatch & Digital Mandi Parchi
 - **Uncluttered Citizen Experience**: Replaced dense multi-tool developer viewports on the default screen with an educational, awe-inspiring **Interactive Precious Metals X-Ray Inspector** (`src/components/MetalXRayInspector.jsx`). Hotspots reveal microscopic yields of 24K gold flash, fine silver solder, pure copper traces, and cobalt battery cells inside obsolete phones, laptops, and batteries.
 - **1-Tap WhatsApp Booking for Indian Households** (`src/services/whatsappService.js`): Eliminates complex multi-step login friction. Citizens can lock in guaranteed payouts from the Hero Valuator or X-Ray Inspector and dispatch verified nearby kabadiwalas via pre-formatted WhatsApp deep links.

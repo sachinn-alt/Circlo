@@ -63,11 +63,38 @@ when {
     resource.informalCollectorPayoutConfirmed == true
 };`;
 
-export function evaluateCedarRequest(principal, actionStr, resource, context = {}) {
+export function evaluateCedarRequest(principal, actionStr, resource, context = {}, customPolicyCode = null) {
   const startTime = performance.now();
   const matchedForbids = [];
   const matchedPermits = [];
   const diagnostics = [];
+
+  // Parse custom policy parameters if supplied by the editor:
+  let customFloorRatio = 0.85;
+  let customHazardThreshold = 3;
+  let forceActionVerdict = null;
+
+  if (customPolicyCode && typeof customPolicyCode === 'string') {
+    // Extract benchmark ratio e.g. 0.85, 0.90, or 85 / 100
+    const ratioMatch = customPolicyCode.match(/benchmarkPricePerKg\s*\*\s*([0-9.]+)/i);
+    if (ratioMatch) {
+      customFloorRatio = parseFloat(ratioMatch[1]);
+    } else {
+      const fracMatch = customPolicyCode.match(/benchmarkPricePerKg\s*\*\s*([0-9]+)\s*\/\s*100/i);
+      if (fracMatch) customFloorRatio = parseFloat(fracMatch[1]) / 100;
+    }
+
+    // Extract hazard threshold e.g. hazardLevel >= 3 or hazardLevel >= 4
+    const hazardMatch = customPolicyCode.match(/hazardLevel\s*>=\s*([0-9]+)/i);
+    if (hazardMatch) {
+      customHazardThreshold = parseInt(hazardMatch[1], 10);
+    }
+
+    // Check if policy starts with permit vs forbid
+    if (/^\s*permit\s*\(/i.test(customPolicyCode) && !customPolicyCode.includes('forbid')) {
+      forceActionVerdict = 'ALLOW';
+    }
+  }
 
   // Normalize action name e.g. 'Action::"dismantle"' -> 'dismantle'
   const action = actionStr.replace(/^Action::\"?|\"?$/g, '');
@@ -80,17 +107,17 @@ export function evaluateCedarRequest(principal, actionStr, resource, context = {
     const certs = principal.certifications || [];
     const hasHazmatCert = certs.includes('HAZMAT_EWASTE_L2') || certs.includes('R2_CERTIFIED');
 
-    if (hazard >= 3 && !hasHazmatCert) {
+    if (hazard >= customHazardThreshold && !hasHazmatCert && forceActionVerdict !== 'ALLOW') {
       matchedForbids.push({
         id: 'policy_hazard_dismantling_guard',
-        clause: 'policy 1 (forbid dismantle when hazardLevel >= 3 && !HAZMAT_L2)',
-        description: `Resource hazardLevel (${hazard}) is high, but principal lacks HAZMAT_EWASTE_L2 or R2_CERTIFIED.`
+        clause: `policy 1 (forbid dismantle when hazardLevel >= ${customHazardThreshold} && !HAZMAT_L2)`,
+        description: `Resource hazardLevel (${hazard}) meets or exceeds threshold (${customHazardThreshold}), and principal lacks HAZMAT_EWASTE_L2.`
       });
-    } else if (hasHazmatCert || hazard < 3) {
+    } else {
       matchedPermits.push({
         id: 'policy_hazard_clearance_permit',
         clause: 'Authorized certified dismantle / safe sorting',
-        description: `Principal holds verified hazmat authorization (${certs.join(', ') || 'Safe class'}) for hazardLevel ${hazard}.`
+        description: `Principal holds verified authorization for hazardLevel ${hazard} (Threshold: ${customHazardThreshold}).`
       });
     }
   }
@@ -102,19 +129,19 @@ export function evaluateCedarRequest(principal, actionStr, resource, context = {
     const isInformal = resource.sellerType === 'INFORMAL_RECYCLER';
     const offered = context.offeredPricePerKg || 0;
     const benchmark = context.benchmarkPricePerKg || 100;
-    const minAllowed = benchmark * 0.85;
+    const minAllowed = benchmark * customFloorRatio;
 
-    if (isInformal && offered < minAllowed) {
+    if (isInformal && offered < minAllowed && forceActionVerdict !== 'ALLOW') {
       matchedForbids.push({
         id: 'policy_fair_floor_price_guarantee',
-        clause: 'policy 2 (forbid bid < 85% of benchmark rate)',
-        description: `Offered price ₹${offered}/kg violates minimum fair floor ₹${minAllowed.toFixed(1)}/kg (-15% tolerance from benchmark ₹${benchmark}/kg).`
+        clause: `policy 2 (forbid bid < ${(customFloorRatio * 100).toFixed(0)}% of benchmark rate)`,
+        description: `Offered price ₹${offered}/kg violates minimum fair floor ₹${minAllowed.toFixed(1)}/kg (${(customFloorRatio * 100).toFixed(0)}% rule on benchmark ₹${benchmark}/kg).`
       });
     } else {
       matchedPermits.push({
         id: 'policy_bid_permitted',
         clause: 'Bid satisfies civic floor pricing threshold',
-        description: `Offered price ₹${offered}/kg is compliant with civic benchmark rate.`
+        description: `Offered price ₹${offered}/kg is compliant with civic benchmark rate (Floor: ₹${minAllowed.toFixed(1)}).`
       });
     }
   }

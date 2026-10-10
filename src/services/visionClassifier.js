@@ -155,6 +155,42 @@ export async function analyzeEwasteImage(imageSource) {
         });
       }
 
+      // Check for Out-of-Distribution (OOD) non-electronic images:
+      // If photo lacks circuit green, copper coil orange, gold flash yellow, and metallic dark contrast
+      const hasElectronicVariance = (goldRatio > 0.005 || copperRatio > 0.01 || pcbRatio > 0.012 || (darkRatio > 0.15 && darkRatio < 0.7));
+
+      if (!hasElectronicVariance && sampledCount > 100) {
+        return resolve({
+          id: `scan_ood_${Date.now()}`,
+          isEwaste: false,
+          title: "NON-E-WASTE OBJECT / LOW SPECTRAL CONFIDENCE",
+          category: "UNRECOGNIZED_OBJECT",
+          imageUrl: typeof imageSource === 'string' ? imageSource : canvas.toDataURL('image/jpeg', 0.85),
+          confidence: 0.32,
+          hazardLevel: 0,
+          hazardName: "Non-Hazardous / Organic / Everyday Object",
+          hazardColor: "#94a3b8",
+          detectedFeatures: [
+            {
+              label: "⚠️ Non-Electronic Pattern [32% Low Conf]",
+              box: [25, 25, 50, 50]
+            }
+          ],
+          materials: {
+            organicOrHousehold: "100%",
+            preciousMetals: "0g (None)",
+            hazardousElements: "None Detected"
+          },
+          recoveryValue: {
+            min: 0,
+            max: 0,
+            fairBenchmark: 0
+          },
+          handlingNotice: "Low electronic signature detected. Please ensure bright lighting and frame a circuit board, battery, motor coil, or electronic appliance.",
+          safeDismantleDirective: "Not eligible for CPCB e-waste pickup protocol. Please rescan with an electronic item."
+        });
+      }
+
       // 4. Hardware Classification & Hazard Inference
       let category = "PRINTED_CIRCUIT_BOARDS";
       let title = "High-Density Logic Motherboard & Server PCB";

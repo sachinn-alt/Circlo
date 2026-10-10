@@ -67,6 +67,13 @@ const MAP_PROVIDERS = {
   }
 };
 
+const METRO_CITIES = [
+  { id: 'delhi', name: 'DELHI NCR', lat: 28.6139, lon: 77.2090, label: 'New Delhi (Connaught Place)' },
+  { id: 'kolkata', name: 'KOLKATA', lat: 22.5726, lon: 88.3639, label: 'Kolkata (Salt Lake Sector V)' },
+  { id: 'bangalore', name: 'BENGALURU', lat: 12.9716, lon: 77.5946, label: 'Bengaluru (Indiranagar)' },
+  { id: 'mumbai', name: 'MUMBAI', lat: 19.0760, lon: 72.8777, label: 'Mumbai (Andheri West)' }
+];
+
 export default function MapTab({ prefilteredSample, onRequestPickup }) {
   const [userLocation, setUserLocation] = useState({ lat: 28.6139, lon: 77.2090, city: "New Delhi (Connaught Place)" });
   const [radiusKm, setRadiusKm] = useState(8);
@@ -74,12 +81,48 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
   const [verifiedOnly, setVerifiedOnly] = useState(true);
   const [selectedRecycler, setSelectedRecycler] = useState(null);
   const [activeMapTheme, setActiveMapTheme] = useState('esriDark');
+  const [isLocatingGps, setIsLocatingGps] = useState(false);
 
   // Map DOM reference
   const mapContainerRef = useRef(null);
   const leafletMapRef = useRef(null);
   const markersRef = useRef([]);
   const tileLayersRef = useRef([]);
+
+  const handleUseGpsLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+    setIsLocatingGps(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setIsLocatingGps(false);
+        const { latitude, longitude } = pos.coords;
+        setUserLocation({
+          lat: latitude,
+          lon: longitude,
+          city: `GPS Location (${latitude.toFixed(3)}, ${longitude.toFixed(3)})`
+        });
+        if (leafletMapRef.current) {
+          leafletMapRef.current.flyTo([latitude, longitude], 13);
+        }
+      },
+      (err) => {
+        setIsLocatingGps(false);
+        console.warn("GPS Geolocation error:", err);
+        alert("GPS permission was denied or unavailable. Falling back to default sector.");
+      },
+      { timeout: 8000 }
+    );
+  };
+
+  const handleSelectCity = (city) => {
+    setUserLocation({ lat: city.lat, lon: city.lon, city: city.label });
+    if (leafletMapRef.current) {
+      leafletMapRef.current.flyTo([city.lat, city.lon], 13);
+    }
+  };
 
   // Query Recyclers
   const searchResults = searchRecyclersOpenSearch(
@@ -230,6 +273,63 @@ export default function MapTab({ prefilteredSample, onRequestPickup }) {
         {/* Left Column: Filter Controls & Recyclers Scroll List */}
         <div style={{ backgroundColor: 'var(--bg-color)', padding: 'clamp(16px, 3.5vw, 32px)', display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
+          {/* Location / Sector Selector with GPS */}
+          <div style={{ borderBottom: '2px solid var(--border-color)', paddingBottom: '16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <span style={{ fontFamily: 'var(--font-space)', fontSize: '12px', fontWeight: 800, textTransform: 'uppercase', color: 'var(--muted-fg-color)' }}>
+                YOUR SECTOR:
+              </span>
+              <button 
+                onClick={handleUseGpsLocation}
+                disabled={isLocatingGps}
+                className="btn-kinetic-outline"
+                style={{ 
+                  height: '28px', 
+                  padding: '0 10px', 
+                  fontSize: '11px', 
+                  display: 'inline-flex', 
+                  alignItems: 'center', 
+                  gap: '6px',
+                  borderColor: isLocatingGps ? 'var(--accent-color)' : 'var(--border-color)'
+                }}
+              >
+                <Radio size={12} color={isLocatingGps ? '#10b981' : 'currentColor'} />
+                <span>{isLocatingGps ? 'LOCATING...' : 'USE MY GPS'}</span>
+              </button>
+            </div>
+            
+            {/* Active City Display */}
+            <div style={{ fontFamily: 'var(--font-space)', fontSize: '13px', fontWeight: 800, color: 'var(--accent-color)', marginBottom: '10px' }}>
+              📍 {userLocation.city}
+            </div>
+
+            {/* Quick Metro Switcher Pills */}
+            <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+              {METRO_CITIES.map(city => {
+                const isActive = userLocation.lat === city.lat && userLocation.lon === city.lon;
+                return (
+                  <button
+                    key={city.id}
+                    onClick={() => handleSelectCity(city)}
+                    style={{
+                      border: '1px solid var(--border-color)',
+                      backgroundColor: isActive ? 'var(--accent-color)' : 'var(--muted-color)',
+                      color: isActive ? '#000000' : 'var(--fg-color)',
+                      fontFamily: 'var(--font-space)',
+                      fontSize: '11px',
+                      fontWeight: 800,
+                      padding: '4px 8px',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    {city.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Radius Control */}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
