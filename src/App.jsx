@@ -271,7 +271,25 @@ export default function App() {
 
           <div style={{ marginTop: '24px', fontSize: '12px', color: 'var(--muted-fg-color)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
             <span>© 2026 CIRCLO // DEDICATED TO 1.5 MILLION FRONTLINE KABADIWALAS</span>
-            <span style={{ color: 'var(--accent-color)' }}>[ CPCB E-WASTE MANAGEMENT RULES 2022 COMPLIANT ]</span>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <button 
+                onClick={() => setIsAwsArchModalOpen(true)}
+                style={{ 
+                  background: 'none', 
+                  border: 'none', 
+                  color: 'var(--muted-fg-color)', 
+                  fontSize: '11px', 
+                  fontFamily: 'var(--font-space)', 
+                  cursor: 'pointer', 
+                  textDecoration: 'underline',
+                  padding: 0
+                }}
+                title="View Technical System Architecture & Cloud Infrastructure"
+              >
+                [ SYSTEM ARCHITECTURE & SPECS ]
+              </button>
+              <span style={{ color: 'var(--accent-color)' }}>[ CPCB E-WASTE MANAGEMENT RULES 2022 COMPLIANT ]</span>
+            </div>
           </div>
 
         </div>

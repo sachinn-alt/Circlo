@@ -192,6 +192,10 @@ circlo/
 ## 🚀 Recent Engineering Milestones & Changelog
 
 ### ⚖️ Hackathon Judge Deep-Dive Upgrades & Real-World Hardening
+- **Streamlined Consumer-First UX & Discreet Technical Specifications** (`src/components/Header.jsx`, `src/components/HeroSection.jsx`, `src/App.jsx`):
+  - Removed overt internal developer buttons (`AWS CLOUD`, `AWS ARCHITECTURE`) from the top navigation bar, mobile drawer, and hero banner to deliver an authentic, consumer-facing digital product.
+  - Replaced the hero third action with a high-intent grassroots shortcut: **`TODAY'S SCRAP RATES (कास्ट दर)`** directly navigating to the live Mandi ticker and digital scale.
+  - Relocated the full interactive AWS Cloud Architecture & Open Source System Blueprint modal to an unobtrusive technical footnote link in the footer (`[ SYSTEM ARCHITECTURE & SPECS ]`), preserving auditability for AWS hackathon judges without cluttering the citizen experience.
 - **Collector Hub Multi-Item Cart & Soundbox Voice Readout** (`src/components/KabadiwalaHub.jsx`):
   - **Multi-Item Weighing Cart**: Supports adding multiple scrap items (e.g. 2.5 kg copper + 1.2 kg server PCBs) into a single batch with itemized subtotals, net certified weight, and combined digital parchi receipts.
   - **Paytm-Style Soundbox Voice Readout (बोलने वाला कांटा)**: Implemented Web Speech API speech synthesis (`window.speechSynthesis`) announcing certified weight and total payouts aloud in Hindi/English, paired with a live animated soundbox equalizer broadcast banner.

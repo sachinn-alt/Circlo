@@ -144,19 +144,6 @@ export default function Header({ activeTab, setActiveTab, onOpenAwsArch }) {
               <span>{language === 'en' ? 'हिन्दी' : language === 'hi' ? 'বাংলা' : 'EN'}</span>
             </motion.button>
 
-            {/* AWS Cloud Architecture Trigger Button (Desktop Only) */}
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="btn-kinetic-outline desktop-only-action"
-              style={{ height: '42px', padding: '0 14px', fontSize: '12px', borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
-              onClick={onOpenAwsArch}
-              title="Inspect AWS Cloud Architecture & Cedar policies"
-            >
-              <Cloud size={14} />
-              <span>AWS CLOUD</span>
-            </motion.button>
-
             {/* Primary Action Button (Desktop Only) */}
             <motion.button 
               whileHover={{ scale: 1.05 }}
@@ -251,17 +238,6 @@ export default function Header({ activeTab, setActiveTab, onOpenAwsArch }) {
                   <span>{t('navScanDevice')}</span>
                 </button>
 
-                <button 
-                  className="btn-kinetic-outline"
-                  style={{ width: '100%', height: '48px', fontSize: '12px', borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenAwsArch();
-                  }}
-                >
-                  <Cloud size={16} />
-                  <span>AWS CLOUD ARCHITECTURE</span>
-                </button>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid var(--border-color)', fontSize: '12px', color: 'var(--muted-fg-color)' }}>
                   <span>LOCALIZATION:</span>

@@ -457,7 +457,7 @@ export default function MetalXRayInspector({ onRequestPickup, onExploreKabadiwal
                 GOVERNMENT & BRAND EPR COMPLIANCE
               </h3>
               <p style={{ fontSize: '14px', color: 'var(--muted-fg-color)', marginTop: '8px' }}>
-                Test our fine-grained AWS Cedar worker safety policies, audit decentralized OpenSearch geo-matching, and mint verifiable CPCB Green Stewardship Certificates.
+                Inspect our automated worker safety rules against toxic burning, audit verified local recycler radius matching, and mint verifiable CPCB Green Stewardship Certificates.
               </p>
             </div>
             <button 
@@ -465,7 +465,7 @@ export default function MetalXRayInspector({ onRequestPickup, onExploreKabadiwal
               className="btn-kinetic-outline"
               style={{ marginTop: '18px', width: '100%', borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
             >
-              <span>INSPECT CEDAR SAFETY POLICIES</span>
+              <span>INSPECT WORKER SAFETY RULES</span>
               <ArrowRight size={14} />
             </button>
           </div>

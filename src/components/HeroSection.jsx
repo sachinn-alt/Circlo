@@ -171,13 +171,13 @@ export default function HeroSection({ onNavigateTab, onOpenAwsArch }) {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="btn-kinetic-outline"
-                style={{ flex: '1 1 180px', borderColor: 'var(--accent-color)', color: 'var(--accent-color)' }}
-                onClick={onOpenAwsArch}
+                style={{ flex: '1 1 180px' }}
+                onClick={() => onNavigateTab('kabadiwala')}
               >
                 <span className="btn-icon">
-                  <Cloud size={18} />
+                  <Coins size={18} />
                 </span>
-                <span>AWS ARCHITECTURE</span>
+                <span>TODAY'S SCRAP RATES</span>
               </motion.button>
             </div>
 
