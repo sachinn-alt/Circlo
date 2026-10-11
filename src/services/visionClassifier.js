@@ -5,6 +5,7 @@
 // ==============================================================================
 
 import { COMMODITY_PRICES } from '../data/mockData';
+import { getLiveCommodityPrices } from './commodityOracle';
 
 export const HUGGING_FACE_MODEL_CONFIG = {
   repoId: "sachinn-alt/circlo-ewaste-mobilenet",
@@ -239,15 +240,17 @@ export async function analyzeEwasteImage(imageSource) {
         safeDismantleDirective = "Wire burning strictly forbidden under CPCB Rules 2022. Use mechanical strippers.";
       }
 
-      // 5. Dynamic Market Valuation linked to COMMODITY_PRICES
-      const cuPrice = COMMODITY_PRICES.find(c => c.id === 'copper_clean')?.pricePerKg || 785;
-      const pcbPrice = COMMODITY_PRICES.find(c => c.id === 'pcb_grade_a')?.pricePerKg || 1450;
+      // 5. Dynamic Market Valuation linked to Live MCX Commodity Oracle
+      const livePrices = getLiveCommodityPrices();
+      const cuPrice = livePrices.find(c => c.id === 'copper_clean')?.pricePerKg || 785;
+      const pcbPrice = livePrices.find(c => c.id === 'pcb_grade_a')?.pricePerKg || 1450;
+      const liPrice = livePrices.find(c => c.id === 'lithium_cells')?.pricePerKg || 890;
       
       let baseVal = 250;
       if (category === 'PRINTED_CIRCUIT_BOARDS') {
         baseVal = Math.floor((pcbPrice * 0.45) + (goldRatio * 1500));
       } else if (category === 'LITHIUM_ION_BATTERY') {
-        baseVal = 240;
+        baseVal = Math.floor((liPrice * 0.28) + 30);
       } else if (category === 'INDUCTION_COIL_TRANSFORMER') {
         baseVal = Math.floor((cuPrice * 0.42) + 80);
       }

@@ -159,6 +159,63 @@ export const PRELOADED_EWASTE_SAMPLES = [
     requiredCertifications: ["SAFE_SORT"],
     handlingNotice: "Verify zero residual capacitor voltage before stripping copper busbars. Recyclable aluminum body.",
     safeDismantleDirective: "Authorized for certified informal collectors with electrical isolation training."
+  },
+  {
+    id: "sample_smartphone",
+    title: "Obsolete 5G Smartphone & Logic Board",
+    category: "TELECOM_MOBILE",
+    imageUrl: "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=800&q=80",
+    confidence: 0.98,
+    hazardLevel: 2,
+    hazardName: "Moderate - Compact Lithium Pouch & Leaded Solder",
+    hazardColor: "#f59e0b",
+    detectedFeatures: [
+      { label: "BGA Application Processor (24K Au Bond)", box: [30, 35, 28, 25] },
+      { label: "High-Density Copper Traces & Antennas", box: [15, 20, 25, 45] },
+      { label: "Lithium-Cobalt Battery Cell (Li/Co)", box: [55, 25, 35, 50] }
+    ],
+    materials: {
+      goldPPM: "0.038g",
+      refinedCopper: "22g",
+      cobaltBlackMass: "6.5g",
+      palladiumPPM: "0.009g",
+      aluminumFrame: "45g"
+    },
+    recoveryValue: {
+      min: 360,
+      max: 450,
+      fairBenchmark: 410
+    },
+    requiredCertifications: ["SAFE_SORT"],
+    handlingNotice: "Precious urban mining gold density. Disconnect battery connector with plastic spudger before board depopulation.",
+    safeDismantleDirective: "Authorized for certified informal Kabadiwala collection. High value urban ore."
+  },
+  {
+    id: "sample_non_ewaste_apple",
+    title: "Organic Apple / Household Item (OOD Test)",
+    category: "NON_EWASTE_ORGANIC",
+    isEwaste: false,
+    imageUrl: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80",
+    confidence: 0.28,
+    hazardLevel: 0,
+    hazardName: "Non-Hazardous / Organic Everyday Item",
+    hazardColor: "#94a3b8",
+    detectedFeatures: [
+      { label: "⚠️ Organic / Non-Metallic Surface [28% Low Conf]", box: [20, 20, 60, 60] }
+    ],
+    materials: {
+      organicCellulose: "100%",
+      metallicElements: "0g (None)",
+      electronicComponents: "0% Detected"
+    },
+    recoveryValue: {
+      min: 0,
+      max: 0,
+      fairBenchmark: 0
+    },
+    requiredCertifications: [],
+    handlingNotice: "Non-electronic object detected. Not eligible for e-waste scrap collection or statutory floor subsidies.",
+    safeDismantleDirective: "CPCB e-waste intake rejected. Please position an electronic appliance or circuit board in view."
   }
 ];
 
