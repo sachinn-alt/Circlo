@@ -5,11 +5,16 @@ on:
     - cron: '0 0 * * *' # Executes daily at 00:00 UTC
   workflow_dispatch:      # Allows manual trigger from GitHub UI
 
+permissions:
+  contents: write
+
 jobs:
   refresh-oracle-rates:
     name: Ingest Metal Spot Benchmarks & Compute Cedar Floors
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: write
 
     steps:
       - name: 📥 Checkout repository
