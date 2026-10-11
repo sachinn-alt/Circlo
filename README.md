@@ -135,11 +135,11 @@ sequenceDiagram
     Resident->>App: Snaps photo of obsolete server board / phone
     App->>App: Multi-spectral canvas pixel decomposition extracts gold, copper, cobalt
     App->>Cedar: Evaluates transaction context against statutory safety policies
-    Cedar-->>App: PERMIT (Safe collection permitted; Floor price >= 85% MCX guaranteed)
+    Cedar-->>App: PERMIT (Safe collection permitted, 85% MCX floor guaranteed)
     App->>OS: Executes sub-10ms geo_distance query with citizen GPS
     OS-->>App: Returns nearest verified collector (Ram Lakhan, 1.4 km, Hazmat L2)
     Resident->>Collector: Dispatches pickup request via 1-tap WhatsApp deep link
-    Collector->>App: Weighs batch on Digital Kanta; triggers audio voice soundbox
+    Collector->>App: Weighs batch on Digital Kanta, triggers audio voice soundbox
     App->>UPI: Renders dynamic SVG UPI QR Code pass (circlo.escrow@icici)
     Resident->>UPI: Scans and transfers guaranteed cash payout
     Collector->>Smelter: Generates CPCB Form 6 Hazardous Consignment Manifest (+₹25/kg bonus)
