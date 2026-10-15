@@ -1,5 +1,10 @@
 [
   {
+    "timestamp": "2026-10-15T02:23:51.850Z",
+    "signature": "0xde8af081d58d2ed01340c8b1fed115b4",
+    "pricesCount": 8
+  },
+  {
     "timestamp": "2026-10-14T02:44:28.401Z",
     "signature": "0x355bde9f2ef00c00646fad156879447b",
     "pricesCount": 8
