@@ -1,18 +1,18 @@
 {
   "oracleName": "Circlo-MCX-LME-Decentralized-Oracle-v1",
   "benchmarkExchange": "MCX (India) / LME (London Metal Exchange)",
-  "lastRefreshed": "2026-10-25T02:20:25.190Z",
-  "integritySignature": "0xa087f674f717aaf804fe2839a2ce93cf",
+  "lastRefreshed": "2026-10-26T02:20:29.466Z",
+  "integritySignature": "0xbf4a790e3ff66a63f5cf153fa5ce21c1",
   "status": "SYNCHRONIZED_ACTIVE",
   "enforcedCedarPolicy": "POLICY_2_FAIR_FLOOR_PRICE",
   "prices": [
     {
       "id": "copper_clean",
       "name": "Copper (Grade 1 / Wire)",
-      "pricePerKg": 789,
-      "floorPrice85": 671,
+      "pricePerKg": 783,
+      "floorPrice85": 666,
       "unit": "₹/kg",
-      "change24h": "-0.41%",
+      "change24h": "-1.1%",
       "trend": "down",
       "category": "Non-Ferrous",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
@@ -20,10 +20,10 @@
     {
       "id": "copper_mixed",
       "name": "Copper (Transformer / Armature)",
-      "pricePerKg": 642,
-      "floorPrice85": 546,
+      "pricePerKg": 641,
+      "floorPrice85": 545,
       "unit": "₹/kg",
-      "change24h": "-0.96%",
+      "change24h": "-1.1%",
       "trend": "down",
       "category": "Non-Ferrous",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
@@ -34,7 +34,7 @@
       "pricePerKg": 217,
       "floorPrice85": 184,
       "unit": "₹/kg",
-      "change24h": "-0.56%",
+      "change24h": "-0.36%",
       "trend": "down",
       "category": "Non-Ferrous",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
@@ -42,21 +42,21 @@
     {
       "id": "pcb_grade_a",
       "name": "Telecom / Server PCBs (Gold-plated)",
-      "pricePerKg": 1453,
-      "floorPrice85": 1235,
+      "pricePerKg": 1474,
+      "floorPrice85": 1253,
       "unit": "₹/kg",
-      "change24h": "-1.5%",
-      "trend": "down",
+      "change24h": "-0.09%",
+      "trend": "neutral",
       "category": "Precious E-Scrap",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
     },
     {
       "id": "pcb_grade_b",
       "name": "Consumer Motherboards (PC/Laptop)",
-      "pricePerKg": 539,
-      "floorPrice85": 458,
+      "pricePerKg": 543,
+      "floorPrice85": 462,
       "unit": "₹/kg",
-      "change24h": "+0.68%",
+      "change24h": "+1.49%",
       "trend": "up",
       "category": "Precious E-Scrap",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
@@ -64,10 +64,10 @@
     {
       "id": "lithium_cells",
       "name": "Li-Ion Black Mass / Cobalt Scrap",
-      "pricePerKg": 946,
-      "floorPrice85": 804,
+      "pricePerKg": 954,
+      "floorPrice85": 811,
       "unit": "₹/kg",
-      "change24h": "+3.43%",
+      "change24h": "+4.25%",
       "trend": "up",
       "category": "Critical Minerals",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
@@ -75,10 +75,10 @@
     {
       "id": "brass_scrap",
       "name": "Brass Terminals & Connectors",
-      "pricePerKg": 475,
-      "floorPrice85": 404,
+      "pricePerKg": 474,
+      "floorPrice85": 403,
       "unit": "₹/kg",
-      "change24h": "+1.4%",
+      "change24h": "+1.31%",
       "trend": "up",
       "category": "Non-Ferrous",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
@@ -89,7 +89,7 @@
       "pricePerKg": 72,
       "floorPrice85": 61,
       "unit": "₹/kg",
-      "change24h": "+1%",
+      "change24h": "+0.72%",
       "trend": "up",
       "category": "Ferrous",
       "cedarFloorRule": "forbid where offeredPrice < benchmark * 0.85"
