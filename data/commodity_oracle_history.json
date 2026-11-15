@@ -1,5 +1,10 @@
 [
   {
+    "timestamp": "2026-11-15T03:51:30.717Z",
+    "signature": "0x842425ba008369d38eddf29acc37811b",
+    "pricesCount": 8
+  },
+  {
     "timestamp": "2026-11-14T04:05:20.265Z",
     "signature": "0x0eb2515a9f8506216f5c90a2a0abd8fe",
     "pricesCount": 8
@@ -142,11 +147,6 @@
   {
     "timestamp": "2026-10-17T02:09:40.784Z",
     "signature": "0xdeaae0603c97031a420732225762240d",
-    "pricesCount": 8
-  },
-  {
-    "timestamp": "2026-10-16T02:16:52.152Z",
-    "signature": "0x847c126a0a9467bc4137676ce47218b3",
     "pricesCount": 8
   }
 ]
